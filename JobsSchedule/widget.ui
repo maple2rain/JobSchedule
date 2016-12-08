@@ -1,20 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Widget</class>
- <widget class="QWidget" name="Widget" >
-  <property name="geometry" >
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1301</width>
+    <height>521</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Widget</string>
   </property>
+  <widget class="QGroupBox" name="List">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>261</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>List</string>
+   </property>
+   <widget class="QLabel" name="CurTimeLbl">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>10</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Current Time</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="CurTimeClock">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>10</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PSA">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>50</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PSA</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PM">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>50</y>
+      <width>35</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PM</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ClearAllDataBtn">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>80</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Run">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>80</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="Algorithm">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>261</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Algorithm</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QRadioButton" name="FCFS">
+      <property name="text">
+       <string>FCFS</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QRadioButton" name="EDF">
+      <property name="text">
+       <string>EDF</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QRadioButton" name="SJF">
+      <property name="text">
+       <string>SJF</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QRadioButton" name="HRRN">
+      <property name="text">
+       <string>HRRN</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QRadioButton" name="MFQ">
+      <property name="text">
+       <string>MFQ</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QRadioButton" name="RR">
+      <property name="text">
+       <string>RR</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="Input">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>261</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Input</string>
+   </property>
+   <widget class="QLabel" name="JobNameLbl">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Job Name</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="JobNameEdit">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>20</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="JoinTimeLbl">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>50</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Join Time</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LastTimeLbl">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>80</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Last Time</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PriorityLbl">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>110</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Priority</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ClearInputBtn">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>140</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="JoinTimeEdit">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="LastTimeEdit">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>80</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="CommitInputBtn">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>140</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Commit</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="OpenFile">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>140</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>110</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+   </widget>
+   <zorder>JobNameLbl</zorder>
+   <zorder>JobNameEdit</zorder>
+   <zorder>JoinTimeLbl</zorder>
+   <zorder>LastTimeLbl</zorder>
+   <zorder>PriorityLbl</zorder>
+   <zorder>ClearInputBtn</zorder>
+   <zorder>JoinTimeEdit</zorder>
+   <zorder>LastTimeEdit</zorder>
+   <zorder>CommitInputBtn</zorder>
+   <zorder>OpenFile</zorder>
+   <zorder>comboBox</zorder>
+   <zorder>NextJob</zorder>
+  </widget>
+  <widget class="QGroupBox" name="About">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>410</y>
+     <width>261</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>About</string>
+   </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>231</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>This simple program was completed by Maple.For more infomation, please visit the author's &lt;a href = &quot;http://blog.leanote.com/maple2snow&quot;&gt;Home Page&lt;/a&gt;..</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::RichText</enum>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+    <property name="openExternalLinks">
+     <bool>true</bool>
+    </property>
+    <property name="textInteractionFlags">
+     <set>Qt::TextBrowserInteraction</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="PreInput">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>10</y>
+     <width>451</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Pre Input</string>
+   </property>
+   <widget class="QTableWidget" name="PreInputTbl">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>411</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <property name="dragEnabled">
+     <bool>true</bool>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Job Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Commit Time</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last Time</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Priority</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="RunningJob">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>10</y>
+     <width>531</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Running Job</string>
+   </property>
+   <widget class="QTableWidget" name="RunJobTbl">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>491</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Commit</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Starting</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Running</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Need</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Priority</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="NextJob">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>130</y>
+     <width>531</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Next Job</string>
+   </property>
+   <widget class="QTableWidget" name="NextJobTbl">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>491</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Commit</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Starting</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Running</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Need</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Priority</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="ReadyJob">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>290</y>
+     <width>451</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Ready Job</string>
+   </property>
+   <widget class="QTableWidget" name="ReadyJobTbl">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>411</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <column>
+     <property name="text">
+      <string>Job Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Commit Time</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last Time</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Priority</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="FinishedJob">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>250</y>
+     <width>531</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Finished Job</string>
+   </property>
+   <widget class="QTableWidget" name="FinishedJobTbl">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>491</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Commit</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Start</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Finish</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Turn Around</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Weight Trun Around</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>220</y>
+      <width>200</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="ATT">
+       <property name="text">
+        <string>Average Turnaround Time</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="ATTValue">
+       <property name="text">
+        <string>time</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>220</y>
+      <width>224</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="WATT">
+       <property name="text">
+        <string>Weighted Average Turnaround Time</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="WATTValue">
+       <property name="text">
+        <string>time</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>FinishedJobTbl</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>ATT</zorder>
+   <zorder>ATTValue</zorder>
+   <zorder>ATTValue</zorder>
+   <zorder>ATT</zorder>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>

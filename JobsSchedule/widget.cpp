@@ -1,5 +1,7 @@
-#include "widget.h"
+﻿#include "widget.h"
 #include "ui_widget.h"
+#include <QLabel>
+#include <QString>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -11,4 +13,14 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     delete ui;
+}
+
+void Widget::on_Run_clicked()
+{
+
+}
+
+void Widget::on_JobNameEdit_textEdited(const QString &arg1)
+{
+
 }

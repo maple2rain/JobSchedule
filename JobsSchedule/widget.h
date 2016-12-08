@@ -1,4 +1,4 @@
-#ifndef WIDGET_H
+﻿#ifndef WIDGET_H
 #define WIDGET_H
 
 #include <QWidget>
@@ -14,6 +14,11 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
+
+private slots:
+    void on_Run_clicked();
+
+    void on_JobNameEdit_textEdited(const QString &arg1);
 
 private:
     Ui::Widget *ui;
