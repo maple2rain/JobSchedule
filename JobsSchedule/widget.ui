@@ -291,7 +291,7 @@
      <string>File</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="PriorityCombo">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -326,7 +326,7 @@
    <zorder>LastTimeEdit</zorder>
    <zorder>CommitInputBtn</zorder>
    <zorder>OpenFile</zorder>
-   <zorder>comboBox</zorder>
+   <zorder>PriorityCombo</zorder>
    <zorder>NextJob</zorder>
   </widget>
   <widget class="QGroupBox" name="About">
@@ -567,116 +567,6 @@
     </column>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="NextJob">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>130</y>
-     <width>531</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Next Job</string>
-   </property>
-   <widget class="QTableWidget" name="NextJobTbl">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>491</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::NoEditTriggers</set>
-    </property>
-    <column>
-     <property name="text">
-      <string>Name</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Commit</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Last</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Starting</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Running</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Need</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Priority</string>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-    </column>
-   </widget>
-  </widget>
   <widget class="QGroupBox" name="ReadyJob">
    <property name="geometry">
     <rect>
@@ -774,6 +664,9 @@
     </property>
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
     </property>
     <column>
      <property name="text">
@@ -919,6 +812,117 @@
    <zorder>ATTValue</zorder>
    <zorder>ATTValue</zorder>
    <zorder>ATT</zorder>
+  </widget>
+  <widget class="QGroupBox" name="NextJob">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>130</y>
+     <width>531</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Next Job</string>
+   </property>
+   <widget class="QTableWidget" name="NextJobTbl">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>491</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <column>
+     <property name="text">
+      <string>Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Commit</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Last</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Starting</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Running</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Need</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Priority</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

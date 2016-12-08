@@ -12,9 +12,12 @@ TARGET = JobsSchedule
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        widget.cpp
+SOURCES += \
+    ../src/main.cpp \
+    ../src/widget.cpp
 
-HEADERS  += widget.h
+HEADERS  += \
+    ../inc/ui_jobs.h \
+    ../inc/widget.h
 
 FORMS    += widget.ui
