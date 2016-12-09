@@ -307,6 +307,16 @@
     </item>
     <item>
      <property name="text">
+      <string>1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>3</string>
      </property>
     </item>
@@ -370,18 +380,8 @@
       <string>15</string>
      </property>
     </item>
-    <item>
-     <property name="text">
-      <string>1</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>2</string>
-     </property>
-    </item>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="DeadLineLbl">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -394,7 +394,7 @@
      <string>DeadLine</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="DeadLineEdit">
     <property name="geometry">
      <rect>
       <x>100</x>

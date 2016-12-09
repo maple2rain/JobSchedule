@@ -13,11 +13,17 @@ Widget::Widget(QWidget *parent) :
 
 Widget::~Widget()
 {
+
 }
 
 void Widget::on_Run_clicked()
 {
     qDebug() << "run";
+}
+
+void Widget::on_ClearAllDataBtn_clicked()
+{
+
 }
 
 void Widget::on_PSA_clicked(bool checked)
@@ -36,11 +42,6 @@ void Widget::on_FCFS_clicked()
 }
 
 void Widget::on_MFQ_clicked()
-{
-
-}
-
-void Widget::on_ClearAllDataBtn_clicked()
 {
 
 }
@@ -81,6 +82,12 @@ void Widget::on_LastTimeEdit_editingFinished()
 
 }
 
+void Widget::on_DeadLineEdit_editingFinished()
+{
+    QString text = Ui_Widget::DeadLineEdit->text();
+    qDebug() << text;
+}
+
 void Widget::on_PriorityCombo_currentIndexChanged(int index)
 {
 
@@ -88,7 +95,7 @@ void Widget::on_PriorityCombo_currentIndexChanged(int index)
 
 void Widget::on_ClearInputBtn_clicked()
 {
-
+    qDebug() << "clear" ;
 }
 
 void Widget::on_CommitInputBtn_clicked()

@@ -37,6 +37,7 @@ private slots:
     void on_JoinTimeEdit_editingFinished();
     void on_JobNameEdit_editingFinished();
     void on_LastTimeEdit_editingFinished();
+    void on_DeadLineEdit_editingFinished();
     void on_PriorityCombo_currentIndexChanged(int index);
 
     /* clear or commit a new job */

@@ -61,8 +61,8 @@ public:
     QPushButton *CommitInputBtn;
     QToolButton *OpenFile;
     QComboBox *PriorityCombo;
-    QLabel *label_2;
-    QLineEdit *lineEdit;
+    QLabel *DeadLineLbl;
+    QLineEdit *DeadLineEdit;
     QGroupBox *About;
     QLabel *label;
     QGroupBox *PreInput;
@@ -184,12 +184,12 @@ public:
         PriorityCombo = new QComboBox(Input);
         PriorityCombo->setObjectName(QStringLiteral("PriorityCombo"));
         PriorityCombo->setGeometry(QRect(100, 140, 61, 20));
-        label_2 = new QLabel(Input);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(30, 110, 54, 12));
-        lineEdit = new QLineEdit(Input);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(100, 110, 111, 20));
+        DeadLineLbl = new QLabel(Input);
+        DeadLineLbl->setObjectName(QStringLiteral("DeadLineLbl"));
+        DeadLineLbl->setGeometry(QRect(30, 110, 54, 12));
+        DeadLineEdit = new QLineEdit(Input);
+        DeadLineEdit->setObjectName(QStringLiteral("DeadLineEdit"));
+        DeadLineEdit->setGeometry(QRect(100, 110, 111, 20));
         About = new QGroupBox(Widget);
         About->setObjectName(QStringLiteral("About"));
         About->setGeometry(QRect(10, 450, 261, 81));
@@ -432,6 +432,8 @@ public:
         PriorityCombo->clear();
         PriorityCombo->insertItems(0, QStringList()
          << QApplication::translate("Widget", "0", 0)
+         << QApplication::translate("Widget", "1", 0)
+         << QApplication::translate("Widget", "2", 0)
          << QApplication::translate("Widget", "3", 0)
          << QApplication::translate("Widget", "4", 0)
          << QApplication::translate("Widget", "5", 0)
@@ -445,10 +447,8 @@ public:
          << QApplication::translate("Widget", "13", 0)
          << QApplication::translate("Widget", "14", 0)
          << QApplication::translate("Widget", "15", 0)
-         << QApplication::translate("Widget", "1", 0)
-         << QApplication::translate("Widget", "2", 0)
         );
-        label_2->setText(QApplication::translate("Widget", "DeadLine", 0));
+        DeadLineLbl->setText(QApplication::translate("Widget", "DeadLine", 0));
         About->setTitle(QApplication::translate("Widget", "About", 0));
         label->setText(QApplication::translate("Widget", "This simple program was completed by Maple.For more infomation, please visit the author's <a href = \"http://blog.leanote.com/maple2snow\">Home Page</a>..", 0));
         PreInput->setTitle(QApplication::translate("Widget", "Pre Input", 0));
