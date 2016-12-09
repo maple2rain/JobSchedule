@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -60,6 +61,8 @@ public:
     QPushButton *CommitInputBtn;
     QToolButton *OpenFile;
     QComboBox *PriorityCombo;
+    QLabel *label_2;
+    QLineEdit *lineEdit;
     QGroupBox *About;
     QLabel *label;
     QGroupBox *PreInput;
@@ -71,21 +74,22 @@ public:
     QGroupBox *FinishedJob;
     QTableWidget *FinishedJobTbl;
     QWidget *layoutWidget;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *ATTHL;
     QLabel *ATT;
     QLabel *ATTValue;
     QWidget *layoutWidget1;
-    QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *WATTHL;
     QLabel *WATT;
     QLabel *WATTValue;
     QGroupBox *NextJob;
     QTableWidget *NextJobTbl;
+    QGraphicsView *graphicsView;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QStringLiteral("Widget"));
-        Widget->resize(1301, 521);
+        Widget->resize(1253, 545);
         List = new QGroupBox(Widget);
         List->setObjectName(QStringLiteral("List"));
         List->setGeometry(QRect(10, 10, 261, 121));
@@ -146,7 +150,7 @@ public:
 
         Input = new QGroupBox(Widget);
         Input->setObjectName(QStringLiteral("Input"));
-        Input->setGeometry(QRect(10, 220, 261, 181));
+        Input->setGeometry(QRect(10, 220, 261, 221));
         JobNameLbl = new QLabel(Input);
         JobNameLbl->setObjectName(QStringLiteral("JobNameLbl"));
         JobNameLbl->setGeometry(QRect(30, 20, 54, 12));
@@ -161,10 +165,10 @@ public:
         LastTimeLbl->setGeometry(QRect(30, 80, 54, 12));
         PriorityLbl = new QLabel(Input);
         PriorityLbl->setObjectName(QStringLiteral("PriorityLbl"));
-        PriorityLbl->setGeometry(QRect(30, 110, 54, 12));
+        PriorityLbl->setGeometry(QRect(30, 140, 54, 12));
         ClearInputBtn = new QPushButton(Input);
         ClearInputBtn->setObjectName(QStringLiteral("ClearInputBtn"));
-        ClearInputBtn->setGeometry(QRect(30, 140, 71, 21));
+        ClearInputBtn->setGeometry(QRect(30, 180, 71, 21));
         JoinTimeEdit = new QLineEdit(Input);
         JoinTimeEdit->setObjectName(QStringLiteral("JoinTimeEdit"));
         JoinTimeEdit->setGeometry(QRect(100, 50, 111, 20));
@@ -173,30 +177,25 @@ public:
         LastTimeEdit->setGeometry(QRect(100, 80, 111, 20));
         CommitInputBtn = new QPushButton(Input);
         CommitInputBtn->setObjectName(QStringLiteral("CommitInputBtn"));
-        CommitInputBtn->setGeometry(QRect(110, 140, 71, 21));
+        CommitInputBtn->setGeometry(QRect(110, 180, 71, 21));
         OpenFile = new QToolButton(Input);
         OpenFile->setObjectName(QStringLiteral("OpenFile"));
-        OpenFile->setGeometry(QRect(190, 140, 41, 21));
+        OpenFile->setGeometry(QRect(190, 180, 41, 21));
         PriorityCombo = new QComboBox(Input);
         PriorityCombo->setObjectName(QStringLiteral("PriorityCombo"));
-        PriorityCombo->setGeometry(QRect(100, 110, 61, 20));
-        JobNameLbl->raise();
-        JobNameEdit->raise();
-        JoinTimeLbl->raise();
-        LastTimeLbl->raise();
-        PriorityLbl->raise();
-        ClearInputBtn->raise();
-        JoinTimeEdit->raise();
-        LastTimeEdit->raise();
-        CommitInputBtn->raise();
-        OpenFile->raise();
-        PriorityCombo->raise();
+        PriorityCombo->setGeometry(QRect(100, 140, 61, 20));
+        label_2 = new QLabel(Input);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(30, 110, 54, 12));
+        lineEdit = new QLineEdit(Input);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setGeometry(QRect(100, 110, 111, 20));
         About = new QGroupBox(Widget);
         About->setObjectName(QStringLiteral("About"));
-        About->setGeometry(QRect(10, 410, 261, 91));
+        About->setGeometry(QRect(10, 450, 261, 81));
         label = new QLabel(About);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 10, 231, 81));
+        label->setGeometry(QRect(10, 10, 231, 71));
         label->setAutoFillBackground(false);
         label->setTextFormat(Qt::RichText);
         label->setWordWrap(true);
@@ -204,7 +203,7 @@ public:
         label->setTextInteractionFlags(Qt::TextBrowserInteraction);
         PreInput = new QGroupBox(Widget);
         PreInput->setObjectName(QStringLiteral("PreInput"));
-        PreInput->setGeometry(QRect(290, 10, 451, 261));
+        PreInput->setGeometry(QRect(290, 10, 331, 261));
         PreInputTbl = new QTableWidget(PreInput);
         if (PreInputTbl->columnCount() < 4)
             PreInputTbl->setColumnCount(4);
@@ -225,15 +224,18 @@ public:
         __qtablewidgetitem3->setFont(font);
         PreInputTbl->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         PreInputTbl->setObjectName(QStringLiteral("PreInputTbl"));
-        PreInputTbl->setGeometry(QRect(20, 20, 411, 221));
+        PreInputTbl->setGeometry(QRect(20, 20, 301, 211));
         PreInputTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         PreInputTbl->setDragEnabled(true);
         PreInputTbl->setAlternatingRowColors(true);
         PreInputTbl->setSortingEnabled(true);
         PreInputTbl->horizontalHeader()->setCascadingSectionResizes(false);
+        PreInputTbl->horizontalHeader()->setDefaultSectionSize(80);
+        PreInputTbl->horizontalHeader()->setMinimumSectionSize(25);
+        PreInputTbl->horizontalHeader()->setStretchLastSection(true);
         RunningJob = new QGroupBox(Widget);
         RunningJob->setObjectName(QStringLiteral("RunningJob"));
-        RunningJob->setGeometry(QRect(760, 10, 531, 101));
+        RunningJob->setGeometry(QRect(640, 10, 461, 101));
         RunJobTbl = new QTableWidget(RunningJob);
         if (RunJobTbl->columnCount() < 7)
             RunJobTbl->setColumnCount(7);
@@ -264,11 +266,13 @@ public:
         __qtablewidgetitem10->setFont(font);
         RunJobTbl->setHorizontalHeaderItem(6, __qtablewidgetitem10);
         RunJobTbl->setObjectName(QStringLiteral("RunJobTbl"));
-        RunJobTbl->setGeometry(QRect(20, 20, 491, 61));
+        RunJobTbl->setGeometry(QRect(20, 20, 431, 61));
         RunJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        RunJobTbl->horizontalHeader()->setDefaultSectionSize(60);
+        RunJobTbl->horizontalHeader()->setStretchLastSection(true);
         ReadyJob = new QGroupBox(Widget);
         ReadyJob->setObjectName(QStringLiteral("ReadyJob"));
-        ReadyJob->setGeometry(QRect(290, 290, 451, 211));
+        ReadyJob->setGeometry(QRect(290, 290, 331, 241));
         ReadyJobTbl = new QTableWidget(ReadyJob);
         if (ReadyJobTbl->columnCount() < 4)
             ReadyJobTbl->setColumnCount(4);
@@ -285,11 +289,14 @@ public:
         __qtablewidgetitem14->setFont(font);
         ReadyJobTbl->setHorizontalHeaderItem(3, __qtablewidgetitem14);
         ReadyJobTbl->setObjectName(QStringLiteral("ReadyJobTbl"));
-        ReadyJobTbl->setGeometry(QRect(20, 20, 411, 171));
+        ReadyJobTbl->setGeometry(QRect(20, 20, 301, 201));
         ReadyJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ReadyJobTbl->setSortingEnabled(true);
+        ReadyJobTbl->horizontalHeader()->setDefaultSectionSize(80);
+        ReadyJobTbl->horizontalHeader()->setStretchLastSection(true);
         FinishedJob = new QGroupBox(Widget);
         FinishedJob->setObjectName(QStringLiteral("FinishedJob"));
-        FinishedJob->setGeometry(QRect(760, 250, 531, 251));
+        FinishedJob->setGeometry(QRect(640, 250, 601, 281));
         FinishedJobTbl = new QTableWidget(FinishedJob);
         if (FinishedJobTbl->columnCount() < 7)
             FinishedJobTbl->setColumnCount(7);
@@ -315,55 +322,51 @@ public:
         __qtablewidgetitem21->setFont(font);
         FinishedJobTbl->setHorizontalHeaderItem(6, __qtablewidgetitem21);
         FinishedJobTbl->setObjectName(QStringLiteral("FinishedJobTbl"));
-        FinishedJobTbl->setGeometry(QRect(20, 20, 491, 191));
+        FinishedJobTbl->setGeometry(QRect(20, 20, 571, 211));
         FinishedJobTbl->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         FinishedJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        FinishedJobTbl->setSortingEnabled(true);
+        FinishedJobTbl->horizontalHeader()->setDefaultSectionSize(75);
+        FinishedJobTbl->horizontalHeader()->setStretchLastSection(true);
         layoutWidget = new QWidget(FinishedJob);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(40, 220, 200, 14));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        layoutWidget->setGeometry(QRect(40, 250, 200, 14));
+        ATTHL = new QHBoxLayout(layoutWidget);
+        ATTHL->setSpacing(6);
+        ATTHL->setContentsMargins(11, 11, 11, 11);
+        ATTHL->setObjectName(QStringLiteral("ATTHL"));
+        ATTHL->setContentsMargins(0, 0, 0, 0);
         ATT = new QLabel(layoutWidget);
         ATT->setObjectName(QStringLiteral("ATT"));
 
-        horizontalLayout->addWidget(ATT);
+        ATTHL->addWidget(ATT);
 
         ATTValue = new QLabel(layoutWidget);
         ATTValue->setObjectName(QStringLiteral("ATTValue"));
 
-        horizontalLayout->addWidget(ATTValue);
+        ATTHL->addWidget(ATTValue);
 
         layoutWidget1 = new QWidget(FinishedJob);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(260, 220, 224, 14));
-        horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        layoutWidget1->setGeometry(QRect(320, 250, 230, 14));
+        WATTHL = new QHBoxLayout(layoutWidget1);
+        WATTHL->setSpacing(6);
+        WATTHL->setContentsMargins(11, 11, 11, 11);
+        WATTHL->setObjectName(QStringLiteral("WATTHL"));
+        WATTHL->setContentsMargins(0, 0, 0, 0);
         WATT = new QLabel(layoutWidget1);
         WATT->setObjectName(QStringLiteral("WATT"));
 
-        horizontalLayout_2->addWidget(WATT);
+        WATTHL->addWidget(WATT);
 
         WATTValue = new QLabel(layoutWidget1);
         WATTValue->setObjectName(QStringLiteral("WATTValue"));
 
-        horizontalLayout_2->addWidget(WATTValue);
+        WATTHL->addWidget(WATTValue);
 
-        FinishedJobTbl->raise();
-        layoutWidget->raise();
-        layoutWidget->raise();
-        ATT->raise();
-        ATTValue->raise();
-        ATTValue->raise();
-        ATT->raise();
         NextJob = new QGroupBox(Widget);
         NextJob->setObjectName(QStringLiteral("NextJob"));
-        NextJob->setGeometry(QRect(760, 130, 531, 101));
+        NextJob->setGeometry(QRect(640, 130, 461, 101));
         NextJobTbl = new QTableWidget(NextJob);
         if (NextJobTbl->columnCount() < 7)
             NextJobTbl->setColumnCount(7);
@@ -389,8 +392,13 @@ public:
         __qtablewidgetitem28->setFont(font);
         NextJobTbl->setHorizontalHeaderItem(6, __qtablewidgetitem28);
         NextJobTbl->setObjectName(QStringLiteral("NextJobTbl"));
-        NextJobTbl->setGeometry(QRect(20, 20, 491, 61));
+        NextJobTbl->setGeometry(QRect(20, 20, 431, 61));
         NextJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        NextJobTbl->horizontalHeader()->setDefaultSectionSize(60);
+        NextJobTbl->horizontalHeader()->setStretchLastSection(true);
+        graphicsView = new QGraphicsView(Widget);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setGeometry(QRect(1110, 10, 131, 221));
 
         retranslateUi(Widget);
 
@@ -424,9 +432,23 @@ public:
         PriorityCombo->clear();
         PriorityCombo->insertItems(0, QStringList()
          << QApplication::translate("Widget", "0", 0)
+         << QApplication::translate("Widget", "3", 0)
+         << QApplication::translate("Widget", "4", 0)
+         << QApplication::translate("Widget", "5", 0)
+         << QApplication::translate("Widget", "6", 0)
+         << QApplication::translate("Widget", "7", 0)
+         << QApplication::translate("Widget", "8", 0)
+         << QApplication::translate("Widget", "9", 0)
+         << QApplication::translate("Widget", "10", 0)
+         << QApplication::translate("Widget", "11", 0)
+         << QApplication::translate("Widget", "12", 0)
+         << QApplication::translate("Widget", "13", 0)
+         << QApplication::translate("Widget", "14", 0)
+         << QApplication::translate("Widget", "15", 0)
          << QApplication::translate("Widget", "1", 0)
          << QApplication::translate("Widget", "2", 0)
         );
+        label_2->setText(QApplication::translate("Widget", "DeadLine", 0));
         About->setTitle(QApplication::translate("Widget", "About", 0));
         label->setText(QApplication::translate("Widget", "This simple program was completed by Maple.For more infomation, please visit the author's <a href = \"http://blog.leanote.com/maple2snow\">Home Page</a>..", 0));
         PreInput->setTitle(QApplication::translate("Widget", "Pre Input", 0));
@@ -468,7 +490,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem16 = FinishedJobTbl->horizontalHeaderItem(1);
         ___qtablewidgetitem16->setText(QApplication::translate("Widget", "Commit", 0));
         QTableWidgetItem *___qtablewidgetitem17 = FinishedJobTbl->horizontalHeaderItem(2);
-        ___qtablewidgetitem17->setText(QApplication::translate("Widget", "Start", 0));
+        ___qtablewidgetitem17->setText(QApplication::translate("Widget", "Starting", 0));
         QTableWidgetItem *___qtablewidgetitem18 = FinishedJobTbl->horizontalHeaderItem(3);
         ___qtablewidgetitem18->setText(QApplication::translate("Widget", "Finish", 0));
         QTableWidgetItem *___qtablewidgetitem19 = FinishedJobTbl->horizontalHeaderItem(4);
@@ -477,9 +499,9 @@ public:
         ___qtablewidgetitem20->setText(QApplication::translate("Widget", "Turn Around", 0));
         QTableWidgetItem *___qtablewidgetitem21 = FinishedJobTbl->horizontalHeaderItem(6);
         ___qtablewidgetitem21->setText(QApplication::translate("Widget", "Weight Trun Around", 0));
-        ATT->setText(QApplication::translate("Widget", "Average Turnaround Time", 0));
+        ATT->setText(QApplication::translate("Widget", "Average Turnaround Time:", 0));
         ATTValue->setText(QApplication::translate("Widget", "time", 0));
-        WATT->setText(QApplication::translate("Widget", "Weighted Average Turnaround Time", 0));
+        WATT->setText(QApplication::translate("Widget", "Weighted Average Turnaround Time:", 0));
         WATTValue->setText(QApplication::translate("Widget", "time", 0));
         NextJob->setTitle(QApplication::translate("Widget", "Next Job", 0));
         QTableWidgetItem *___qtablewidgetitem22 = NextJobTbl->horizontalHeaderItem(0);

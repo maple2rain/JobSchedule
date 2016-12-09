@@ -21,6 +21,7 @@ private slots:
     void on_PSA_clicked(bool checked);
     void on_PM_clicked(bool checked);
 
+    /* action operate */
     void on_Run_clicked();
     void on_ClearAllDataBtn_clicked();
 
@@ -46,8 +47,6 @@ private slots:
     void on_OpenFile_clicked();
 
 
-private:
-    Ui::Widget *ui;
 };
 
 #endif // WIDGET_H

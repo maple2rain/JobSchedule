@@ -7,11 +7,12 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+    setWindowTitle("Jobs Scheduler");
+    setFixedSize(this->width(), this->height());
 }
 
 Widget::~Widget()
 {
-    delete ui;
 }
 
 void Widget::on_Run_clicked()
