@@ -2,7 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include "../inc/ui_jobs.h"
+#include "ui_widget.h"
 
 namespace Ui {
 class Widget;
@@ -22,7 +22,6 @@ private slots:
     void on_PM_clicked(bool checked);
 
     /* action operate */
-    void on_Run_clicked();
     void on_ClearAllDataBtn_clicked();
 
     /* choose schedule algorithm */
@@ -48,6 +47,10 @@ private slots:
     void on_OpenFile_clicked();
 
 
+    void on_RunBtn_clicked();
+    void on_PauseBtn_clicked();
+    void on_StopBtn_clicked();
+    void on_PauseBtn_pressed();
 };
 
 #endif // WIDGET_H

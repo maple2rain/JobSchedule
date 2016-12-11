@@ -7,11 +7,18 @@
     <x>0</x>
     <y>0</y>
     <width>1253</width>
-    <height>545</height>
+    <height>563</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>Jobs Scheduler</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="rsc.qrc">
+    <normaloff>:/images/images/ico.ico</normaloff>:/images/images/ico.ico</iconset>
   </property>
   <widget class="QGroupBox" name="List">
    <property name="geometry">
@@ -19,7 +26,7 @@
      <x>10</x>
      <y>10</y>
      <width>261</width>
-     <height>121</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="title">
@@ -87,7 +94,7 @@
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Run">
+   <widget class="QPushButton" name="RunBtn">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -100,12 +107,50 @@
      <string>Run</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="PauseBtn">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>110</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Pause</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="StopBtn">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>110</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Stop</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="Algorithm">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
+     <y>160</y>
      <width>261</width>
      <height>71</height>
     </rect>
@@ -162,7 +207,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
+     <y>240</y>
      <width>261</width>
      <height>221</height>
     </rect>
@@ -409,7 +454,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>450</y>
+     <y>470</y>
      <width>261</width>
      <height>81</height>
     </rect>
@@ -417,7 +462,7 @@
    <property name="title">
     <string>About</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="AboutLbl">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -664,7 +709,7 @@
      <x>290</x>
      <y>290</y>
      <width>331</width>
-     <height>241</height>
+     <height>261</height>
     </rect>
    </property>
    <property name="title">
@@ -676,7 +721,7 @@
       <x>20</x>
       <y>20</y>
       <width>301</width>
-      <height>201</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="editTriggers">
@@ -747,7 +792,7 @@
      <x>640</x>
      <y>250</y>
      <width>601</width>
-     <height>281</height>
+     <height>301</height>
     </rect>
    </property>
    <property name="title">
@@ -759,8 +804,11 @@
       <x>20</x>
       <y>20</y>
       <width>571</width>
-      <height>211</height>
+      <height>231</height>
      </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
     </property>
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::AdjustToContents</enum>
@@ -866,7 +914,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>250</y>
+      <y>270</y>
       <width>200</width>
       <height>14</height>
      </rect>
@@ -892,7 +940,7 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>250</y>
+      <y>270</y>
       <width>230</width>
       <height>14</height>
      </rect>
@@ -1042,8 +1090,21 @@
     </rect>
    </property>
   </widget>
+  <zorder>List</zorder>
+  <zorder>Algorithm</zorder>
+  <zorder>Input</zorder>
+  <zorder>About</zorder>
+  <zorder>PreInput</zorder>
+  <zorder>RunningJob</zorder>
+  <zorder>ReadyJob</zorder>
+  <zorder>FinishedJob</zorder>
+  <zorder>NextJob</zorder>
+  <zorder>graphicsView</zorder>
+  <zorder>AboutLbl</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="rsc.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -17,7 +17,9 @@ SOURCES += \
     ../src/widget.cpp
 
 HEADERS  += \
-    ../inc/ui_jobs.h \
     ../inc/widget.h
 
 FORMS    += widget.ui
+
+RESOURCES += \
+    rsc.qrc
