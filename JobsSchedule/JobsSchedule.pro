@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui\
+			sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,7 +18,8 @@ SOURCES += \
     ../src/widget.cpp
 
 HEADERS  += \
-    ../inc/widget.h
+    ../inc/widget.h \
+    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_widget.h
 
 FORMS    += widget.ui
 
