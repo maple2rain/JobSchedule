@@ -19,6 +19,7 @@ class Widget : public QWidget, public Ui::Widget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
+    void methodMsgSend();
 
 private slots:
     /* if PSA and PM chosed*/
@@ -52,15 +53,21 @@ private slots:
     void on_StopBtn_clicked();
     void on_PauseBtn_pressed();
 
+    /* deal with radio button */
+    void DisableRadioBtn();
+    void EnableRadioBtn();
 private:
     QTimer *timer;
     std::string scheduleMethod;
     bool    isRun;
-    bool    isRSA;
+    bool    isPSA;
     bool    isPM;
+    bool    isMethodFixed;
     static unsigned short runtime;
     std::vector<std::string> jobNames;
 
+signals://使用signals标记信号函数，信号是一个函数声明，返回void，不需要函数的实现代码
+    void methodFixedSignal(const std::string &scheduleMethod, bool _isPM, bool _isPSA);
 
 };
 

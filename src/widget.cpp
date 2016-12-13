@@ -22,7 +22,7 @@ Widget::Widget(QWidget *parent) :
     } );
     CurTimeClock->setPalette(Qt::red);
 
-    isRSA = isPM = isRun = false;
+    isPSA = isPM = isRun = isMethodFixed = false;
     scheduleMethod = "";
 }
 
@@ -106,10 +106,11 @@ void Widget::on_PauseBtn_clicked()
 void Widget::on_StopBtn_clicked()
 {
     isRun = false;
+    isMethodFixed = false;
 }
 
 /* select schedule type */
-void Widget::on_PSA_clicked(bool checked) { isRSA = checked; }
+void Widget::on_PSA_clicked(bool checked) { isPSA = checked; }
 void Widget::on_PM_clicked(bool checked) { isPM = checked; }
 
 /* select schedule method */
@@ -120,6 +121,26 @@ void Widget::on_SJF_clicked() { scheduleMethod = "SJF"; }
 void Widget::on_HRRN_clicked() { scheduleMethod = "HRRN"; }
 void Widget::on_EDF_clicked() { scheduleMethod = "EDF"; }
 
+void Widget::DisableRadioBtn()
+{
+    FCFS->setCheckable(false);
+    MFQ->setCheckable(false);
+    RR->setCheckable(false);
+    SJF->setCheckable(false);
+    HRRN->setCheckable(false);
+    EDF->setCheckable(false);
+}
+
+void Widget::EnableRadioBtn()
+{
+    FCFS->setCheckable(true);
+    MFQ->setCheckable(true);
+    RR->setCheckable(true);
+    SJF->setCheckable(true);
+    HRRN->setCheckable(true);
+    EDF->setCheckable(true);
+}
+
 void Widget::on_PriorityCombo_currentIndexChanged(int index)
 {
 
@@ -128,6 +149,11 @@ void Widget::on_PriorityCombo_currentIndexChanged(int index)
 void Widget::on_ClearInputBtn_clicked()
 {
     qDebug() << "clear" ;
+}
+
+void Widget::methodMsgSend()
+{
+    emit methodFixedSignal(scheduleMethod, isPM, isPSA);
 }
 
 void Widget::on_CommitInputBtn_clicked()
@@ -144,7 +170,12 @@ void Widget::on_CommitInputBtn_clicked()
         QMessageBox::warning(this, tr("Warning"), tr(warning.c_str()));
     }else{
         qDebug() << "commit success" << endl;
+    }
 
+    if(!isMethodFixed){
+        methodMsgSend();
+        isMethodFixed = true;
+        DisableRadioBtn();
     }
 }
 

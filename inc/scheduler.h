@@ -7,14 +7,14 @@
 #include <iostream>
 
 class Scheduler {
-    Scheduler *scheduler; //envelope
+    Scheduler* scheduler; //envelope
 
     //Prevent copy-construction & operator =
     Scheduler(Scheduler&);
     Scheduler operator=(Scheduler&);
 protected:
     typedef std::shared_ptr<Job> ptr; //smart pointer
-    Scheduler() { scheduler = 0; }
+    Scheduler() { scheduler = 0; std::cout << "create scheduler" << std::endl; }
 public:
     void schedule();
     virtual void schedule_NONE() { std::cout << "schedule_NONE" << std::endl; }
@@ -33,7 +33,6 @@ public:
         if (scheduler) {
             scheduler->clearAllJob();
         }
-        delete scheduler;
     }
 
 public:
@@ -64,7 +63,7 @@ class FCFS : public Scheduler
     FCFS(FCFS&);
     FCFS operator=(FCFS&);
 
-    FCFS() {} //private constructor, prevent to be instanced by other operation
+    FCFS() { std::cout << "create FCFS scheduler" << std::endl; } //private constructor, prevent to be instanced by other operation
     friend class Scheduler;
 public:
     ~FCFS() {}

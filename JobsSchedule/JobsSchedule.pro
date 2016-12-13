@@ -16,7 +16,8 @@ TEMPLATE = app
 SOURCES += \
     ../src/main.cpp \
     ../src/widget.cpp \
-    ../src/fcfs.cpp
+    ../src/fcfs.cpp \
+    ../src/scheduler.cpp
 
 HEADERS  += \
     ../inc/widget.h \
