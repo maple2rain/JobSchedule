@@ -24,6 +24,18 @@ Widget::Widget(QWidget *parent) :
 
     isPSA = isPM = isRun = isMethodFixed = false;
     scheduleMethod = "";
+    radioBtnVec = { FCFS, EDF, SJF, HRRN, MFQ, RR };
+    initMap();
+}
+
+void Widget::initMap()
+{
+    radioBtnMap[std::string("FCFS")] = 0;
+    radioBtnMap[std::string("EDF")] = 1;
+    radioBtnMap[std::string("SJF")] = 2;
+    radioBtnMap[std::string("HRRN")] = 3;
+    radioBtnMap[std::string("MFQ")] = 4;
+    radioBtnMap[std::string("RR")] = 5;
 }
 
 Widget::~Widget()
@@ -107,6 +119,7 @@ void Widget::on_StopBtn_clicked()
 {
     isRun = false;
     isMethodFixed = false;
+    EnableRadioBtn();
 }
 
 /* select schedule type */
@@ -121,24 +134,20 @@ void Widget::on_SJF_clicked() { scheduleMethod = "SJF"; }
 void Widget::on_HRRN_clicked() { scheduleMethod = "HRRN"; }
 void Widget::on_EDF_clicked() { scheduleMethod = "EDF"; }
 
-void Widget::DisableRadioBtn()
+void Widget::DisableRadioBtn(std::string exception)
 {
-    FCFS->setCheckable(false);
-    MFQ->setCheckable(false);
-    RR->setCheckable(false);
-    SJF->setCheckable(false);
-    HRRN->setCheckable(false);
-    EDF->setCheckable(false);
+    for(auto it = radioBtnMap.begin(); it != radioBtnMap.end(); ++it){
+        if(it->first != exception){
+            radioBtnVec[it->second]->setDisabled(true);
+        }
+    }
 }
 
 void Widget::EnableRadioBtn()
 {
-    FCFS->setCheckable(true);
-    MFQ->setCheckable(true);
-    RR->setCheckable(true);
-    SJF->setCheckable(true);
-    HRRN->setCheckable(true);
-    EDF->setCheckable(true);
+    for(size_t i = 0; i < radioBtnVec.size(); ++i){
+        radioBtnVec[i]->setEnabled(true);
+    }
 }
 
 void Widget::on_PriorityCombo_currentIndexChanged(int index)
@@ -175,7 +184,7 @@ void Widget::on_CommitInputBtn_clicked()
     if(!isMethodFixed){
         methodMsgSend();
         isMethodFixed = true;
-        DisableRadioBtn();
+        DisableRadioBtn(scheduleMethod);
     }
 }
 

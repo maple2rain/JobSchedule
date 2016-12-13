@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
 #include "ui_widget.h"
 
 namespace Ui {
@@ -54,8 +55,10 @@ private slots:
     void on_PauseBtn_pressed();
 
     /* deal with radio button */
-    void DisableRadioBtn();
+    void DisableRadioBtn(std::string exception);
     void EnableRadioBtn();
+
+    void initMap();
 private:
     QTimer *timer;
     std::string scheduleMethod;
@@ -65,6 +68,10 @@ private:
     bool    isMethodFixed;
     static unsigned short runtime;
     std::vector<std::string> jobNames;
+
+    /* To manage radio button to be enabled or disabled */
+    std::vector<QRadioButton*> radioBtnVec;
+    std::map<std::string, size_t> radioBtnMap;
 
 signals://使用signals标记信号函数，信号是一个函数声明，返回void，不需要函数的实现代码
     void methodFixedSignal(const std::string &scheduleMethod, bool _isPM, bool _isPSA);
