@@ -54,6 +54,15 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgbrgb(253, 255, 221)</string>
+    </property>
+    <property name="digitCount">
+     <number>5</number>
+    </property>
    </widget>
    <widget class="QCheckBox" name="PSA">
     <property name="geometry">
@@ -887,7 +896,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Turn Around</string>
+      <string>Turn Over</string>
      </property>
      <property name="font">
       <font>
@@ -899,7 +908,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Weight Trun Around</string>
+      <string>Weight Trun over</string>
      </property>
      <property name="font">
       <font>
@@ -923,7 +932,7 @@
      <item>
       <widget class="QLabel" name="ATT">
        <property name="text">
-        <string>Average Turnaround Time:</string>
+        <string>Average Turnover Time:</string>
        </property>
       </widget>
      </item>
@@ -949,7 +958,7 @@
      <item>
       <widget class="QLabel" name="WATT">
        <property name="text">
-        <string>Weighted Average Turnaround Time:</string>
+        <string>Weighted Average Turnover Time:</string>
        </property>
       </widget>
      </item>
@@ -1090,17 +1099,6 @@
     </rect>
    </property>
   </widget>
-  <zorder>List</zorder>
-  <zorder>Algorithm</zorder>
-  <zorder>Input</zorder>
-  <zorder>About</zorder>
-  <zorder>PreInput</zorder>
-  <zorder>RunningJob</zorder>
-  <zorder>ReadyJob</zorder>
-  <zorder>FinishedJob</zorder>
-  <zorder>NextJob</zorder>
-  <zorder>graphicsView</zorder>
-  <zorder>AboutLbl</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

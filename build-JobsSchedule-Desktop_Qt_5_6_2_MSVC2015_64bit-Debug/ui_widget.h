@@ -105,6 +105,9 @@ public:
         CurTimeClock = new QLCDNumber(List);
         CurTimeClock->setObjectName(QStringLiteral("CurTimeClock"));
         CurTimeClock->setGeometry(QRect(150, 10, 64, 23));
+        CurTimeClock->setAutoFillBackground(false);
+        CurTimeClock->setStyleSheet(QStringLiteral("background-color:rgbrgb(253, 255, 221)"));
+        CurTimeClock->setDigitCount(5);
         PSA = new QCheckBox(List);
         PSA->setObjectName(QStringLiteral("PSA"));
         PSA->setGeometry(QRect(50, 50, 41, 16));
@@ -415,17 +418,6 @@ public:
         graphicsView = new QGraphicsView(Widget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setGeometry(QRect(1110, 10, 131, 221));
-        List->raise();
-        Algorithm->raise();
-        Input->raise();
-        About->raise();
-        PreInput->raise();
-        RunningJob->raise();
-        ReadyJob->raise();
-        FinishedJob->raise();
-        NextJob->raise();
-        graphicsView->raise();
-        AboutLbl->raise();
 
         retranslateUi(Widget);
 
@@ -528,12 +520,12 @@ public:
         QTableWidgetItem *___qtablewidgetitem19 = FinishedJobTbl->horizontalHeaderItem(4);
         ___qtablewidgetitem19->setText(QApplication::translate("Widget", "Last", 0));
         QTableWidgetItem *___qtablewidgetitem20 = FinishedJobTbl->horizontalHeaderItem(5);
-        ___qtablewidgetitem20->setText(QApplication::translate("Widget", "Turn Around", 0));
+        ___qtablewidgetitem20->setText(QApplication::translate("Widget", "Turn Over", 0));
         QTableWidgetItem *___qtablewidgetitem21 = FinishedJobTbl->horizontalHeaderItem(6);
-        ___qtablewidgetitem21->setText(QApplication::translate("Widget", "Weight Trun Around", 0));
-        ATT->setText(QApplication::translate("Widget", "Average Turnaround Time:", 0));
+        ___qtablewidgetitem21->setText(QApplication::translate("Widget", "Weight Trun over", 0));
+        ATT->setText(QApplication::translate("Widget", "Average Turnover Time:", 0));
         ATTValue->setText(QApplication::translate("Widget", "time", 0));
-        WATT->setText(QApplication::translate("Widget", "Weighted Average Turnaround Time:", 0));
+        WATT->setText(QApplication::translate("Widget", "Weighted Average Turnover Time:", 0));
         WATTValue->setText(QApplication::translate("Widget", "time", 0));
         NextJob->setTitle(QApplication::translate("Widget", "Next Job", 0));
         QTableWidgetItem *___qtablewidgetitem22 = NextJobTbl->horizontalHeaderItem(0);

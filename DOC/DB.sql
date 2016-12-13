@@ -1,7 +1,7 @@
 create database Jobs;
 use Jobs;
 
-drop table job;
+drop table jobAttrbute;
 
 create table user (
 	userID     INT unsigned AUTO_INCREMENT,
@@ -41,15 +41,17 @@ create table job (
     FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE
 );
 
-create table jobAttrbute (
-	jobID		INT unsigned AUTO_INCREMENT,
-	jobName   	VARCHAR(20) UNIQUE not null,
-    commitTime	smallint unsigned not null,
-    lastTime	smallint unsigned not null,
-    startTime	smallint unsigned,
-    runTime		smallint unsigned,
-    needTime	smallint unsigned,
-    PrioOrSlice	smallint unsigned,
+create table jobAttribute (
+	jobID				INT unsigned AUTO_INCREMENT,
+	jobName   			VARCHAR(20) UNIQUE not null,
+    commitTime			smallint unsigned not null,
+    lastTime			smallint unsigned not null,
+    startTime			smallint unsigned,
+    runTime				smallint unsigned,
+    needTime			smallint unsigned,
+    PrioOrSlice			smallint unsigned,
+    turnoverTime		float,
+    weightTurnoverTime	float,
 	PRIMARY KEY (jobID),
     FOREIGN KEY (jobID) REFERENCES job (jobID) ON DELETE CASCADE  
 );
