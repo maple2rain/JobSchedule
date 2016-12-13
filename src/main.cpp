@@ -12,15 +12,15 @@
 QReadWriteLock readyJobLock;
 QReadWriteLock waitingJobLock;
 
-void addWaitingJob(Scheduler &scheduler);
-void addReadyJob(Scheduler &scheduler);
-void addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, Scheduler *scheduler);
+void addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler);
+void addReadyJob(Job *job, std::shared_ptr<Scheduler> &scheduler);
+void addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, std::shared_ptr<Scheduler> &scheduler);
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Widget w;
-    Scheduler *scheduler = NULL;
+    std::shared_ptr<Scheduler> scheduler;
 
 //    qDebug()<<"available drivers:";
 //    QStringList drivers = QSqlDatabase::drivers();
@@ -30,6 +30,12 @@ int main(int argc, char *argv[])
                      [=, &scheduler](const std::string &scheduleMethod, bool _isPM, bool _isPSA){
                         //Reader *read = new Reader("world");
                         ::addScheduler(scheduleMethod, _isPM, _isPSA, scheduler);//使用lambda表达式实现默认参数
+                    });
+
+    QObject::connect(&w, &Widget::jobCommingSignal,
+                     [=, &scheduler](Job *job){
+                        //Reader *read = new Reader("world");
+                        ::addWaitingJob(job, scheduler);//使用lambda表达式实现默认参数
                     });
 
     w.show();
@@ -48,14 +54,22 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-void addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, Scheduler *scheduler)
+void addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, std::shared_ptr<Scheduler> &scheduler)
 {
     try{
-        scheduler = new Scheduler(scheduleMethod);  //remember to delete
+        scheduler = std::make_shared<Scheduler>(scheduleMethod);  //remember to delete
     }catch(Scheduler::BadSchedulerCreation e){
         std::cout << e.what() << std::endl;
     }
 
     scheduler->setFlag(_isPSA, _isPM);
+}
+void addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
+{
+    QReadLocker locker(&waitingJobLock);
+    std::cout << "addWaitingJob" << std::endl;
+
+    std::shared_ptr<Job> _job(job);
+    scheduler->addWaitingJob(_job);
 }
 

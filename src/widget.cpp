@@ -81,7 +81,10 @@ public:
 
 void Widget::on_ClearAllDataBtn_clicked()
 {
-
+    if(!isRun){
+        isMethodFixed = false;
+        EnableRadioBtn();
+    }
 }
 
 void Widget::on_RunBtn_clicked()
@@ -157,7 +160,13 @@ void Widget::on_PriorityCombo_currentIndexChanged(int index)
 
 void Widget::on_ClearInputBtn_clicked()
 {
-    qDebug() << "clear" ;
+    /* clear input */
+    JobNameEdit->clear();
+    JoinTimeEdit->clear();
+    LastTimeEdit->clear();
+    DeadLineEdit->clear();
+    PriorityCombo->setCurrentIndex(0);
+    qDebug() << "clear data" ;
 }
 
 void Widget::methodMsgSend()
@@ -175,17 +184,33 @@ void Widget::on_CommitInputBtn_clicked()
     validJob->setDeadLineStr(std::string((const char*)DeadLineEdit->text().toLocal8Bit()));
 
     if(false == validJob->checkJobValid()){
-        std::string warning = std::string("The job you committed is not valid!\n") + "The follow may be the error:\n" + validJob->getFault();
+        std::string warning =
+                std::string("The job you committed is not valid!\n") +
+                "The follow may be the error:\n" +
+                validJob->getFault();
+
         QMessageBox::warning(this, tr("Warning"), tr(warning.c_str()));
     }else{
         qDebug() << "commit success" << endl;
-    }
+        if(!isMethodFixed){
+            methodMsgSend();
+            isMethodFixed = true;
+            DisableRadioBtn(scheduleMethod);
+        }
 
-    if(!isMethodFixed){
-        methodMsgSend();
-        isMethodFixed = true;
-        DisableRadioBtn(scheduleMethod);
+        Job *job = new Job(validJob->getJobName(),
+                                     validJob->getJoinTime(),
+                                     validJob->getLastTime(),
+                                     validJob->getDeadLine(),
+                                     PriorityCombo->currentIndex());
+
+        jobSend(job);
     }
+}
+
+void Widget::jobSend(Job *job)
+{
+    emit jobCommingSignal(job);
 }
 
 void Widget::on_OpenFile_clicked()

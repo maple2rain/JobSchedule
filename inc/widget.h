@@ -8,6 +8,8 @@
 #include <memory>
 #include <map>
 #include "ui_widget.h"
+#include "../inc/scheduler.h"
+#include "../inc/job.h"
 
 namespace Ui {
 class Widget;
@@ -21,6 +23,7 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void methodMsgSend();
+    void jobSend(Job *job);
 
 private slots:
     /* if PSA and PM chosed*/
@@ -75,7 +78,7 @@ private:
 
 signals://使用signals标记信号函数，信号是一个函数声明，返回void，不需要函数的实现代码
     void methodFixedSignal(const std::string &scheduleMethod, bool _isPM, bool _isPSA);
-
+    void jobCommingSignal(Job* job);
 };
 
 #endif // WIDGET_H

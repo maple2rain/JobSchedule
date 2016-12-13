@@ -13,9 +13,9 @@ class Scheduler {
     Scheduler(Scheduler&);
     Scheduler operator=(Scheduler&);
 protected:
-    typedef std::shared_ptr<Job> ptr; //smart pointer
     Scheduler() { scheduler = 0; std::cout << "create scheduler" << std::endl; }
 public:
+    typedef std::shared_ptr<Job> ptr; //smart pointer
     void schedule();
     virtual void schedule_NONE() { std::cout << "schedule_NONE" << std::endl; }
     virtual void schedule_PM() { std::cout << "schedule_PM" << std::endl; }
@@ -23,9 +23,19 @@ public:
     virtual void schedule_PM_PSA() { std::cout << "schedule_PM_PSA" << std::endl; }
 
     ptr selectFirstJob() { return readyJobs.front(); }	//select the job to run, which is in the front of the readyJobs list
-    void clearJob(std::list<ptr> &jobs) { jobs.clear(); }		//clear all the readyJobs
-    void eraseJob(std::list<ptr> &jobs) { jobs.pop_front(); }	//remove the finished job
-    void addJob(std::list<ptr> &jobs, ptr job) { jobs.push_back(job); }	//add a new job
+    void clearJob(std::list<ptr> &jobs) { jobs.clear(); std::cout << "clear all the readyJobs" << std::endl; }		//clear all the readyJobs
+    void eraseJob(std::list<ptr> &jobs) { jobs.pop_front(); std::cout << "remove the finished job" << std::endl; }	//remove the finished job
+
+    void addJob(std::list<ptr> &jobs, ptr &job) {
+        jobs.push_back(job);
+        std::cout << "add a new job" << std::endl;
+    }	//add a new job
+    void addWaitingJob(ptr &job) {
+        addJob(waitingJobs, job);
+        std::cout << "add waiting job" << std::endl;
+    }   //add waiting job
+
+    void addReadyJob(ptr &job) { addJob(readyJobs, job); std::cout << "add ready job" << std::endl; }   //add ready job
     void clearAllJob() { readyJobs.clear(); waitingJobs.clear(); }	//clear all the job
     void setFlag(bool isPSA = false, bool isPM = false) { flag = 0; flag |= isPSA; flag <<= 1; flag |= isPM; }
 

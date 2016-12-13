@@ -5,12 +5,13 @@
 /* The Attribute of jobs */
 class Job
 {
-    std::string         jobName;
+    std::string    jobName;
     unsigned short commitTime;
     unsigned short lastTime;
     unsigned short startTime;
     unsigned short runTime;
     unsigned short needTime;
+    unsigned short deadLine;
     unsigned short PrioOrSlice;
     bool           isFinished;
 
@@ -21,10 +22,12 @@ public:
     Job(const std::string &name,
         unsigned short _commitTime,
         unsigned short _lastTime,
+        unsigned short _deadLine,
         unsigned short _PrioOrSlice = 0)
         : jobName(name),
           commitTime(_commitTime),
           lastTime(_lastTime),
+          deadLine(_deadLine),
           PrioOrSlice(_PrioOrSlice)
     {
         startTime = 0;
@@ -39,6 +42,7 @@ public:
      const unsigned short getStartTime() { return startTime; }
      const unsigned short getRunTime() { return runTime; }
      const unsigned short getNeedTime() { return needTime; }
+     const unsigned short getDeadLine() { return deadLine; }
      const unsigned short getPrioOrSlice() { return PrioOrSlice; }
      const bool IsFinished() { return isFinished; }
 
