@@ -218,8 +218,10 @@ void Widget::on_CommitInputBtn_clicked()
 
 void Widget::TableAddJobItem(QTableWidget *table)
 {
-    int rowCount = table->rowCount() + 1;
-    PreInputTbl->setRowCount(rowCount);
+    int rowCount = table->rowCount();
+    table->setRowCount(rowCount + 1); //change row count
+
+    /* add new item */
     QTableWidgetItem *jobNameItem = new QTableWidgetItem();
     jobNameItem->setText(JobNameEdit->text());
     QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
@@ -231,11 +233,12 @@ void Widget::TableAddJobItem(QTableWidget *table)
     QTableWidgetItem *currentIndexItem = new QTableWidgetItem();
     currentIndexItem->setText(PriorityCombo->currentText());
 
-    table->setItem(rowCount - 1, 0, jobNameItem);
-    table->setItem(rowCount - 1, 1, joinTimeItem);
-    table->setItem(rowCount - 1, 2, lastTimeItem);
-    table->setItem(rowCount - 1, 3, deadLineItem);
-    table->setItem(rowCount - 1, 4, currentIndexItem);
+    /* set new item */
+    table->setItem(rowCount, 0, jobNameItem);
+    table->setItem(rowCount, 1, joinTimeItem);
+    table->setItem(rowCount, 2, lastTimeItem);
+    table->setItem(rowCount, 3, deadLineItem);
+    table->setItem(rowCount, 4, currentIndexItem);
 }
 
 void Widget::jobSend(Job *job)

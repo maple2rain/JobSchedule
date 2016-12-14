@@ -91,7 +91,7 @@ public:
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QStringLiteral("Widget"));
-        Widget->resize(1351, 563);
+        Widget->resize(1372, 563);
         Widget->setFocusPolicy(Qt::NoFocus);
         QIcon icon;
         icon.addFile(QStringLiteral(":/images/images/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
@@ -221,7 +221,7 @@ public:
         AboutLbl->setTextInteractionFlags(Qt::TextBrowserInteraction);
         PreInput = new QGroupBox(Widget);
         PreInput->setObjectName(QStringLiteral("PreInput"));
-        PreInput->setGeometry(QRect(290, 10, 411, 261));
+        PreInput->setGeometry(QRect(290, 10, 431, 261));
         PreInputTbl = new QTableWidget(PreInput);
         if (PreInputTbl->columnCount() < 5)
             PreInputTbl->setColumnCount(5);
@@ -245,7 +245,7 @@ public:
         __qtablewidgetitem4->setFont(font);
         PreInputTbl->setHorizontalHeaderItem(4, __qtablewidgetitem4);
         PreInputTbl->setObjectName(QStringLiteral("PreInputTbl"));
-        PreInputTbl->setGeometry(QRect(20, 20, 371, 211));
+        PreInputTbl->setGeometry(QRect(20, 20, 391, 211));
         PreInputTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         PreInputTbl->setDragEnabled(true);
         PreInputTbl->setAlternatingRowColors(true);
@@ -254,9 +254,10 @@ public:
         PreInputTbl->horizontalHeader()->setDefaultSectionSize(75);
         PreInputTbl->horizontalHeader()->setMinimumSectionSize(15);
         PreInputTbl->horizontalHeader()->setStretchLastSection(true);
+        PreInputTbl->verticalHeader()->setDefaultSectionSize(25);
         RunningJob = new QGroupBox(Widget);
         RunningJob->setObjectName(QStringLiteral("RunningJob"));
-        RunningJob->setGeometry(QRect(720, 10, 461, 101));
+        RunningJob->setGeometry(QRect(740, 10, 471, 101));
         RunJobTbl = new QTableWidget(RunningJob);
         if (RunJobTbl->columnCount() < 7)
             RunJobTbl->setColumnCount(7);
@@ -287,13 +288,14 @@ public:
         __qtablewidgetitem11->setFont(font);
         RunJobTbl->setHorizontalHeaderItem(6, __qtablewidgetitem11);
         RunJobTbl->setObjectName(QStringLiteral("RunJobTbl"));
-        RunJobTbl->setGeometry(QRect(20, 20, 431, 61));
+        RunJobTbl->setGeometry(QRect(20, 20, 441, 61));
         RunJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         RunJobTbl->horizontalHeader()->setDefaultSectionSize(60);
         RunJobTbl->horizontalHeader()->setStretchLastSection(true);
+        RunJobTbl->verticalHeader()->setDefaultSectionSize(25);
         ReadyJob = new QGroupBox(Widget);
         ReadyJob->setObjectName(QStringLiteral("ReadyJob"));
-        ReadyJob->setGeometry(QRect(290, 290, 411, 261));
+        ReadyJob->setGeometry(QRect(290, 290, 431, 261));
         ReadyJobTbl = new QTableWidget(ReadyJob);
         if (ReadyJobTbl->columnCount() < 5)
             ReadyJobTbl->setColumnCount(5);
@@ -313,14 +315,15 @@ public:
         __qtablewidgetitem16->setFont(font);
         ReadyJobTbl->setHorizontalHeaderItem(4, __qtablewidgetitem16);
         ReadyJobTbl->setObjectName(QStringLiteral("ReadyJobTbl"));
-        ReadyJobTbl->setGeometry(QRect(20, 20, 371, 221));
+        ReadyJobTbl->setGeometry(QRect(20, 20, 391, 221));
         ReadyJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ReadyJobTbl->setSortingEnabled(true);
         ReadyJobTbl->horizontalHeader()->setDefaultSectionSize(75);
         ReadyJobTbl->horizontalHeader()->setStretchLastSection(true);
+        ReadyJobTbl->verticalHeader()->setDefaultSectionSize(25);
         FinishedJob = new QGroupBox(Widget);
         FinishedJob->setObjectName(QStringLiteral("FinishedJob"));
-        FinishedJob->setGeometry(QRect(720, 250, 601, 301));
+        FinishedJob->setGeometry(QRect(740, 250, 621, 301));
         FinishedJobTbl = new QTableWidget(FinishedJob);
         if (FinishedJobTbl->columnCount() < 8)
             FinishedJobTbl->setColumnCount(8);
@@ -349,13 +352,14 @@ public:
         __qtablewidgetitem24->setFont(font);
         FinishedJobTbl->setHorizontalHeaderItem(7, __qtablewidgetitem24);
         FinishedJobTbl->setObjectName(QStringLiteral("FinishedJobTbl"));
-        FinishedJobTbl->setGeometry(QRect(20, 20, 571, 231));
+        FinishedJobTbl->setGeometry(QRect(20, 20, 591, 231));
         FinishedJobTbl->setAutoFillBackground(true);
         FinishedJobTbl->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         FinishedJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         FinishedJobTbl->setSortingEnabled(true);
         FinishedJobTbl->horizontalHeader()->setDefaultSectionSize(65);
         FinishedJobTbl->horizontalHeader()->setStretchLastSection(true);
+        FinishedJobTbl->verticalHeader()->setDefaultSectionSize(25);
         layoutWidget = new QWidget(FinishedJob);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(40, 270, 200, 14));
@@ -394,7 +398,7 @@ public:
 
         NextJob = new QGroupBox(Widget);
         NextJob->setObjectName(QStringLiteral("NextJob"));
-        NextJob->setGeometry(QRect(720, 130, 461, 101));
+        NextJob->setGeometry(QRect(740, 130, 471, 101));
         NextJobTbl = new QTableWidget(NextJob);
         if (NextJobTbl->columnCount() < 7)
             NextJobTbl->setColumnCount(7);
@@ -420,13 +424,13 @@ public:
         __qtablewidgetitem31->setFont(font);
         NextJobTbl->setHorizontalHeaderItem(6, __qtablewidgetitem31);
         NextJobTbl->setObjectName(QStringLiteral("NextJobTbl"));
-        NextJobTbl->setGeometry(QRect(20, 20, 431, 61));
+        NextJobTbl->setGeometry(QRect(20, 20, 441, 61));
         NextJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         NextJobTbl->horizontalHeader()->setDefaultSectionSize(60);
         NextJobTbl->horizontalHeader()->setStretchLastSection(true);
         graphicsView = new QGraphicsView(Widget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(1190, 10, 131, 221));
+        graphicsView->setGeometry(QRect(1230, 10, 131, 221));
 
         retranslateUi(Widget);
 
