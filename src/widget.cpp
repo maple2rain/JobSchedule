@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <iostream>
+#include <QStandardItem>
 
 unsigned short Widget::runtime;
 
@@ -90,11 +91,12 @@ void Widget::on_ClearAllDataBtn_clicked()
 void Widget::on_RunBtn_clicked()
 {
     /* if it is not running, that initialize the operation and start the timer; */
-    if(!isRun){
+    if(isMethodFixed && !isRun){
         runtime = 0;
         CurTimeClock->setPalette(Qt::green);
         timer->start(500);
         isRun = true;
+        RunBtn->setDisabled(true);
     }
 }
 
@@ -120,9 +122,12 @@ void Widget::on_PauseBtn_clicked()
 
 void Widget::on_StopBtn_clicked()
 {
+    timer->stop();
+    CurTimeClock->display(0);
     isRun = false;
     isMethodFixed = false;
     EnableRadioBtn();
+
 }
 
 /* select schedule type */
@@ -198,6 +203,9 @@ void Widget::on_CommitInputBtn_clicked()
             DisableRadioBtn(scheduleMethod);
         }
 
+
+
+        TableAddJobItem(PreInputTbl);
         Job *job = new Job(validJob->getJobName(),
                                      validJob->getJoinTime(),
                                      validJob->getLastTime(),
@@ -206,6 +214,28 @@ void Widget::on_CommitInputBtn_clicked()
 
         jobSend(job);
     }
+}
+
+void Widget::TableAddJobItem(QTableWidget *table)
+{
+    int rowCount = table->rowCount() + 1;
+    PreInputTbl->setRowCount(rowCount);
+    QTableWidgetItem *jobNameItem = new QTableWidgetItem();
+    jobNameItem->setText(JobNameEdit->text());
+    QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
+    joinTimeItem->setText(JoinTimeEdit->text());
+    QTableWidgetItem *lastTimeItem = new QTableWidgetItem();
+    lastTimeItem->setText(LastTimeEdit->text());
+    QTableWidgetItem *deadLineItem = new QTableWidgetItem();
+    deadLineItem->setText(DeadLineEdit->text());
+    QTableWidgetItem *currentIndexItem = new QTableWidgetItem();
+    currentIndexItem->setText(PriorityCombo->currentText());
+
+    table->setItem(rowCount - 1, 0, jobNameItem);
+    table->setItem(rowCount - 1, 1, joinTimeItem);
+    table->setItem(rowCount - 1, 2, lastTimeItem);
+    table->setItem(rowCount - 1, 3, deadLineItem);
+    table->setItem(rowCount - 1, 4, currentIndexItem);
 }
 
 void Widget::jobSend(Job *job)

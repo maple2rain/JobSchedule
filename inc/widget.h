@@ -61,6 +61,9 @@ private slots:
     void DisableRadioBtn(std::string exception);
     void EnableRadioBtn();
 
+    /* deal with table */
+    void Widget::TableAddJobItem(QTableWidget *table);
+
     void initMap();
 private:
     QTimer *timer;
