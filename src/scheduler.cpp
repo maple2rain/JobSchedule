@@ -23,8 +23,7 @@ void Scheduler::schedule()
     }
 }
 
-Scheduler::Scheduler(const std::string &type) {
-    if (type == "FCFS")
-        scheduler = new FCFS;
-    else    throw BadSchedulerCreation(type);
+bool Scheduler::statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, std::list<ptr> &changeJobs, unsigned short runtime)
+{
+    return true;
 }

@@ -8,34 +8,30 @@
 #include <string>
 #include <QObject>
 #include "../inc/scheduler.h"
+#include "../inc/proxy.h"
 
 QReadWriteLock readyJobLock;
 QReadWriteLock waitingJobLock;
-
-void addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler);
-void addReadyJob(Job *job, std::shared_ptr<Scheduler> &scheduler);
-void addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, std::shared_ptr<Scheduler> &scheduler);
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Widget w;
     std::shared_ptr<Scheduler> scheduler;
+    std::shared_ptr<Proxy> proxy = std::make_shared<Proxy>(); // the proxy to deal with the interaction of scheduler and window
 
 //    qDebug()<<"available drivers:";
 //    QStringList drivers = QSqlDatabase::drivers();
 //    foreach(QString driver, drivers)
-//        qDebug() << driver
+//        qDebug() << driver;
     QObject::connect(&w, &Widget::methodFixedSignal,
                      [=, &scheduler](const std::string &scheduleMethod, bool _isPM, bool _isPSA){
-                        //Reader *read = new Reader("world");
-                        ::addScheduler(scheduleMethod, _isPM, _isPSA, scheduler);//使用lambda表达式实现默认参数
+                        proxy->addScheduler(scheduleMethod, _isPM, _isPSA, scheduler);//使用lambda表达式实现默认参数
                     });
 
     QObject::connect(&w, &Widget::jobCommingSignal,
                      [=, &scheduler](Job *job){
-                        //Reader *read = new Reader("world");
-                        ::addWaitingJob(job, scheduler);//使用lambda表达式实现默认参数
+                        proxy->addWaitingJob(job, scheduler);//使用lambda表达式实现默认参数
                     });
 
     w.show();
@@ -53,22 +49,3 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
-
-void addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, std::shared_ptr<Scheduler> &scheduler)
-{
-    try{
-        scheduler = std::make_shared<Scheduler>(scheduleMethod);
-        scheduler->setFlag(_isPSA, _isPM);
-    }catch(Scheduler::BadSchedulerCreation e){
-        std::cout << e.what() << std::endl;
-    }
-}
-void addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
-{
-    QWriteLocker locker(&waitingJobLock);
-    std::cout << "addWaitingJob" << std::endl;
-
-    std::shared_ptr<Job> _job(job);
-    scheduler->addWaitingJob(_job);
-}
-

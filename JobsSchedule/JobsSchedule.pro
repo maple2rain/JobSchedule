@@ -17,14 +17,18 @@ SOURCES += \
     ../src/main.cpp \
     ../src/widget.cpp \
     ../src/fcfs.cpp \
-    ../src/scheduler.cpp
+    ../src/scheduler.cpp \
+    ../src/proxy.cpp \
+    ../src/jobrecorder.cpp
 
 HEADERS  += \
     ../inc/widget.h \
     ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_widget.h \
     ../inc/job.h \
     ../inc/scheduler.h \
-    ../inc/producer.h
+    ../inc/producer.h \
+    ../inc/proxy.h \
+    ../inc/jobrecorder.h
 
 FORMS    += widget.ui
 

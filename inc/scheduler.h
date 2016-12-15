@@ -15,6 +15,10 @@ class Scheduler {
 protected:
     Scheduler() { scheduler = 0; std::cout << "create scheduler" << std::endl; }
 public:
+    enum status{
+        wait2ready, ready2next, run2ready, run2finished, run2next, next2ready
+    };
+
     typedef std::shared_ptr<Job> ptr; //smart pointer
     void schedule();
     virtual void schedule_NONE() { std::cout << "schedule_NONE" << std::endl; }
@@ -30,10 +34,17 @@ public:
         jobs.push_back(job);
         std::cout << "add a new job" << std::endl;
     }	//add a new job
+
     void addWaitingJob(ptr &job) {
         addJob(waitingJobs, job);
         std::cout << "add waiting job" << std::endl;
     }   //add waiting job
+
+    std::list<ptr> &getReadyJobs() { return readyJobs; }
+    std::list<ptr> &getWaitingJobs() { return waitingJobs; }
+
+    //as time goes by, jobs status will change
+    bool statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, std::list<ptr> &changeJobs, unsigned short runtime);
 
     void addReadyJob(ptr &job) { addJob(readyJobs, job); std::cout << "add ready job" << std::endl; }   //add ready job
     void clearAllJob() { readyJobs.clear(); waitingJobs.clear(); }	//clear all the job
@@ -57,6 +68,8 @@ public:
 protected:
     std::list<ptr> readyJobs;	//list to store ready jobs
     std::list<ptr> waitingJobs;	//list to store jobs whose committing time is older than current time
+    std::list<ptr> finishedJobs;//list to store finished jobs
+    std::list<ptr> nextJob;     //list to store next job, thougn there is only one next job
 
 //what flag mean is that :
 #define _NONE	0x00
@@ -65,6 +78,8 @@ protected:
 #define _PM_PSA 0x03
     unsigned char flag;
 };
+
+
 
 /* FCFS, inherit from Scheduler */
 class FCFS : public Scheduler
@@ -82,3 +97,10 @@ public:
     void schedule_PM();
     void schedule_PM_PSA();
 };
+
+inline
+Scheduler::Scheduler(const std::string &type) {
+    if (type == "FCFS")
+        scheduler = new FCFS;
+    else    throw BadSchedulerCreation(type);
+}

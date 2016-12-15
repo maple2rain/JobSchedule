@@ -2,17 +2,18 @@
 #define JOB_H
 #include <string>
 
+typedef unsigned short us16;
 /* The Attribute of jobs */
 class Job
 {
     std::string    jobName;
-    unsigned short commitTime;
-    unsigned short lastTime;
-    unsigned short startTime;
-    unsigned short runTime;
-    unsigned short needTime;
-    unsigned short deadLine;
-    unsigned short PrioOrSlice;
+    us16 joinTime;
+    us16 lastTime;
+    us16 startTime;
+    us16 runTime;
+    us16 needTime;
+    us16 deadLine;
+    us16 PrioOrSlice;
     bool           isFinished;
 
     //Prevent copy-construction & operator =
@@ -20,12 +21,12 @@ class Job
     Job operator=(Job&);
 public:
     Job(const std::string &name,
-        unsigned short _commitTime,
-        unsigned short _lastTime,
-        unsigned short _deadLine,
-        unsigned short _PrioOrSlice = 0)
+        us16 _joinTime,
+        us16 _lastTime,
+        us16 _deadLine,
+        us16 _PrioOrSlice = 0)
         : jobName(name),
-          commitTime(_commitTime),
+          joinTime(_joinTime),
           lastTime(_lastTime),
           deadLine(_deadLine),
           PrioOrSlice(_PrioOrSlice)
@@ -37,17 +38,17 @@ public:
     }
 
      const std::string& getJobName() { return jobName; }
-     const unsigned short getCommitTime() { return commitTime; }
-     const unsigned short getLastTime() { return lastTime; }
-     const unsigned short getStartTime() { return startTime; }
-     const unsigned short getRunTime() { return runTime; }
-     const unsigned short getNeedTime() { return needTime; }
-     const unsigned short getDeadLine() { return deadLine; }
-     const unsigned short getPrioOrSlice() { return PrioOrSlice; }
+     const us16 getJoinTime() { return joinTime; }
+     const us16 getLastTime() { return lastTime; }
+     const us16 getStartTime() { return startTime; }
+     const us16 getRunTime() { return runTime; }
+     const us16 getNeedTime() { return needTime; }
+     const us16 getDeadLine() { return deadLine; }
+     const us16 getPrioOrSlice() { return PrioOrSlice; }
      const bool IsFinished() { return isFinished; }
 
-     void setRunTime(unsigned short _runTime) { runTime = _runTime; }
-     void setNeedTime(unsigned short _needTime) { needTime = _needTime; }
+     void setRunTime(us16 _runTime) { runTime = _runTime; }
+     void setNeedTime(us16 _needTime) { needTime = _needTime; }
      void setJobFinished() { isFinished = true; }
 };
 

@@ -62,7 +62,7 @@ private slots:
     void EnableRadioBtn();
 
     /* deal with table */
-    void Widget::TableAddJobItem(QTableWidget *table);
+    void Widget::TableAddJobItem(QTableWidget *table, Job *job);
 
     void initMap();
 private:
@@ -72,7 +72,7 @@ private:
     bool    isPSA;
     bool    isPM;
     bool    isMethodFixed;
-    static unsigned short runtime;
+    static us16 runtime;
     std::vector<std::string> jobNames;
 
     /* To manage radio button to be enabled or disabled */

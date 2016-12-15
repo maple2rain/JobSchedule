@@ -9,7 +9,7 @@
 #include <iostream>
 #include <QStandardItem>
 
-unsigned short Widget::runtime;
+us16 Widget::runtime;
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent)
@@ -52,30 +52,30 @@ private:
     std::string deadLineStr;
     std::string fault;
 
-    unsigned short joinTime;
-    unsigned short lastTime;
-    unsigned short deadLine;
+    us16 joinTime;
+    us16 lastTime;
+    us16 deadLine;
 public:
     ValidJob() {}
     ~ValidJob() {}
 
-    void setJobName(std::string _jobName) { jobName = _jobName; }
-    void setJoinTimeStr(std::string _joinTimeStr) { joinTimeStr = _joinTimeStr; }
-    void setLastTimeStr(std::string _lastTimeStr) { lastTimeStr = _lastTimeStr; }
-    void setDeadLineStr(std::string _deadLineStr) { deadLineStr = _deadLineStr; }
-    void setJoinTime(unsigned short _joinTime) { joinTime = _joinTime; }
-    void setLastTime(unsigned short _lastTime) { lastTime = _lastTime; }
-    void setDeadLine(unsigned short _deadLine) { deadLine = _deadLine; }
+    void setJobName(std::string &_jobName) { jobName = _jobName; }
+    void setJoinTimeStr(std::string &_joinTimeStr) { joinTimeStr = _joinTimeStr; }
+    void setLastTimeStr(std::string &_lastTimeStr) { lastTimeStr = _lastTimeStr; }
+    void setDeadLineStr(std::string &_deadLineStr) { deadLineStr = _deadLineStr; }
+    void setJoinTime(us16 _joinTime) { joinTime = _joinTime; }
+    void setLastTime(us16 _lastTime) { lastTime = _lastTime; }
+    void setDeadLine(us16 _deadLine) { deadLine = _deadLine; }
     void setFault(std::string faultStr) { fault += faultStr; }
 
-    std::string getFault() { return fault; }
-    std::string getJobName() { return jobName; }
-    std::string getJoinTimeStr() { return joinTimeStr; }
-    std::string getLastTimeStr() { return lastTimeStr; }
-    std::string getDeadLineStr() { return deadLineStr; }
-    unsigned short getJoinTime() { return joinTime; }
-    unsigned short getLastTime() { return lastTime; }
-    unsigned short getDeadLine() { return deadLine; }
+    const std::string& getFault() { return fault; }
+    const std::string& getJobName() { return jobName; }
+    const std::string& getJoinTimeStr() { return joinTimeStr; }
+    const std::string& getLastTimeStr() { return lastTimeStr; }
+    const std::string& getDeadLineStr() { return deadLineStr; }
+    us16 getJoinTime() { return joinTime; }
+    us16 getLastTime() { return lastTime; }
+    us16 getDeadLine() { return deadLine; }
 
     bool checkJobValid();   //check if the committed job is valid
 };
@@ -205,40 +205,47 @@ void Widget::on_CommitInputBtn_clicked()
 
 
 
-        TableAddJobItem(PreInputTbl);
-        Job *job = new Job(validJob->getJobName(),
-                                     validJob->getJoinTime(),
-                                     validJob->getLastTime(),
-                                     validJob->getDeadLine(),
-                                     PriorityCombo->currentIndex());
 
+        Job *job = new Job(validJob->getJobName(),
+                            validJob->getJoinTime(),
+                            validJob->getLastTime(),
+                            validJob->getDeadLine(),
+                            PriorityCombo->currentIndex());
+        TableAddJobItem(PreInputTbl, job);
         jobSend(job);
     }
 }
 
-void Widget::TableAddJobItem(QTableWidget *table)
+void Widget::TableAddJobItem(QTableWidget *table, Job *job)
 {
     int rowCount = table->rowCount();
     table->setRowCount(rowCount + 1); //change row count
 
     /* add new item */
     QTableWidgetItem *jobNameItem = new QTableWidgetItem();
-    jobNameItem->setText(JobNameEdit->text());
+    jobNameItem->setText(job->getJobName().c_str());
     QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
-    joinTimeItem->setText(JoinTimeEdit->text());
+    joinTimeItem->setData(Qt::DisplayRole, job->getJoinTime());
     QTableWidgetItem *lastTimeItem = new QTableWidgetItem();
-    lastTimeItem->setText(LastTimeEdit->text());
+    lastTimeItem->setData(Qt::DisplayRole, job->getLastTime());
     QTableWidgetItem *deadLineItem = new QTableWidgetItem();
-    deadLineItem->setText(DeadLineEdit->text());
+    deadLineItem->setData(Qt::DisplayRole, job->getDeadLine());
     QTableWidgetItem *currentIndexItem = new QTableWidgetItem();
-    currentIndexItem->setText(PriorityCombo->currentText());
+    currentIndexItem->setData(Qt::DisplayRole, job->getPrioOrSlice());
+
+    //if sorting enabled was true, that it will lose some item due to the sorting
+    table->setSortingEnabled(false);
 
     /* set new item */
-    table->setItem(rowCount, 0, jobNameItem);
-    table->setItem(rowCount, 1, joinTimeItem);
-    table->setItem(rowCount, 2, lastTimeItem);
-    table->setItem(rowCount, 3, deadLineItem);
     table->setItem(rowCount, 4, currentIndexItem);
+    table->setItem(rowCount, 3, deadLineItem);
+    table->setItem(rowCount, 2, lastTimeItem);
+    table->setItem(rowCount, 1, joinTimeItem);
+    table->setItem(rowCount, 0, jobNameItem);
+
+    //enable sorting again
+    table->setSortingEnabled(true);
+
 }
 
 void Widget::jobSend(Job *job)
@@ -270,7 +277,7 @@ bool Widget::ValidJob::checkJobValid()
     }
 
     std::istringstream ss;
-    unsigned short time = -1;
+    us16 time = -1;
     std::cout << "time is " << time << std::endl;
 
     /* check join time */
