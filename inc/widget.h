@@ -62,9 +62,18 @@ private slots:
     void EnableRadioBtn();
 
     /* deal with table */
-    void Widget::TableAddJobItem(QTableWidget *table, Job *job);
+    void TableAddJobItem(QTableWidget *table, Job *job);
+    void RemoveRowByName(const std::string &name);
+    void ClearTable();
+    void ClearTable(QTableWidget* table);
 
-    void initMap();
+    /* init */
+    void InitModule();//initialize all the module
+    void initStatus();//initialize the initial status of the attribute
+    void initRadioBtnVec();//initialize the radio button vec, add the buttons to vec
+    void initTableVec();//initialize the table vec, add the tables to vec
+    void initMap();//init the map of radio button
+
 private:
     QTimer *timer;
     std::string scheduleMethod;
@@ -78,6 +87,7 @@ private:
     /* To manage radio button to be enabled or disabled */
     std::vector<QRadioButton*> radioBtnVec;
     std::map<std::string, size_t> radioBtnMap;
+    std::vector<QTableWidget*> tableVec;
 
 signals://使用signals标记信号函数，信号是一个函数声明，返回void，不需要函数的实现代码
     void methodFixedSignal(const std::string &scheduleMethod, bool _isPM, bool _isPSA);

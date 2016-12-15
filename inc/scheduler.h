@@ -16,7 +16,7 @@ protected:
     Scheduler() { scheduler = 0; std::cout << "create scheduler" << std::endl; }
 public:
     enum status{
-        wait2ready, ready2next, run2ready, run2finished, run2next, next2ready
+        wait2ready, ready2next, next2run, next2ready, run2next, run2ready, run2finished
     };
 
     typedef std::shared_ptr<Job> ptr; //smart pointer

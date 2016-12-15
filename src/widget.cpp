@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <iostream>
 #include <QStandardItem>
+#include <QList>
 
 us16 Widget::runtime;
 
@@ -15,18 +16,44 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-//    setWindowTitle("Jobs Scheduler");
     setFixedSize(this->width(), this->height());
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [=](){
         CurTimeClock->display(QString::number(runtime++));
+
+        RemoveRowByName("w");
     } );
     CurTimeClock->setPalette(Qt::red);
 
-    isPSA = isPM = isRun = isMethodFixed = false;
+
+    InitModule();
     scheduleMethod = "";
-    radioBtnVec = { FCFS, EDF, SJF, HRRN, MFQ, RR };
+}
+
+void Widget::InitModule()
+{
+    initStatus();
+    initRadioBtnVec();
+    initTableVec();
     initMap();
+}
+
+inline
+void Widget::initStatus()
+{
+    isPSA = isPM = isRun = isMethodFixed = false;
+}
+
+inline
+void Widget::initRadioBtnVec()
+{
+    radioBtnVec = { FCFS, EDF, SJF, HRRN, MFQ, RR };
+}
+
+inline
+void Widget::initTableVec()
+{
+    tableVec = { PreInputTbl, ReadyJobTbl, RunJobTbl, NextJobTbl, FinishedJobTbl };
 }
 
 void Widget::initMap()
@@ -37,6 +64,14 @@ void Widget::initMap()
     radioBtnMap[std::string("HRRN")] = 3;
     radioBtnMap[std::string("MFQ")] = 4;
     radioBtnMap[std::string("RR")] = 5;
+}
+
+void Widget::RemoveRowByName(const std::string &name)
+{
+    QList<QTableWidgetItem*> list = PreInputTbl->findItems(name.c_str(), Qt::MatchExactly);
+
+    if(list.size() > 0)
+        PreInputTbl->removeRow(list.at(0)->row());  //excatly, there must be only one item,
 }
 
 Widget::~Widget()
@@ -84,6 +119,7 @@ void Widget::on_ClearAllDataBtn_clicked()
 {
     if(!isRun){
         isMethodFixed = false;
+        ClearTable();
         EnableRadioBtn();
     }
 }
@@ -124,10 +160,15 @@ void Widget::on_StopBtn_clicked()
 {
     timer->stop();
     CurTimeClock->display(0);
+
+    //change status
     isRun = false;
     isMethodFixed = false;
-    EnableRadioBtn();
 
+    RunBtn->setEnabled(true);
+    PauseBtn->setText(tr("Pause"));     //change the text show on the button
+
+    EnableRadioBtn();
 }
 
 /* select schedule type */
@@ -155,6 +196,19 @@ void Widget::EnableRadioBtn()
 {
     for(size_t i = 0; i < radioBtnVec.size(); ++i){
         radioBtnVec[i]->setEnabled(true);
+    }
+}
+
+void Widget::ClearTable(QTableWidget* table)
+{
+    table->setRowCount(0);
+    table->clearContents();
+}
+
+void Widget::ClearTable()
+{
+    for(size_t i = 0; i < tableVec.size(); ++i){
+        ClearTable(tableVec[i]);
     }
 }
 

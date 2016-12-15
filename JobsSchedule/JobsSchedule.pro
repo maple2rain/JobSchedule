@@ -18,8 +18,7 @@ SOURCES += \
     ../src/widget.cpp \
     ../src/fcfs.cpp \
     ../src/scheduler.cpp \
-    ../src/proxy.cpp \
-    ../src/jobrecorder.cpp
+    ../src/proxy.cpp
 
 HEADERS  += \
     ../inc/widget.h \
