@@ -1,22 +1,53 @@
 ﻿#include "../inc/scheduler.h"
+void Scheduler::addWaitingJob(ptr &job)
+{
+    auto it = waitingJobs.begin();
+    while(it != waitingJobs.end()){ //add waiting job in ascending order
+        if((*it)->getJoinTime() <= job->getJoinTime())
+            ++it;
+        else
+            break;
+    }
+    waitingJobs.insert(it, job);
+    DEBUG_PRINT(waitingJobs, JoinTime);
+}
 
-void Scheduler::schedule()
+void Scheduler::checkWaitingJob(us16 runtime, JobRecorder &jobRecorder)
+{
+    // if waiting job's join time up to runtime, then move it to ready jobs and job recorder
+    for(auto it = waitingJobs.begin(); it != waitingJobs.end();){
+        if((*it)->getJoinTime() <= runtime){
+            AddRecord(jobRecorder, *it, Wait2Ready);    //add it to job recorder
+            readyJobs.push_back(*it);   //add it to ready jobs list
+            std::cout << "waiting job is " << (*it)->getJobName() << " ,it become ready " << std::endl;
+            it = waitingJobs.erase(it); //remove it from waiting jobs list
+
+        }else{
+            break;
+        }
+    }
+}
+
+void Scheduler::schedule(us16 runtime, JobRecorder &jobRecorder)
 {
     require(flag <= _PM_PSA, "flag is out of range!");
 
+    checkWaitingJob(runtime, jobRecorder);  //check if waiting can be a ready job
+
+    //begin to schedule
     switch (flag)
     {
     case _NONE:
-        scheduler->schedule_NONE();
+        scheduler->schedule_NONE(runtime, jobRecorder);
         break;
     case _PM:
-        scheduler->schedule_PM();
+        scheduler->schedule_PM(runtime, jobRecorder);
         break;
     case _PSA:
-        scheduler->schedule_PSA();
+        scheduler->schedule_PSA(runtime, jobRecorder);
         break;
     case _PM_PSA:
-        scheduler->schedule_PM_PSA();
+        scheduler->schedule_PM_PSA(runtime, jobRecorder);
         break;
     default:
         break;
@@ -26,4 +57,11 @@ void Scheduler::schedule()
 bool Scheduler::statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, std::list<ptr> &changeJobs, unsigned short runtime)
 {
     return true;
+}
+
+Scheduler::ptr& Scheduler::selectNextJob()
+{
+    require(readyJobs.size() >= 2, "The size of ready jobs list is less than 2!");
+    auto it = readyJobs.begin();
+    return *++it;
 }

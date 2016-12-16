@@ -18,10 +18,24 @@ void Proxy::addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
     std::cout << "addWaitingJob" << std::endl;
 
     std::shared_ptr<Job> _job(job);
-    scheduler->addWaitingJob(_job);
+    try{
+        if(scheduler)
+            scheduler->addWaitingJob(_job);
+        else
+            std::cout << "scheduler is not exists" << std::endl;
+    }catch(Scheduler::BadSchedulerCreation e){
+        std::cout << e.what() << std::endl;
+    }
 }
 
 void Proxy::addReadyJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
 {
 
+}
+
+void Proxy::toSchedule(std::shared_ptr<Scheduler> &scheduler, JobRecorder &jobRecorder, us16 runtime)
+{
+    jobRecorder.clear();
+    scheduler->schedule(runtime, jobRecorder);
+    statusSend(jobRecorder);
 }

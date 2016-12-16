@@ -22,8 +22,16 @@ class Widget : public QWidget, public Ui::Widget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-    void methodMsgSend();
-    void jobSend(Job *job);
+    void methodMsgSend() {
+        emit methodFixedSignal(scheduleMethod, isPM, isPSA);
+    }
+    void jobSend(Job *job){
+        emit jobCommingSignal(job);
+    }
+
+    void timeRun(){
+        emit timeRunningSignal(runtime);
+    }
 
 private slots:
     /* if PSA and PM chosed*/
@@ -73,6 +81,7 @@ private slots:
     void initRadioBtnVec();//initialize the radio button vec, add the buttons to vec
     void initTableVec();//initialize the table vec, add the tables to vec
     void initMap();//init the map of radio button
+    void initPalette();
 
 private:
     QTimer *timer;
@@ -82,6 +91,7 @@ private:
     bool    isPM;
     bool    isMethodFixed;
     static us16 runtime;
+    static us16 waittime;
     std::vector<std::string> jobNames;
 
     /* To manage radio button to be enabled or disabled */
@@ -92,6 +102,7 @@ private:
 signals://使用signals标记信号函数，信号是一个函数声明，返回void，不需要函数的实现代码
     void methodFixedSignal(const std::string &scheduleMethod, bool _isPM, bool _isPSA);
     void jobCommingSignal(Job* job);
+    void timeRunningSignal(us16 runtime);
 };
 
 #endif // WIDGET_H

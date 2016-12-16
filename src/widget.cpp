@@ -11,6 +11,7 @@
 #include <QList>
 
 us16 Widget::runtime;
+us16 Widget::waittime = 500; // ms
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent)
@@ -20,14 +21,10 @@ Widget::Widget(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [=](){
         CurTimeClock->display(QString::number(runtime++));
-
-        RemoveRowByName("w");
-    } );
-    CurTimeClock->setPalette(Qt::red);
-
+        timeRun();
+    });
 
     InitModule();
-    scheduleMethod = "";
 }
 
 void Widget::InitModule()
@@ -36,6 +33,13 @@ void Widget::InitModule()
     initRadioBtnVec();
     initTableVec();
     initMap();
+    initPalette();
+}
+
+inline
+void Widget::initPalette()
+{
+    CurTimeClock->setPalette(Qt::red);
 }
 
 inline
@@ -94,6 +98,7 @@ public:
     ValidJob() {}
     ~ValidJob() {}
 
+    /* setter */
     void setJobName(std::string &_jobName) { jobName = _jobName; }
     void setJoinTimeStr(std::string &_joinTimeStr) { joinTimeStr = _joinTimeStr; }
     void setLastTimeStr(std::string &_lastTimeStr) { lastTimeStr = _lastTimeStr; }
@@ -103,14 +108,15 @@ public:
     void setDeadLine(us16 _deadLine) { deadLine = _deadLine; }
     void setFault(std::string faultStr) { fault += faultStr; }
 
-    const std::string& getFault() { return fault; }
-    const std::string& getJobName() { return jobName; }
-    const std::string& getJoinTimeStr() { return joinTimeStr; }
-    const std::string& getLastTimeStr() { return lastTimeStr; }
-    const std::string& getDeadLineStr() { return deadLineStr; }
-    us16 getJoinTime() { return joinTime; }
-    us16 getLastTime() { return lastTime; }
-    us16 getDeadLine() { return deadLine; }
+    /* getter */
+    const std::string& getFault() const { return fault; }
+    const std::string& getJobName() const { return jobName; }
+    const std::string& getJoinTimeStr() const { return joinTimeStr; }
+    const std::string& getLastTimeStr() const { return lastTimeStr; }
+    const std::string& getDeadLineStr() const { return deadLineStr; }
+    us16 getJoinTime() const { return joinTime; }
+    us16 getLastTime() const { return lastTime; }
+    us16 getDeadLine() const { return deadLine; }
 
     bool checkJobValid();   //check if the committed job is valid
 };
@@ -130,7 +136,7 @@ void Widget::on_RunBtn_clicked()
     if(isMethodFixed && !isRun){
         runtime = 0;
         CurTimeClock->setPalette(Qt::green);
-        timer->start(500);
+        timer->start(waittime);
         isRun = true;
         RunBtn->setDisabled(true);
     }
@@ -143,7 +149,7 @@ void Widget::on_PauseBtn_clicked()
         static bool isPause = false;
         if(isPause){
             CurTimeClock->setPalette(Qt::green);
-            timer->start(500);
+            timer->start(waittime);
             PauseBtn->setText(tr("Pause"));     //change the text show on the button
             isPause = false;
         }else{
@@ -228,14 +234,11 @@ void Widget::on_ClearInputBtn_clicked()
     qDebug() << "clear data" ;
 }
 
-void Widget::methodMsgSend()
-{
-    emit methodFixedSignal(scheduleMethod, isPM, isPSA);
-}
 
 void Widget::on_CommitInputBtn_clicked()
 {
     validJob = new ValidJob;
+
     /* set attribute of job */
     validJob->setJobName(std::string((const char*)JobNameEdit->text().toLocal8Bit()));
     validJob->setJoinTimeStr(std::string((const char*)JoinTimeEdit->text().toLocal8Bit()));
@@ -254,19 +257,18 @@ void Widget::on_CommitInputBtn_clicked()
         if(!isMethodFixed){
             methodMsgSend();
             isMethodFixed = true;
-            DisableRadioBtn(scheduleMethod);
+            DisableRadioBtn(scheduleMethod);//disable button except the one decide the current method
         }
 
+        Job *job =
+                new Job(validJob->getJobName(),
+                        validJob->getJoinTime(),
+                        validJob->getLastTime(),
+                        validJob->getDeadLine(),
+                        PriorityCombo->currentIndex());
 
-
-
-        Job *job = new Job(validJob->getJobName(),
-                            validJob->getJoinTime(),
-                            validJob->getLastTime(),
-                            validJob->getDeadLine(),
-                            PriorityCombo->currentIndex());
         TableAddJobItem(PreInputTbl, job);
-        jobSend(job);
+        jobSend(job);//notify that add a new job
     }
 }
 
@@ -276,8 +278,11 @@ void Widget::TableAddJobItem(QTableWidget *table, Job *job)
     table->setRowCount(rowCount + 1); //change row count
 
     /* add new item */
+    //set as text
     QTableWidgetItem *jobNameItem = new QTableWidgetItem();
     jobNameItem->setText(job->getJobName().c_str());
+
+    //set as data
     QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
     joinTimeItem->setData(Qt::DisplayRole, job->getJoinTime());
     QTableWidgetItem *lastTimeItem = new QTableWidgetItem();
@@ -291,22 +296,16 @@ void Widget::TableAddJobItem(QTableWidget *table, Job *job)
     table->setSortingEnabled(false);
 
     /* set new item */
-    table->setItem(rowCount, 4, currentIndexItem);
-    table->setItem(rowCount, 3, deadLineItem);
-    table->setItem(rowCount, 2, lastTimeItem);
-    table->setItem(rowCount, 1, joinTimeItem);
     table->setItem(rowCount, 0, jobNameItem);
+    table->setItem(rowCount, 1, joinTimeItem);
+    table->setItem(rowCount, 2, lastTimeItem);
+    table->setItem(rowCount, 3, deadLineItem);
+    table->setItem(rowCount, 4, currentIndexItem);
 
     //enable sorting again
     table->setSortingEnabled(true);
 
 }
-
-void Widget::jobSend(Job *job)
-{
-    emit jobCommingSignal(job);
-}
-
 void Widget::on_OpenFile_clicked()
 {
 

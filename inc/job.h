@@ -37,19 +37,22 @@ public:
         isFinished = false;
     }
 
-     const std::string& getJobName() { return jobName; }
-     const us16 getJoinTime() { return joinTime; }
-     const us16 getLastTime() { return lastTime; }
-     const us16 getStartTime() { return startTime; }
-     const us16 getRunTime() { return runTime; }
-     const us16 getNeedTime() { return needTime; }
-     const us16 getDeadLine() { return deadLine; }
-     const us16 getPrioOrSlice() { return PrioOrSlice; }
-     const bool IsFinished() { return isFinished; }
+    /* getter */
+    const std::string& getJobName() const { return jobName; }
+    const us16 getJoinTime() const { return joinTime; }
+    const us16 getLastTime() const { return lastTime; }
+    const us16 getStartTime() const { return startTime; }
+    const us16 getRunTime() const { return runTime; }
+    const us16 getNeedTime() const { return needTime; }
+    const us16 getDeadLine() const { return deadLine; }
+    const us16 getPrioOrSlice() const { return PrioOrSlice; }
+    const bool IsFinished() const { return isFinished; }
 
-     void setRunTime(us16 _runTime) { runTime = _runTime; }
-     void setNeedTime(us16 _needTime) { needTime = _needTime; }
-     void setJobFinished() { isFinished = true; }
+    /* setter */
+    void addRunTime() { ++runTime; }
+    void subNeedTime() { --needTime; }
+    void exec() { addRunTime(); subNeedTime(); }
+    void setJobFinished() { isFinished = true; }
 };
 
 #endif // JOB_H
