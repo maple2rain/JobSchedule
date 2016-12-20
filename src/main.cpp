@@ -2,17 +2,18 @@
 #include <QApplication>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlDriver>
-#include <QReadWriteLock>
+#include <QMutexLocker>
 #include <QDebug>
 #include <memory>
 #include <string>
 #include <QObject>
+#include <QTextStream>
 #include "../inc/scheduler.h"
 #include "../inc/proxy.h"
 #include "../inc/jobrecorder.h"
 
-QReadWriteLock readyJobLock;
-QReadWriteLock waitingJobLock;
+QMutex readyJobLock;
+QMutex waitingJobLock;
 
 int main(int argc, char *argv[])
 {
@@ -39,6 +40,11 @@ int main(int argc, char *argv[])
     QObject::connect(&w, &Widget::timeRunningSignal,
                     [=, &scheduler, &jobRecorder](us16 runtime){
                         proxy->toSchedule(scheduler, jobRecorder, runtime);//使用lambda表达式实现默认参数
+                    });
+
+    QObject::connect(proxy.get(), &Proxy::jobStatusChangeSignal,
+                    [&](const JobRecorder &jobRecorder){
+                        w.drawTable(jobRecorder);//使用lambda表达式实现默认参数
                     });
 
     w.show();

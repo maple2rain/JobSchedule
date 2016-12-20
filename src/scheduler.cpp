@@ -1,27 +1,30 @@
 ﻿#include "../inc/scheduler.h"
 void Scheduler::addWaitingJob(ptr &job)
 {
-    auto it = waitingJobs.begin();
-    while(it != waitingJobs.end()){ //add waiting job in ascending order
+    auto it = scheduler->waitingJobs.begin();
+    while(it != scheduler->waitingJobs.end()){ //add waiting job in ascending order
         if((*it)->getJoinTime() <= job->getJoinTime())
             ++it;
         else
             break;
     }
-    waitingJobs.insert(it, job);
-    DEBUG_PRINT(waitingJobs, JoinTime);
+    scheduler->waitingJobs.insert(it, job);
+    DEBUG_PRINT_JOB(waitingJobs, JoinTime);
 }
 
 void Scheduler::checkWaitingJob(us16 runtime, JobRecorder &jobRecorder)
 {
     // if waiting job's join time up to runtime, then move it to ready jobs and job recorder
-    for(auto it = waitingJobs.begin(); it != waitingJobs.end();){
-        if((*it)->getJoinTime() <= runtime){
+    for(auto it = scheduler->waitingJobs.begin(); it != scheduler->waitingJobs.end(); ){
+        us16 joinTime = (*it)->getJoinTime();
+        if(joinTime == runtime + 1){    //waiting job begin to ready when its jointime is less than runtime + 1
             AddRecord(jobRecorder, *it, Wait2Ready);    //add it to job recorder
-            readyJobs.push_back(*it);   //add it to ready jobs list
-            std::cout << "waiting job is " << (*it)->getJobName() << " ,it become ready " << std::endl;
-            it = waitingJobs.erase(it); //remove it from waiting jobs list
-
+            DEBUG_PRINT("waiting job is ", (*it)->getJobName(), " ,it become ready");
+            ++it;
+        }else if(joinTime == runtime){
+            scheduler->addReadyJob(*it);   //add it to ready jobs list
+            DEBUG_PRINT("ready job is ", (*it)->getJobName(), " ,it was added to ready jobs");
+            it = scheduler->waitingJobs.erase(it); //remove it from waiting jobs list
         }else{
             break;
         }
@@ -31,6 +34,11 @@ void Scheduler::checkWaitingJob(us16 runtime, JobRecorder &jobRecorder)
 void Scheduler::schedule(us16 runtime, JobRecorder &jobRecorder)
 {
     require(flag <= _PM_PSA, "flag is out of range!");
+
+    if(scheduler->isJobNone()){
+        jobRecorder.setJobEnd();
+        return;
+    }
 
     checkWaitingJob(runtime, jobRecorder);  //check if waiting can be a ready job
 

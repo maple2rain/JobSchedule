@@ -27,7 +27,9 @@ HEADERS  += \
     ../inc/scheduler.h \
     ../inc/producer.h \
     ../inc/proxy.h \
-    ../inc/jobrecorder.h
+    ../inc/jobrecorder.h \
+    ../inc/app_cfg.h \
+    ../inc/require.h
 
 FORMS    += widget.ui
 

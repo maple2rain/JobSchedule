@@ -1,4 +1,4 @@
-﻿/********************************************************************************
+/********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.6.2
@@ -492,7 +492,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem = PreInputTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("Widget", "Job Name", 0));
         QTableWidgetItem *___qtablewidgetitem1 = PreInputTbl->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("Widget", "Commit Time", 0));
+        ___qtablewidgetitem1->setText(QApplication::translate("Widget", "Join Time", 0));
         QTableWidgetItem *___qtablewidgetitem2 = PreInputTbl->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QApplication::translate("Widget", "Last Time", 0));
         QTableWidgetItem *___qtablewidgetitem3 = PreInputTbl->horizontalHeaderItem(3);
@@ -503,7 +503,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem5 = RunJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem5->setText(QApplication::translate("Widget", "Name", 0));
         QTableWidgetItem *___qtablewidgetitem6 = RunJobTbl->horizontalHeaderItem(1);
-        ___qtablewidgetitem6->setText(QApplication::translate("Widget", "Commit", 0));
+        ___qtablewidgetitem6->setText(QApplication::translate("Widget", "Join", 0));
         QTableWidgetItem *___qtablewidgetitem7 = RunJobTbl->horizontalHeaderItem(2);
         ___qtablewidgetitem7->setText(QApplication::translate("Widget", "Last", 0));
         QTableWidgetItem *___qtablewidgetitem8 = RunJobTbl->horizontalHeaderItem(3);
@@ -518,7 +518,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem12 = ReadyJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem12->setText(QApplication::translate("Widget", "Job Name", 0));
         QTableWidgetItem *___qtablewidgetitem13 = ReadyJobTbl->horizontalHeaderItem(1);
-        ___qtablewidgetitem13->setText(QApplication::translate("Widget", "Commit Time", 0));
+        ___qtablewidgetitem13->setText(QApplication::translate("Widget", "Join Time", 0));
         QTableWidgetItem *___qtablewidgetitem14 = ReadyJobTbl->horizontalHeaderItem(2);
         ___qtablewidgetitem14->setText(QApplication::translate("Widget", "Last Time", 0));
         QTableWidgetItem *___qtablewidgetitem15 = ReadyJobTbl->horizontalHeaderItem(3);
@@ -529,7 +529,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem17 = FinishedJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem17->setText(QApplication::translate("Widget", "Name", 0));
         QTableWidgetItem *___qtablewidgetitem18 = FinishedJobTbl->horizontalHeaderItem(1);
-        ___qtablewidgetitem18->setText(QApplication::translate("Widget", "Commit", 0));
+        ___qtablewidgetitem18->setText(QApplication::translate("Widget", "Join", 0));
         QTableWidgetItem *___qtablewidgetitem19 = FinishedJobTbl->horizontalHeaderItem(2);
         ___qtablewidgetitem19->setText(QApplication::translate("Widget", "Starting", 0));
         QTableWidgetItem *___qtablewidgetitem20 = FinishedJobTbl->horizontalHeaderItem(3);
@@ -550,7 +550,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem25 = NextJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem25->setText(QApplication::translate("Widget", "Name", 0));
         QTableWidgetItem *___qtablewidgetitem26 = NextJobTbl->horizontalHeaderItem(1);
-        ___qtablewidgetitem26->setText(QApplication::translate("Widget", "Commit", 0));
+        ___qtablewidgetitem26->setText(QApplication::translate("Widget", "Join", 0));
         QTableWidgetItem *___qtablewidgetitem27 = NextJobTbl->horizontalHeaderItem(2);
         ___qtablewidgetitem27->setText(QApplication::translate("Widget", "Last", 0));
         QTableWidgetItem *___qtablewidgetitem28 = NextJobTbl->horizontalHeaderItem(3);

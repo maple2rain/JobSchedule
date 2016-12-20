@@ -23,9 +23,6 @@ public slots:
     //when commit a new job, add it to waiting-job list
     void addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler);
 
-    //when the joining time of the job is equal to the current time, that add it to ready-job list
-    void addReadyJob(Job *job, std::shared_ptr<Scheduler> &scheduler);
-
     //when choose new method to schedule, add a new scheduler
     void addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, std::shared_ptr<Scheduler> &scheduler);
 

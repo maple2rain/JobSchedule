@@ -1,17 +1,20 @@
 ﻿#include "ui_widget.h"
 #include "../inc/widget.h"
 #include <algorithm>
+#include <iostream>
 #include <sstream>
 #include <QLabel>
 #include <QString>
 #include <QDebug>
 #include <QMessageBox>
 #include <iostream>
-#include <QStandardItem>
 #include <QList>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
 
-us16 Widget::runtime;
-us16 Widget::waittime = 500; // ms
+us16 Widget::runtime = 0;
+us16 Widget::waittime = 100; // ms
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent)
@@ -20,9 +23,16 @@ Widget::Widget(QWidget *parent) :
     setFixedSize(this->width(), this->height());
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [=](){
-        CurTimeClock->display(QString::number(runtime++));
+        CurTimeClock->display(QString::number(++runtime));
         timeRun();
+//        if(runtime == 1){
+//            addJob();
+//        }
+
+        qDebug() << "runtime is " << runtime ;
     });
+
+
 
     InitModule();
 }
@@ -70,12 +80,12 @@ void Widget::initMap()
     radioBtnMap[std::string("RR")] = 5;
 }
 
-void Widget::RemoveRowByName(const std::string &name)
+void Widget::RemoveRowByName(QTableWidget *table, const std::string &name)
 {
-    QList<QTableWidgetItem*> list = PreInputTbl->findItems(name.c_str(), Qt::MatchExactly);
+    QList<QTableWidgetItem*> list = table->findItems(name.c_str(), Qt::MatchExactly);
 
     if(list.size() > 0)
-        PreInputTbl->removeRow(list.at(0)->row());  //excatly, there must be only one item,
+        table->removeRow(list.at(0)->row());  //excatly, there must be only one item,
 }
 
 Widget::~Widget()
@@ -94,6 +104,7 @@ private:
     us16 joinTime;
     us16 lastTime;
     us16 deadLine;
+    us16 priorityOrSlice;
 public:
     ValidJob() {}
     ~ValidJob() {}
@@ -106,6 +117,7 @@ public:
     void setJoinTime(us16 _joinTime) { joinTime = _joinTime; }
     void setLastTime(us16 _lastTime) { lastTime = _lastTime; }
     void setDeadLine(us16 _deadLine) { deadLine = _deadLine; }
+    void setPriorityOrSlice(us16 _priorityOrSlice) { priorityOrSlice = _priorityOrSlice; }
     void setFault(std::string faultStr) { fault += faultStr; }
 
     /* getter */
@@ -117,6 +129,7 @@ public:
     us16 getJoinTime() const { return joinTime; }
     us16 getLastTime() const { return lastTime; }
     us16 getDeadLine() const { return deadLine; }
+    us16 getPriorityOrSlice() const { return priorityOrSlice; }
 
     bool checkJobValid();   //check if the committed job is valid
 };
@@ -134,7 +147,7 @@ void Widget::on_RunBtn_clicked()
 {
     /* if it is not running, that initialize the operation and start the timer; */
     if(isMethodFixed && !isRun){
-        runtime = 0;
+        runtime = -1;
         CurTimeClock->setPalette(Qt::green);
         timer->start(waittime);
         isRun = true;
@@ -162,9 +175,10 @@ void Widget::on_PauseBtn_clicked()
 
 }
 
-void Widget::on_StopBtn_clicked()
+void Widget::stopEvent()
 {
     timer->stop();
+    runtime = 0;
     CurTimeClock->display(0);
 
     //change status
@@ -174,7 +188,13 @@ void Widget::on_StopBtn_clicked()
     RunBtn->setEnabled(true);
     PauseBtn->setText(tr("Pause"));     //change the text show on the button
 
+
     EnableRadioBtn();
+}
+
+void Widget::on_StopBtn_clicked()
+{
+    stopEvent();
 }
 
 /* select schedule type */
@@ -244,12 +264,55 @@ void Widget::on_CommitInputBtn_clicked()
     validJob->setJoinTimeStr(std::string((const char*)JoinTimeEdit->text().toLocal8Bit()));
     validJob->setLastTimeStr(std::string((const char*)LastTimeEdit->text().toLocal8Bit()));
     validJob->setDeadLineStr(std::string((const char*)DeadLineEdit->text().toLocal8Bit()));
+    validJob->setPriorityOrSlice(PriorityCombo->currentIndex());
+    commitJob(validJob);
 
-    if(false == validJob->checkJobValid()){
+    delete validJob;
+}
+
+void Widget::dealWithJobFromFile(QTextStream &in)
+{
+    QString line = in.readLine();
+    scheduleMethod = std::string((const char*)line.toLocal8Bit());
+    radioBtnVec[radioBtnMap[scheduleMethod]]->setChecked(true);
+
+    while(!in.atEnd()){
+        validJob = new ValidJob;
+        line = in.readLine();
+        std::string str = std::string((const char*)line.toLocal8Bit());
+
+        us16 begin, end;
+        begin = end = 0;
+
+        while(end < str.size() && str[end] != '\t') ++end;
+        validJob->setJobName(str.substr(begin, end - begin));
+        begin = ++end;
+
+        while(end < str.size() && str[end] != '\t') ++end;
+        validJob->setJoinTimeStr(str.substr(begin, end - begin));
+        begin = ++end;
+
+        while(end < str.size() && str[end] != '\t') ++end;
+        validJob->setLastTimeStr(str.substr(begin, end - begin));
+        begin = ++end;
+
+        while(end < str.size() && str[end] != '\t') ++end;
+        validJob->setDeadLineStr(str.substr(begin, end - begin));
+        begin = ++end;
+
+        validJob->setPriorityOrSlice(atoi(str.substr(begin, str.size()).c_str()));
+
+        commitJob(validJob);
+    }
+}
+
+void Widget::commitJob(ValidJob *_validJob)
+{
+    if(false == _validJob->checkJobValid()){
         std::string warning =
                 std::string("The job you committed is not valid!\n") +
                 "The follow may be the error:\n" +
-                validJob->getFault();
+                _validJob->getFault();
 
         QMessageBox::warning(this, tr("Warning"), tr(warning.c_str()));
     }else{
@@ -261,15 +324,28 @@ void Widget::on_CommitInputBtn_clicked()
         }
 
         Job *job =
-                new Job(validJob->getJobName(),
-                        validJob->getJoinTime(),
-                        validJob->getLastTime(),
-                        validJob->getDeadLine(),
-                        PriorityCombo->currentIndex());
+                new Job(_validJob->getJobName(),
+                        _validJob->getJoinTime(),
+                        _validJob->getLastTime(),
+                        _validJob->getDeadLine(),
+                        _validJob->getPriorityOrSlice());
 
         TableAddJobItem(PreInputTbl, job);
         jobSend(job);//notify that add a new job
     }
+}
+
+void Widget::addJob()
+{
+    Job *job =
+            new Job("x",
+                    2,
+                    2,
+                    99,
+                    0);
+
+    TableAddJobItem(PreInputTbl, job);
+    jobSend(job);//notify that add a new job
 }
 
 void Widget::TableAddJobItem(QTableWidget *table, Job *job)
@@ -306,9 +382,104 @@ void Widget::TableAddJobItem(QTableWidget *table, Job *job)
     table->setSortingEnabled(true);
 
 }
+
+void Widget::TableSetRunOrNextJobItem(QTableWidget *table, Job *job)
+{
+    table->setRowCount(1);
+
+    //set as text
+    QTableWidgetItem *jobNameItem = new QTableWidgetItem();
+    jobNameItem->setText(job->getJobName().c_str());
+
+    //set as data
+    QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
+    joinTimeItem->setData(Qt::DisplayRole, job->getJoinTime());
+    QTableWidgetItem *lastTimeItem = new QTableWidgetItem();
+    lastTimeItem->setData(Qt::DisplayRole, job->getLastTime());
+    QTableWidgetItem *startTimeItem = new QTableWidgetItem();
+    startTimeItem->setData(Qt::DisplayRole, job->getStartTime());
+    QTableWidgetItem *runningTimeItem = new QTableWidgetItem();
+    runningTimeItem->setData(Qt::DisplayRole, job->getRunTime());
+    QTableWidgetItem *needTimeItem = new QTableWidgetItem();
+    needTimeItem->setData(Qt::DisplayRole, job->getNeedTime());
+    QTableWidgetItem *currentIndexItem = new QTableWidgetItem();
+    currentIndexItem->setData(Qt::DisplayRole, job->getPrioOrSlice());
+
+
+    /* set new item */
+    table->setItem(0, 0, jobNameItem);
+    table->setItem(0, 1, joinTimeItem);
+    table->setItem(0, 2, lastTimeItem);
+    table->setItem(0, 3, startTimeItem);
+    table->setItem(0, 4, runningTimeItem);
+    table->setItem(0, 5, needTimeItem);
+    table->setItem(0, 6, currentIndexItem);
+
+}
+
+void Widget::DrawFinishedTable(Job *job)
+{
+    int rowCount = FinishedJobTbl->rowCount();
+    FinishedJobTbl->setRowCount(rowCount + 1); //change row count
+
+    /* add new item */
+    //set as text
+    QTableWidgetItem *jobNameItem = new QTableWidgetItem();
+    jobNameItem->setText(job->getJobName().c_str());
+
+    //set as data
+    QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
+    joinTimeItem->setData(Qt::DisplayRole, job->getJoinTime());
+    QTableWidgetItem *lastTimeItem = new QTableWidgetItem();
+    lastTimeItem->setData(Qt::DisplayRole, job->getLastTime());
+    QTableWidgetItem *startTimeItem = new QTableWidgetItem();
+    startTimeItem->setData(Qt::DisplayRole, job->getStartTime());
+    QTableWidgetItem *finishedTimeItem = new QTableWidgetItem();
+    finishedTimeItem->setData(Qt::DisplayRole, job->getFinishedTime());
+    QTableWidgetItem *deadLineItem = new QTableWidgetItem();
+    deadLineItem->setData(Qt::DisplayRole, job->getDeadLine());
+    QTableWidgetItem *turnoverItem = new QTableWidgetItem();
+    turnoverItem->setData(Qt::DisplayRole, job->getTurnOverTime());
+    QTableWidgetItem *wTurnoverItem = new QTableWidgetItem();
+    wTurnoverItem->setData(Qt::DisplayRole, (double)job->getTurnOverTime() / job->getLastTime());
+
+    //if sorting enabled was true, that it will lose some item due to the sorting
+    FinishedJobTbl->setSortingEnabled(false);
+
+    /* set new item */
+    FinishedJobTbl->setItem(rowCount, 0, jobNameItem);
+    FinishedJobTbl->setItem(rowCount, 1, joinTimeItem);
+    FinishedJobTbl->setItem(rowCount, 2, startTimeItem);
+    FinishedJobTbl->setItem(rowCount, 3, finishedTimeItem);
+    FinishedJobTbl->setItem(rowCount, 4, lastTimeItem);
+    FinishedJobTbl->setItem(rowCount, 5, deadLineItem);
+    FinishedJobTbl->setItem(rowCount, 6, turnoverItem);
+    FinishedJobTbl->setItem(rowCount, 7, wTurnoverItem);
+
+    //enable sorting again
+    FinishedJobTbl->setSortingEnabled(true);
+}
+
+
 void Widget::on_OpenFile_clicked()
 {
+    if(isRun){
+        QMessageBox::warning(this, tr("Warning"), tr("Can't commit job from file\n when it's running!"));
+        return;
+    }
 
+    QString path = QFileDialog::getOpenFileName(this, tr("Open File"), "../JobsSchedule/file", tr("Text Files(*.txt)"));//打开文件路径，使用this为当前父窗口，“Open File”为对话框标题，“.”为默认目录，过滤器为“Text Files(*.txt)”
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {//以只读方式打开text文件
+        QMessageBox::warning(this, tr("Read File"), tr("Cannot open file:\n%1").arg(path));
+        return;
+    }
+
+    QTextStream in(&file);//打开文件输入流
+    if(!in.atEnd())
+        dealWithJobFromFile(in);
+
+    file.close();
 }
 
 
@@ -329,18 +500,19 @@ bool Widget::ValidJob::checkJobValid()
         flag = false;
     }
 
-    std::istringstream ss;
+    std::stringstream ss;
     us16 time = -1;
     std::cout << "time is " << time << std::endl;
 
     /* check join time */
     ss.str(joinTimeStr);
     ss >> time;
-    if(ss.fail() || time < 0){
+    if(ss.fail() || time <= runtime){
         this->setFault("The number about the join time is invalid!\n");
         qDebug() << "join time is " << time << endl;
         qDebug() << ss.failbit;
-        std::cout << joinTimeStr << std::endl;
+        std::cout << "jointime is " << joinTimeStr << std::endl;
+        std::cout << "time is " << time << " and runtime is " << runtime << std::endl;
         flag = false;
     }else{
         joinTime = time;
@@ -377,4 +549,81 @@ bool Widget::ValidJob::checkJobValid()
     return flag;
 }
 
+void Widget::drawTable(const JobRecorder &jobRecorder)
+{
+    if(jobRecorder.isFinished()){
+        stopEvent();
+        return;
+    }
+    auto it = jobRecorder.getRecorder().cbegin();
+    Job *job;
 
+    /* waiting to ready */
+    for(us16 count = jobRecorder.getWait2Ready(); count > 0; --count){
+        job = (*it++).get();
+        TableAddJobItem(ReadyJobTbl, job);
+        DEBUG_PRINT("job Wait2Ready is to draw");
+    }
+
+    /* run to next */
+    if(jobRecorder.getRun2Next() > 0){
+        job = (*it++).get();
+        TableSetRunOrNextJobItem(RunJobTbl, job);
+        DEBUG_PRINT("job Run2Next is to draw");
+    }
+
+    /* run to ready */
+    if(jobRecorder.getRun2Ready() > 0){
+        job = (*it++).get();
+        RemoveRowByName(RunJobTbl, job->getJobName());
+        TableSetRunOrNextJobItem(ReadyJobTbl, job);
+        DEBUG_PRINT("job Run2Ready is to draw");
+    }
+
+    /* run to finished */
+    if(jobRecorder.getRun2Finished() > 0){
+        job = (*it++).get();
+        RemoveRowByName(RunJobTbl, job->getJobName());
+        DrawFinishedTable(job);
+        DEBUG_PRINT("job Run2Finished is to draw");
+    }
+
+    /* next to run */
+    if(jobRecorder.getNext2Run() > 0){
+        job = (*it++).get();
+        RemoveRowByName(NextJobTbl, job->getJobName());
+        TableSetRunOrNextJobItem(RunJobTbl, job);
+        DEBUG_PRINT("job Next2Run is to draw");
+    }
+
+    /* ready to run */
+    if(jobRecorder.getReady2Run() > 0){
+        job = (*it++).get();
+        RemoveRowByName(ReadyJobTbl, job->getJobName());
+        TableSetRunOrNextJobItem(RunJobTbl, job);
+        DEBUG_PRINT("job Ready2Run is to draw");
+    }
+
+    /* next to ready */
+    if(jobRecorder.getNext2Ready() > 0){
+        job = (*it++).get();
+        RemoveRowByName(NextJobTbl, job->getJobName());
+        TableSetRunOrNextJobItem(ReadyJobTbl, job);
+        DEBUG_PRINT("job Next2Ready is to draw");
+    }
+
+    /* run to run */
+    if(jobRecorder.getRun2Run() > 0){
+        job = (*it++).get();
+        TableSetRunOrNextJobItem(RunJobTbl, job);
+        DEBUG_PRINT("job Run2Run is to draw");
+    }
+
+    /* ready to next */
+    if(jobRecorder.getReady2Next() > 0){
+        job = (*it++).get();
+        RemoveRowByName(ReadyJobTbl, job->getJobName());
+        TableSetRunOrNextJobItem(NextJobTbl, job);
+        DEBUG_PRINT("job Ready2Next is to draw");
+    }
+}

@@ -7,9 +7,10 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <QTextStream>
 #include "ui_widget.h"
-#include "../inc/scheduler.h"
-#include "../inc/job.h"
+#include "scheduler.h"
+#include "job.h"
 
 namespace Ui {
 class Widget;
@@ -32,6 +33,8 @@ public:
     void timeRun(){
         emit timeRunningSignal(runtime);
     }
+public slots:
+    void drawTable(const JobRecorder &jobRecorder);
 
 private slots:
     /* if PSA and PM chosed*/
@@ -59,19 +62,21 @@ private slots:
     /* add job from file */
     void on_OpenFile_clicked();
 
-
     void on_RunBtn_clicked();
     void on_PauseBtn_clicked();
     void on_StopBtn_clicked();
     void on_PauseBtn_pressed();
 
+private:
     /* deal with radio button */
     void DisableRadioBtn(std::string exception);
     void EnableRadioBtn();
 
     /* deal with table */
     void TableAddJobItem(QTableWidget *table, Job *job);
-    void RemoveRowByName(const std::string &name);
+    void TableSetRunOrNextJobItem(QTableWidget *table, Job *job);
+    void DrawFinishedTable(Job *job);
+    void RemoveRowByName(QTableWidget *table, const std::string &name);
     void ClearTable();
     void ClearTable(QTableWidget* table);
 
@@ -82,6 +87,12 @@ private slots:
     void initTableVec();//initialize the table vec, add the tables to vec
     void initMap();//init the map of radio button
     void initPalette();
+
+    /* test */
+    void addJob();
+    void commitJob(ValidJob *validJob);
+    void dealWithJobFromFile(QTextStream &in);
+    void stopEvent();
 
 private:
     QTimer *timer;

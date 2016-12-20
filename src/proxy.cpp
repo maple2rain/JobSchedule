@@ -1,5 +1,6 @@
 ﻿#include "../inc/proxy.h"
-#include <QReadWriteLock>
+#include "../inc/app_cfg.h"
+#include <QMutexLocker>
 
 void Proxy::addScheduler(const std::string &scheduleMethod, bool _isPM, bool _isPSA, std::shared_ptr<Scheduler> &scheduler)
 {
@@ -13,8 +14,8 @@ void Proxy::addScheduler(const std::string &scheduleMethod, bool _isPM, bool _is
 
 void Proxy::addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
 {
-    extern QReadWriteLock waitingJobLock;
-    QWriteLocker locker(&waitingJobLock);
+    extern QMutex waitingJobLock;
+    QMutexLocker locker(&waitingJobLock);
     std::cout << "addWaitingJob" << std::endl;
 
     std::shared_ptr<Job> _job(job);
@@ -28,13 +29,13 @@ void Proxy::addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
     }
 }
 
-void Proxy::addReadyJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
-{
-
-}
-
 void Proxy::toSchedule(std::shared_ptr<Scheduler> &scheduler, JobRecorder &jobRecorder, us16 runtime)
 {
+    extern QMutex waitingJobLock;
+    extern QMutex readyJobLock;
+    QMutexLocker lockerWait(&waitingJobLock);
+    QMutexLocker lockerReady(&readyJobLock);
+
     jobRecorder.clear();
     scheduler->schedule(runtime, jobRecorder);
     statusSend(jobRecorder);

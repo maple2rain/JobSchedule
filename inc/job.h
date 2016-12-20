@@ -6,15 +6,15 @@ typedef unsigned short us16;
 /* The Attribute of jobs */
 class Job
 {
-    std::string    jobName;
-    us16 joinTime;
-    us16 lastTime;
-    us16 startTime;
-    us16 runTime;
-    us16 needTime;
-    us16 deadLine;
-    us16 PrioOrSlice;
-    bool           isFinished;
+    std::string     jobName;
+            us16    joinTime;
+            us16    lastTime;
+            us16    startTime;
+            us16    runTime;
+            us16    needTime;
+            us16    deadLine;
+            us16    finishedTime;
+            us16    PrioOrSlice;
 
     //Prevent copy-construction & operator =
     Job(Job&);
@@ -34,7 +34,7 @@ public:
         startTime = 0;
         needTime = _lastTime;
         runTime = 0;
-        isFinished = false;
+        finishedTime = 0;
     }
 
     /* getter */
@@ -45,14 +45,16 @@ public:
     const us16 getRunTime() const { return runTime; }
     const us16 getNeedTime() const { return needTime; }
     const us16 getDeadLine() const { return deadLine; }
+    const us16 getFinishedTime() const { return finishedTime; }
     const us16 getPrioOrSlice() const { return PrioOrSlice; }
-    const bool IsFinished() const { return isFinished; }
+    const us16 getTurnOverTime() const { return finishedTime - joinTime; }
 
     /* setter */
     void addRunTime() { ++runTime; }
     void subNeedTime() { --needTime; }
+    void setStartTime(us16 _startTime) { startTime = _startTime; }
     void exec() { addRunTime(); subNeedTime(); }
-    void setJobFinished() { isFinished = true; }
+    void setJobFinished(us16 _finishedTime) { finishedTime = _finishedTime; }
 };
 
 #endif // JOB_H
