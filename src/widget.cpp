@@ -216,13 +216,25 @@ void Widget::DisableRadioBtn(std::string exception)
             radioBtnVec[it->second]->setDisabled(true);
         }
     }
+
+    /* check and disable checkBox */
+    PM->setChecked(isPM);
+    PSA->setChecked(isPSA);
+    PM->setDisabled(true);
+    PSA->setDisabled(true);
 }
+
+
 
 void Widget::EnableRadioBtn()
 {
     for(size_t i = 0; i < radioBtnVec.size(); ++i){
         radioBtnVec[i]->setEnabled(true);
     }
+
+    /* enable check box */
+    PM->setEnabled(true);
+    PSA->setEnabled(true);
 }
 
 void Widget::ClearTable(QTableWidget* table)
@@ -265,6 +277,8 @@ void Widget::on_CommitInputBtn_clicked()
     validJob->setLastTimeStr(std::string((const char*)LastTimeEdit->text().toLocal8Bit()));
     validJob->setDeadLineStr(std::string((const char*)DeadLineEdit->text().toLocal8Bit()));
     validJob->setPriorityOrSlice(PriorityCombo->currentIndex());
+
+    /* commit valid job */
     commitJob(validJob);
 
     delete validJob;
@@ -275,6 +289,15 @@ void Widget::dealWithJobFromFile(QTextStream &in)
     QString line = in.readLine();
     scheduleMethod = std::string((const char*)line.toLocal8Bit());
     radioBtnVec[radioBtnMap[scheduleMethod]]->setChecked(true);
+    line = in.readLine();
+
+    /* set task status */
+    {
+        char type = atoi(line.toLocal8Bit());
+        isPM = (type & 0x01) != 0;
+        isPSA = (type & 0x02) != 0;
+        DEBUG_PRINT("isPM is ", isPM, "isPSA is ", isPSA);
+    }
 
     while(!in.atEnd()){
         validJob = new ValidJob;
@@ -303,6 +326,7 @@ void Widget::dealWithJobFromFile(QTextStream &in)
         validJob->setPriorityOrSlice(atoi(str.substr(begin, str.size()).c_str()));
 
         commitJob(validJob);
+        delete validJob;
     }
 }
 
