@@ -1,7 +1,7 @@
 create database Jobs;
 use Jobs;
 
-drop table jobAttrbute;
+drop table jobAttribute;
 
 create table user (
 	userID     INT unsigned AUTO_INCREMENT,
@@ -49,6 +49,7 @@ create table jobAttribute (
     startTime			smallint unsigned,
     runTime				smallint unsigned,
     needTime			smallint unsigned,
+    deadline			smallint unsigned,
     PrioOrSlice			smallint unsigned,
     turnoverTime		float,
     weightTurnoverTime	float,
@@ -71,3 +72,6 @@ create table jobFailed (
     FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE, 
     FOREIGN KEY (jobID) REFERENCES  job (jobID) ON DELETE CASCADE
 );
+
+select * from user;
+insert into user (username, passwd, signupdate) values('maple', '123456', '2016-12-10');

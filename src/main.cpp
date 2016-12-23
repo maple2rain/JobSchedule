@@ -1,7 +1,6 @@
 ﻿#include "../inc/widget.h"
 #include <QApplication>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlDriver>
+
 #include <QMutexLocker>
 #include <QDebug>
 #include <memory>
@@ -11,6 +10,7 @@
 #include "../inc/scheduler.h"
 #include "../inc/proxy.h"
 #include "../inc/jobrecorder.h"
+#include "../inc/useroperate.h"
 
 QMutex readyJobLock;
 QMutex waitingJobLock;
@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     std::shared_ptr<Scheduler> scheduler;
     std::shared_ptr<Proxy> proxy = std::make_shared<Proxy>(); // the proxy is to deal with the interaction of scheduler and window
     JobRecorder jobRecorder; // the recorder is to record the status of job
+    UserOperate user;
 
 //    qDebug()<<"available drivers:";
 //    QStringList drivers = QSqlDatabase::drivers();
@@ -46,17 +47,9 @@ int main(int argc, char *argv[])
                     [&](const JobRecorder &jobRecorder){
                         w.drawTable(jobRecorder);//使用lambda表达式实现默认参数
                     });
-
+    user.AddUser("maple5", "123456");
     w.show();
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-//        db.setHostName("localhost");
-//        db.setDatabaseName("Jobs");
-//        db.setUserName("root");
-//        db.setPassword("123456");
-//        if(!db.open()){
-//        qDebug() << "sql failed";
-//            db.close();
-//        }
+
 
 
 

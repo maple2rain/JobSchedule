@@ -18,7 +18,9 @@ SOURCES += \
     ../src/widget.cpp \
     ../src/fcfs.cpp \
     ../src/scheduler.cpp \
-    ../src/proxy.cpp
+    ../src/proxy.cpp \
+    ../src/connectionpool.cpp \
+    ../src/useroperate.cpp
 
 HEADERS  += \
     ../inc/widget.h \
@@ -29,7 +31,10 @@ HEADERS  += \
     ../inc/proxy.h \
     ../inc/jobrecorder.h \
     ../inc/app_cfg.h \
-    ../inc/require.h
+    ../inc/require.h \
+    ../inc/ConnectionPool.h \
+    ../inc/jobsoperate.h \
+    ../inc/useroperate.h
 
 FORMS    += widget.ui
 
