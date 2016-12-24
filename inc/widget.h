@@ -15,6 +15,7 @@
 namespace Ui {
 class Widget;
 }
+
 class Widget : public QWidget, public Ui::Widget
 {
     class ValidJob;
@@ -110,6 +111,9 @@ private:
     std::vector<QRadioButton*> radioBtnVec;
     std::map<std::string, size_t> radioBtnMap;
     std::vector<QTableWidget*> tableVec;
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
 
 signals://使用signals标记信号函数，信号是一个函数声明，返回void，不需要函数的实现代码
     void methodFixedSignal(const std::string &scheduleMethod, bool _isPM, bool _isPSA);

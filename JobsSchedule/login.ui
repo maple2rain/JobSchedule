@@ -113,7 +113,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="PasswdLbl">
         <property name="font">
          <font>
           <family>Calibri</family>

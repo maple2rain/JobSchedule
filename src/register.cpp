@@ -25,7 +25,7 @@ void Register::on_OkBtn_clicked()
     if(passwd.compare(confirm) == 0){
         user.setUserName(std::string((const char*)UserNameLineEdit->text().toLocal8Bit()));
         user.setPassword(std::string((const char*)PasswdLineEdit->text().toLocal8Bit()));
-        Info info = user.AddUser();
+        Info info = user.AddUser();//add user
 
         if(info.getStatus() == true){
             QMessageBox::warning(this, tr("Information"), tr(info.getInfo().c_str()));

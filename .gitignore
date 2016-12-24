@@ -1,2 +1,5 @@
 /build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/*
 !/build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_widget.h
+!/build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_person.h
+!/build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_login.h
+!/build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_register.h

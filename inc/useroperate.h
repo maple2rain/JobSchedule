@@ -25,6 +25,8 @@ public:
     const Info CheckUser();
     const Info UpdateGraph(Graph &graph);
     const Info UpdateGif(Gif& gif);
+    const Info GetGraph();
+    const Info GetGif();
 
 
     /* setter */

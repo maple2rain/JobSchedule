@@ -34,8 +34,8 @@ void Widget::test()
     //        file.close();
     //    }
 
-    ////    QPixmap photo;
-    ////    photo.loadFromData(bytes, "JPG");
+    //    QPixmap photo;
+    //    photo.loadFromData(bytes, "JPG");
     //    qDebug() << imagePath;
 
     //    QMovie *movie = new QMovie(imagePath);
@@ -61,6 +61,7 @@ Widget::Widget(QWidget *parent) :
         qDebug() << "runtime is " << runtime ;
     });
 
+    graphLbl->installEventFilter(this);
 
 
     InitModule();
@@ -108,6 +109,20 @@ void Widget::initMap()
     radioBtnMap[std::string("HRRN")] = 3;
     radioBtnMap[std::string("MFQ")] = 4;
     radioBtnMap[std::string("RR")] = 5;
+}
+
+bool Widget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == graphLbl){
+        if(event->type() == QEvent::MouseButtonPress){//press event
+            QMessageBox::warning(this, tr("Warning"), tr("graph"));
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return QWidget::eventFilter(watched, event);
+    }
 }
 
 void Widget::RemoveRowByName(QTableWidget *table, const std::string &name)

@@ -2,5 +2,7 @@
     <qresource prefix="/images">
         <file>images/ico.ico</file>
         <file>images/talent.png</file>
+        <file>images/sun.jpg</file>
+        <file>images/cloud.jpg</file>
     </qresource>
 </RCC>

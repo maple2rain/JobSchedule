@@ -20,6 +20,12 @@
    <iconset resource="rsc.qrc">
     <normaloff>:/images/images/ico.ico</normaloff>:/images/images/ico.ico</iconset>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QGroupBox" name="List">
    <property name="geometry">
     <rect>
@@ -28,6 +34,13 @@
      <width>261</width>
      <height>141</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>List</string>
@@ -99,6 +112,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
+    </property>
     <property name="text">
      <string>Clear</string>
     </property>
@@ -111,6 +127,9 @@
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
     </property>
     <property name="text">
      <string>Run</string>
@@ -135,7 +154,10 @@
      <string/>
     </property>
     <property name="autoFillBackground">
-     <bool>true</bool>
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
     </property>
     <property name="text">
      <string>Pause</string>
@@ -150,6 +172,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
+    </property>
     <property name="text">
      <string>Stop</string>
     </property>
@@ -163,6 +188,13 @@
      <width>261</width>
      <height>71</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Algorithm</string>
@@ -220,6 +252,13 @@
      <width>261</width>
      <height>221</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Input</string>
@@ -295,6 +334,9 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
+    </property>
     <property name="text">
      <string>Clear</string>
     </property>
@@ -328,6 +370,9 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
+    </property>
     <property name="text">
      <string>Commit</string>
     </property>
@@ -341,6 +386,9 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
+    </property>
     <property name="text">
      <string>File</string>
     </property>
@@ -353,6 +401,9 @@
       <width>61</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
     </property>
     <item>
      <property name="text">
@@ -468,6 +519,14 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>About</string>
    </property>
@@ -484,7 +543,7 @@
      <bool>false</bool>
     </property>
     <property name="text">
-     <string>This simple program was completed by Maple.For more infomation, please visit the author's &lt;a href = &quot;http://blog.leanote.com/maple2snow&quot;&gt;Home Page&lt;/a&gt;..</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This simple program was completed by Maple.For more infomation, please visit the author's &lt;a href=&quot;http://blog.leanote.com/maple2snow&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Home Page&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="textFormat">
      <enum>Qt::RichText</enum>
@@ -508,6 +567,13 @@
      <width>431</width>
      <height>261</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Pre Input</string>
@@ -619,8 +685,15 @@
      <height>101</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
-    <string>Running Job</string>
+    <string>Running Jobs</string>
    </property>
    <widget class="QTableWidget" name="RunJobTbl">
     <property name="geometry">
@@ -739,8 +812,15 @@
      <height>261</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
-    <string>Ready Job</string>
+    <string>Ready Jobs</string>
    </property>
    <widget class="QTableWidget" name="ReadyJobTbl">
     <property name="geometry">
@@ -837,8 +917,15 @@
      <height>301</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
-    <string>Finished Job</string>
+    <string>Finished Jobs</string>
    </property>
    <widget class="QTableWidget" name="FinishedJobTbl">
     <property name="geometry">
@@ -973,12 +1060,19 @@
       <x>40</x>
       <y>270</y>
       <width>200</width>
-      <height>14</height>
+      <height>16</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="ATTHL">
      <item>
       <widget class="QLabel" name="ATT">
+       <property name="font">
+        <font>
+         <family>Calibri</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Average Turnover Time:</string>
        </property>
@@ -986,6 +1080,13 @@
      </item>
      <item>
       <widget class="QLabel" name="ATTValue">
+       <property name="font">
+        <font>
+         <family>Calibri</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>time</string>
        </property>
@@ -999,12 +1100,19 @@
       <x>320</x>
       <y>270</y>
       <width>230</width>
-      <height>14</height>
+      <height>16</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="WATTHL">
      <item>
       <widget class="QLabel" name="WATT">
+       <property name="font">
+        <font>
+         <family>Calibri</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Weighted Average Turnover Time:</string>
        </property>
@@ -1012,6 +1120,13 @@
      </item>
      <item>
       <widget class="QLabel" name="WATTValue">
+       <property name="font">
+        <font>
+         <family>Calibri</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>time</string>
        </property>
@@ -1028,6 +1143,13 @@
      <width>471</width>
      <height>101</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Next Job</string>
@@ -1146,10 +1268,56 @@
      <height>211</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="text">
-    <string>GraphLabel</string>
+    <string>Click to set personal information</string>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1371</width>
+     <height>571</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url(:/images/images/cloud.jpg)</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>List</zorder>
+  <zorder>Algorithm</zorder>
+  <zorder>Input</zorder>
+  <zorder>About</zorder>
+  <zorder>PreInput</zorder>
+  <zorder>RunningJob</zorder>
+  <zorder>ReadyJob</zorder>
+  <zorder>FinishedJob</zorder>
+  <zorder>NextJob</zorder>
+  <zorder>graphLbl</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

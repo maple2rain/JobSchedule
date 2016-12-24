@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -85,6 +86,7 @@ public:
     QGroupBox *NextJob;
     QTableWidget *NextJobTbl;
     QLabel *graphLbl;
+    QFrame *frame;
 
     void setupUi(QWidget *Widget)
     {
@@ -95,9 +97,16 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral(":/images/images/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
         Widget->setWindowIcon(icon);
+        Widget->setAutoFillBackground(false);
+        Widget->setStyleSheet(QStringLiteral(""));
         List = new QGroupBox(Widget);
         List->setObjectName(QStringLiteral("List"));
         List->setGeometry(QRect(10, 10, 261, 141));
+        QFont font;
+        font.setFamily(QStringLiteral("Calibri"));
+        font.setBold(true);
+        font.setWeight(75);
+        List->setFont(font);
         CurTimeLbl = new QLabel(List);
         CurTimeLbl->setObjectName(QStringLiteral("CurTimeLbl"));
         CurTimeLbl->setGeometry(QRect(50, 10, 71, 21));
@@ -116,21 +125,26 @@ public:
         ClearAllDataBtn = new QPushButton(List);
         ClearAllDataBtn->setObjectName(QStringLiteral("ClearAllDataBtn"));
         ClearAllDataBtn->setGeometry(QRect(50, 80, 75, 23));
+        ClearAllDataBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         RunBtn = new QPushButton(List);
         RunBtn->setObjectName(QStringLiteral("RunBtn"));
         RunBtn->setGeometry(QRect(140, 80, 75, 23));
+        RunBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         PauseBtn = new QPushButton(List);
         PauseBtn->setObjectName(QStringLiteral("PauseBtn"));
         PauseBtn->setGeometry(QRect(50, 110, 75, 23));
         PauseBtn->setCursor(QCursor(Qt::ArrowCursor));
         PauseBtn->setMouseTracking(true);
-        PauseBtn->setAutoFillBackground(true);
+        PauseBtn->setAutoFillBackground(false);
+        PauseBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         StopBtn = new QPushButton(List);
         StopBtn->setObjectName(QStringLiteral("StopBtn"));
         StopBtn->setGeometry(QRect(140, 110, 75, 23));
+        StopBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         Algorithm = new QGroupBox(Widget);
         Algorithm->setObjectName(QStringLiteral("Algorithm"));
         Algorithm->setGeometry(QRect(10, 160, 261, 71));
+        Algorithm->setFont(font);
         gridLayout = new QGridLayout(Algorithm);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -168,6 +182,7 @@ public:
         Input = new QGroupBox(Widget);
         Input->setObjectName(QStringLiteral("Input"));
         Input->setGeometry(QRect(10, 240, 261, 221));
+        Input->setFont(font);
         JobNameLbl = new QLabel(Input);
         JobNameLbl->setObjectName(QStringLiteral("JobNameLbl"));
         JobNameLbl->setGeometry(QRect(30, 20, 54, 12));
@@ -186,6 +201,7 @@ public:
         ClearInputBtn = new QPushButton(Input);
         ClearInputBtn->setObjectName(QStringLiteral("ClearInputBtn"));
         ClearInputBtn->setGeometry(QRect(30, 180, 71, 21));
+        ClearInputBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         JoinTimeEdit = new QLineEdit(Input);
         JoinTimeEdit->setObjectName(QStringLiteral("JoinTimeEdit"));
         JoinTimeEdit->setGeometry(QRect(100, 50, 111, 20));
@@ -195,12 +211,15 @@ public:
         CommitInputBtn = new QPushButton(Input);
         CommitInputBtn->setObjectName(QStringLiteral("CommitInputBtn"));
         CommitInputBtn->setGeometry(QRect(110, 180, 71, 21));
+        CommitInputBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         OpenFile = new QToolButton(Input);
         OpenFile->setObjectName(QStringLiteral("OpenFile"));
         OpenFile->setGeometry(QRect(190, 180, 41, 21));
+        OpenFile->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         PriorityCombo = new QComboBox(Input);
         PriorityCombo->setObjectName(QStringLiteral("PriorityCombo"));
         PriorityCombo->setGeometry(QRect(100, 140, 61, 20));
+        PriorityCombo->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         DeadLineLbl = new QLabel(Input);
         DeadLineLbl->setObjectName(QStringLiteral("DeadLineLbl"));
         DeadLineLbl->setGeometry(QRect(30, 110, 54, 12));
@@ -210,6 +229,12 @@ public:
         About = new QGroupBox(Widget);
         About->setObjectName(QStringLiteral("About"));
         About->setGeometry(QRect(10, 470, 261, 81));
+        QFont font1;
+        font1.setFamily(QStringLiteral("Calibri"));
+        font1.setPointSize(10);
+        font1.setBold(true);
+        font1.setWeight(75);
+        About->setFont(font1);
         AboutLbl = new QLabel(About);
         AboutLbl->setObjectName(QStringLiteral("AboutLbl"));
         AboutLbl->setGeometry(QRect(10, 10, 231, 71));
@@ -221,13 +246,10 @@ public:
         PreInput = new QGroupBox(Widget);
         PreInput->setObjectName(QStringLiteral("PreInput"));
         PreInput->setGeometry(QRect(290, 10, 431, 261));
+        PreInput->setFont(font);
         PreInputTbl = new QTableWidget(PreInput);
         if (PreInputTbl->columnCount() < 5)
             PreInputTbl->setColumnCount(5);
-        QFont font;
-        font.setFamily(QStringLiteral("Calibri"));
-        font.setBold(true);
-        font.setWeight(75);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         __qtablewidgetitem->setFont(font);
         PreInputTbl->setHorizontalHeaderItem(0, __qtablewidgetitem);
@@ -257,16 +279,17 @@ public:
         RunningJob = new QGroupBox(Widget);
         RunningJob->setObjectName(QStringLiteral("RunningJob"));
         RunningJob->setGeometry(QRect(740, 10, 471, 101));
+        RunningJob->setFont(font);
         RunJobTbl = new QTableWidget(RunningJob);
         if (RunJobTbl->columnCount() < 7)
             RunJobTbl->setColumnCount(7);
-        QFont font1;
-        font1.setFamily(QStringLiteral("Calibri"));
-        font1.setPointSize(9);
-        font1.setBold(true);
-        font1.setWeight(75);
+        QFont font2;
+        font2.setFamily(QStringLiteral("Calibri"));
+        font2.setPointSize(9);
+        font2.setBold(true);
+        font2.setWeight(75);
         QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
-        __qtablewidgetitem5->setFont(font1);
+        __qtablewidgetitem5->setFont(font2);
         RunJobTbl->setHorizontalHeaderItem(0, __qtablewidgetitem5);
         QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
         __qtablewidgetitem6->setFont(font);
@@ -295,6 +318,7 @@ public:
         ReadyJob = new QGroupBox(Widget);
         ReadyJob->setObjectName(QStringLiteral("ReadyJob"));
         ReadyJob->setGeometry(QRect(290, 290, 431, 261));
+        ReadyJob->setFont(font);
         ReadyJobTbl = new QTableWidget(ReadyJob);
         if (ReadyJobTbl->columnCount() < 5)
             ReadyJobTbl->setColumnCount(5);
@@ -323,6 +347,7 @@ public:
         FinishedJob = new QGroupBox(Widget);
         FinishedJob->setObjectName(QStringLiteral("FinishedJob"));
         FinishedJob->setGeometry(QRect(740, 250, 621, 301));
+        FinishedJob->setFont(font);
         FinishedJobTbl = new QTableWidget(FinishedJob);
         if (FinishedJobTbl->columnCount() < 8)
             FinishedJobTbl->setColumnCount(8);
@@ -361,7 +386,7 @@ public:
         FinishedJobTbl->verticalHeader()->setDefaultSectionSize(25);
         layoutWidget = new QWidget(FinishedJob);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(40, 270, 200, 14));
+        layoutWidget->setGeometry(QRect(40, 270, 200, 16));
         ATTHL = new QHBoxLayout(layoutWidget);
         ATTHL->setSpacing(6);
         ATTHL->setContentsMargins(11, 11, 11, 11);
@@ -369,17 +394,19 @@ public:
         ATTHL->setContentsMargins(0, 0, 0, 0);
         ATT = new QLabel(layoutWidget);
         ATT->setObjectName(QStringLiteral("ATT"));
+        ATT->setFont(font);
 
         ATTHL->addWidget(ATT);
 
         ATTValue = new QLabel(layoutWidget);
         ATTValue->setObjectName(QStringLiteral("ATTValue"));
+        ATTValue->setFont(font);
 
         ATTHL->addWidget(ATTValue);
 
         layoutWidget1 = new QWidget(FinishedJob);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(320, 270, 230, 14));
+        layoutWidget1->setGeometry(QRect(320, 270, 230, 16));
         WATTHL = new QHBoxLayout(layoutWidget1);
         WATTHL->setSpacing(6);
         WATTHL->setContentsMargins(11, 11, 11, 11);
@@ -387,22 +414,25 @@ public:
         WATTHL->setContentsMargins(0, 0, 0, 0);
         WATT = new QLabel(layoutWidget1);
         WATT->setObjectName(QStringLiteral("WATT"));
+        WATT->setFont(font);
 
         WATTHL->addWidget(WATT);
 
         WATTValue = new QLabel(layoutWidget1);
         WATTValue->setObjectName(QStringLiteral("WATTValue"));
+        WATTValue->setFont(font);
 
         WATTHL->addWidget(WATTValue);
 
         NextJob = new QGroupBox(Widget);
         NextJob->setObjectName(QStringLiteral("NextJob"));
         NextJob->setGeometry(QRect(740, 130, 471, 101));
+        NextJob->setFont(font);
         NextJobTbl = new QTableWidget(NextJob);
         if (NextJobTbl->columnCount() < 7)
             NextJobTbl->setColumnCount(7);
         QTableWidgetItem *__qtablewidgetitem25 = new QTableWidgetItem();
-        __qtablewidgetitem25->setFont(font1);
+        __qtablewidgetitem25->setFont(font2);
         NextJobTbl->setHorizontalHeaderItem(0, __qtablewidgetitem25);
         QTableWidgetItem *__qtablewidgetitem26 = new QTableWidgetItem();
         __qtablewidgetitem26->setFont(font);
@@ -430,6 +460,27 @@ public:
         graphLbl = new QLabel(Widget);
         graphLbl->setObjectName(QStringLiteral("graphLbl"));
         graphLbl->setGeometry(QRect(1230, 20, 121, 211));
+        graphLbl->setFont(font);
+        graphLbl->setScaledContents(false);
+        graphLbl->setWordWrap(true);
+        frame = new QFrame(Widget);
+        frame->setObjectName(QStringLiteral("frame"));
+        frame->setGeometry(QRect(0, 0, 1371, 571));
+        frame->setAutoFillBackground(false);
+        frame->setStyleSheet(QStringLiteral("background-image:url(:/images/images/cloud.jpg)"));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        frame->raise();
+        List->raise();
+        Algorithm->raise();
+        Input->raise();
+        About->raise();
+        PreInput->raise();
+        RunningJob->raise();
+        ReadyJob->raise();
+        FinishedJob->raise();
+        NextJob->raise();
+        graphLbl->raise();
 
         retranslateUi(Widget);
 
@@ -486,7 +537,7 @@ public:
         );
         DeadLineLbl->setText(QApplication::translate("Widget", "DeadLine", 0));
         About->setTitle(QApplication::translate("Widget", "About", 0));
-        AboutLbl->setText(QApplication::translate("Widget", "This simple program was completed by Maple.For more infomation, please visit the author's <a href = \"http://blog.leanote.com/maple2snow\">Home Page</a>..", 0));
+        AboutLbl->setText(QApplication::translate("Widget", "<html><head/><body><p>This simple program was completed by Maple.For more infomation, please visit the author's <a href=\"http://blog.leanote.com/maple2snow\"><span style=\" text-decoration: underline; color:#0000ff;\">Home Page</span></a>.</p></body></html>", 0));
         PreInput->setTitle(QApplication::translate("Widget", "Pre Input", 0));
         QTableWidgetItem *___qtablewidgetitem = PreInputTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("Widget", "Job Name", 0));
@@ -498,7 +549,7 @@ public:
         ___qtablewidgetitem3->setText(QApplication::translate("Widget", "DeadLine", 0));
         QTableWidgetItem *___qtablewidgetitem4 = PreInputTbl->horizontalHeaderItem(4);
         ___qtablewidgetitem4->setText(QApplication::translate("Widget", "Priority", 0));
-        RunningJob->setTitle(QApplication::translate("Widget", "Running Job", 0));
+        RunningJob->setTitle(QApplication::translate("Widget", "Running Jobs", 0));
         QTableWidgetItem *___qtablewidgetitem5 = RunJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem5->setText(QApplication::translate("Widget", "Name", 0));
         QTableWidgetItem *___qtablewidgetitem6 = RunJobTbl->horizontalHeaderItem(1);
@@ -513,7 +564,7 @@ public:
         ___qtablewidgetitem10->setText(QApplication::translate("Widget", "Need", 0));
         QTableWidgetItem *___qtablewidgetitem11 = RunJobTbl->horizontalHeaderItem(6);
         ___qtablewidgetitem11->setText(QApplication::translate("Widget", "Priority", 0));
-        ReadyJob->setTitle(QApplication::translate("Widget", "Ready Job", 0));
+        ReadyJob->setTitle(QApplication::translate("Widget", "Ready Jobs", 0));
         QTableWidgetItem *___qtablewidgetitem12 = ReadyJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem12->setText(QApplication::translate("Widget", "Job Name", 0));
         QTableWidgetItem *___qtablewidgetitem13 = ReadyJobTbl->horizontalHeaderItem(1);
@@ -524,7 +575,7 @@ public:
         ___qtablewidgetitem15->setText(QApplication::translate("Widget", "Deadline", 0));
         QTableWidgetItem *___qtablewidgetitem16 = ReadyJobTbl->horizontalHeaderItem(4);
         ___qtablewidgetitem16->setText(QApplication::translate("Widget", "Priority", 0));
-        FinishedJob->setTitle(QApplication::translate("Widget", "Finished Job", 0));
+        FinishedJob->setTitle(QApplication::translate("Widget", "Finished Jobs", 0));
         QTableWidgetItem *___qtablewidgetitem17 = FinishedJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem17->setText(QApplication::translate("Widget", "Name", 0));
         QTableWidgetItem *___qtablewidgetitem18 = FinishedJobTbl->horizontalHeaderItem(1);
@@ -560,7 +611,7 @@ public:
         ___qtablewidgetitem30->setText(QApplication::translate("Widget", "Need", 0));
         QTableWidgetItem *___qtablewidgetitem31 = NextJobTbl->horizontalHeaderItem(6);
         ___qtablewidgetitem31->setText(QApplication::translate("Widget", "Priority", 0));
-        graphLbl->setText(QApplication::translate("Widget", "GraphLabel", 0));
+        graphLbl->setText(QApplication::translate("Widget", "Click to set personal information", 0));
     } // retranslateUi
 
 };
