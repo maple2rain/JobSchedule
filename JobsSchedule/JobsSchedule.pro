@@ -20,7 +20,9 @@ SOURCES += \
     ../src/scheduler.cpp \
     ../src/proxy.cpp \
     ../src/connectionpool.cpp \
-    ../src/useroperate.cpp
+    ../src/useroperate.cpp \
+    ../src/login.cpp \
+    ../src/register.cpp
 
 HEADERS  += \
     ../inc/widget.h \
@@ -37,9 +39,17 @@ HEADERS  += \
     ../inc/useroperate.h \
     ../inc/info.h \
     ../inc/graph.h \
-    ../inc/gif.h
+    ../inc/gif.h \
+    login.h \
+    register.h \
+    ../inc/login.h \
+    ../inc/register.h \
+    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_login.h \
+    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_register.h
 
-FORMS    += widget.ui
+FORMS    += widget.ui \
+    login.ui \
+    register.ui
 
 RESOURCES += \
     rsc.qrc

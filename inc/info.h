@@ -7,10 +7,8 @@
 class Info
 {
 public:
-    Info() {
-        status = false;
-        info = "";
-    }
+    Info(const std::string &msg = "failed", bool _status = false) :
+        info(msg), status(_status){ }
     ~Info() {}
 
     /* setter */

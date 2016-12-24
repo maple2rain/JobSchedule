@@ -8,6 +8,7 @@ public:
 		const std::string &_gifName = "") :
 		username(_username),
 		gifName(_gifName){}
+    
 	~Gif() {}
 
 	/* getter */
@@ -15,8 +16,8 @@ public:
 	void setGifName(const std::string &_gifName) { gifName = _gifName; }
 
 	/* setter */
-	const std::string getUsername() { return username; }
-	const std::string getGifName() { return gifName; }
+    const std::string& getUsername() { return username; }
+    const std::string& getGifName() { return gifName; }
 
 private:
 	std::string username;

@@ -121,51 +121,29 @@ void getFileType(const std::string &path, std::string &filetype)
     }
 }
 
-const Info UserOperate::UpdateGraph(const std::string &username)
+const Info UserOperate::UpdateGraph(Graph &graph)
 {
     QSqlDatabase con;
     Info info;
     con = ConnectionPool::openConnection();
 
     try{
-//        QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "../JobsSchedule/image/graph", tr("Image (*.jpg, *.png)"));//打开文件路径，使用this为当前父窗口，“Open File”为对话框标题，“.”为默认目录，过滤器为“Text Files(*.txt)”
-//        if(!imagePath.isEmpty()) {
-//            QFile file(imagePath);
+        QSqlQuery query(con);
+        QVariant var(graph.getGraph());
 
-//            if (!file.open(QIODevice::ReadOnly)) {//以只读方式打开text文件
-//                QMessageBox::warning(this, tr("Read File"), tr("Cannot open file:\n%1").arg(path));
-//                return;
-//            }
+        /* Insert */
+        query.prepare("Insert Into user (username, graphName, graph, graphType) Values(:username, :graphName, :graph, :graphType)");
+        query.bindValue(":username", graph.getUsername().c_str());
+        query.bindValue(":graphName", graph.getGraphName().c_str());
+        query.bindValue(":graph", var);
+        query.bindValue(":graphType", graph.getGraphType().c_str());
 
-//            QByteArray data = file.readAll();
-//            file.close();
-
-//            std::string path = std::string((const char*)(imagePath.toLocal8Bit()));
-//            std::string graphName;
-//            getFileName(path, graphName);
-//            std::string graphType;
-//            getFileType(path, graphType);
-
-//            QVariant graph(data);
-//            QSqlQuery query(con);
-
-//            /* check if username valid or if user exists */
-//            query.prepare("Insert Into user (username, graphName, graph, graphType) Values(:username, :graphName, :graph, :graphType)");
-//            query.bindValue(":username", username);
-//            query.bindValue(":graphName", graphName);
-//            query.bindValue(":graph", graph);
-//            query.bindValue(":graphType", graphType);
-
-//            if(query.exec()){
-//                info.setStatus(true);
-//                info.setInfo("Sign up success!");
-//            }else{
-//                info.setInfo("Sign up failed!");
-//            }
-
-//        } else {
-//            QMessageBox::warning(this, tr("Path"), tr("You did not select any file."));
-//        }
+        if(query.exec()){
+            info.setStatus(true);
+            info.setInfo("Update graph success!");
+        }else{
+            info.setInfo("Update graph failed!");
+        }
     }catch(QSqlError e){
         qDebug() << e;
     }
@@ -174,10 +152,30 @@ const Info UserOperate::UpdateGraph(const std::string &username)
     return info;
 }
 
-
-const Info UserOperate::UpdateGraph()
+const Info UpdateGif(Gif& gif)
 {
-    return UpdateGraph(username);
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* Insert */
+        query.prepare("Insert Into user (username, gifName) Values(:username, :gifName)");
+        query.bindValue(":username", gif.getUsername().c_str());
+        query.bindValue(":gifName", gif.getGifName().c_str());
+
+        if(query.exec()){
+            info.setStatus(true);
+            info.setInfo("Update gif success!");
+        }else{
+            info.setInfo("Update gif failed!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    ConnectionPool::closeConnection(con);
+    return info;
 }
-
-

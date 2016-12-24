@@ -3,6 +3,8 @@
 
 #include "ConnectionPool.h"
 #include "info.h"
+#include "graph.h"
+#include "gif.h"
 #include <string>
 
 class UserOperate
@@ -20,8 +22,8 @@ public:
     const Info AddUser(const std::string &username, const std::string &passwd);
     const Info CheckUser(const std::string &username, const std::string &passwd);
     const Info CheckUser();
-    const Info UpdateGraph(const std::string &username);
-    const Info UpdateGraph();
+    const Info UpdateGraph(Graph &graph);
+    const Info UpdateGif(Gif& gif);
 
 
     /* setter */
