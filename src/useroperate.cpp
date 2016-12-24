@@ -57,6 +57,11 @@ const Info UserOperate::AddUser(const std::string &username, const std::string &
     return info;
 }
 
+const Info UserOperate::AddUser()
+{
+    return AddUser(username, passwd);
+}
+
 const Info UserOperate::CheckUser(const std::string &username, const std::string &passwd)
 {
     QSqlDatabase con;

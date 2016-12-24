@@ -20,6 +20,7 @@ public:
 
     /* sql operate */
     const Info AddUser(const std::string &username, const std::string &passwd);
+    const Info AddUser();
     const Info CheckUser(const std::string &username, const std::string &passwd);
     const Info CheckUser();
     const Info UpdateGraph(Graph &graph);

@@ -114,7 +114,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="PasswdLineEdit"/>
+       <widget class="QLineEdit" name="PasswdLineEdit">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -147,6 +151,9 @@
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
         </property>
        </widget>
       </item>

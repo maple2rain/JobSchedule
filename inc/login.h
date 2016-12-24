@@ -16,13 +16,16 @@ public:
     explicit Login(QWidget *parent = 0);
     ~Login();
 
+    void signInSignalSend() {
+        emit userSignInSignal();
+    }
+
 private slots:
     void on_LoginBtn_clicked();
     void on_RegisterBtn_clicked();
 
 signals:
     void userSignInSignal();
-    void userSignUpSignal();
 };
 
 #endif // LOGIN_H
