@@ -16,6 +16,11 @@ public:
     explicit Register(QWidget *parent = 0);
     ~Register();
 
+private slots:
+    void on_OkBtn_clicked();
+
+    void on_CancelBtn_clicked();
+
 private:
     Ui::Register *ui;
 };

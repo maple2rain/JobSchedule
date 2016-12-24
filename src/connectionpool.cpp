@@ -52,7 +52,12 @@ void ConnectionPool::release() {
 
 QSqlDatabase ConnectionPool::openConnection() {
 	ConnectionPool& pool = ConnectionPool::getInstance();
-	QString connectionName;
+    QString connectionName;
+
+    //    qDebug()<<"available drivers:";
+    //    QStringList drivers = QSqlDatabase::drivers();
+    //    foreach(QString driver, drivers)
+    //        qDebug() << driver;
 
 	QMutexLocker locker(&mutex);
 

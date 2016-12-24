@@ -18,8 +18,11 @@ public:
 
 private slots:
     void on_LoginBtn_clicked();
-
     void on_RegisterBtn_clicked();
+
+signals:
+    void userSignInSignal();
+    void userSignUpSignal();
 };
 
 #endif // LOGIN_H

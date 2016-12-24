@@ -6,21 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>313</width>
-    <height>219</height>
+    <width>287</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Sign Up</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="rsc.qrc">
+    <normaloff>:/images/images/ico.ico</normaloff>:/images/images/ico.ico</iconset>
+  </property>
   <widget class="QPushButton" name="OkBtn">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>160</y>
+     <x>30</x>
+     <y>130</y>
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(249, 249, 249)</string>
    </property>
    <property name="text">
     <string>OK</string>
@@ -29,11 +43,21 @@
   <widget class="QPushButton" name="CancelBtn">
    <property name="geometry">
     <rect>
-     <x>176</x>
-     <y>160</y>
+     <x>170</x>
+     <y>130</y>
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(249, 249, 249)</string>
    </property>
    <property name="text">
     <string>Cancel</string>
@@ -42,17 +66,27 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>30</y>
-     <width>197</width>
+     <x>30</x>
+     <y>10</y>
+     <width>211</width>
      <height>101</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="topMargin">
+     <number>0</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QLabel" name="UserNameLbl">
+        <property name="font">
+         <font>
+          <family>Calibri</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>User Name</string>
         </property>
@@ -67,8 +101,15 @@
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <family>Calibri</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>Password </string>
+         <string>Password   </string>
         </property>
        </widget>
       </item>
@@ -81,19 +122,70 @@
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QLabel" name="ConfirmLbl">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Calibri</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>Confirmed</string>
+         <string>Confirmed  </string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="ConfirmLineEdit"/>
+       <widget class="QLineEdit" name="ConfirmLineEdit">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
    </layout>
   </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>-290</x>
+     <y>-79</y>
+     <width>581</width>
+     <height>351</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url(:/images/images/talent.png)</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>OkBtn</zorder>
+  <zorder>CancelBtn</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>UserNameLbl</zorder>
+  <zorder></zorder>
+  <zorder>UserNameLbl</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="rsc.qrc"/>
+ </resources>
  <connections/>
 </ui>

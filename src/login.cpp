@@ -5,6 +5,7 @@ Login::Login(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+    setFixedSize(this->width(), this->height());
 }
 
 Login::~Login()

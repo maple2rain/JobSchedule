@@ -13,8 +13,8 @@
 #include "../inc/jobrecorder.h"
 #include "../inc/useroperate.h"
 
-QMutex readyJobLock;
-QMutex waitingJobLock;
+QMutex JobLock;
+UserOperate user;
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
     std::shared_ptr<Proxy> proxy = std::make_shared<Proxy>(); // the proxy is to deal with the interaction of scheduler and window
     JobRecorder jobRecorder; // the recorder is to record the status of job
     Login l;
-    UserOperate user;
+    Register r;
+
    // Login l;
 
 
@@ -52,7 +53,14 @@ int main(int argc, char *argv[])
         w.drawTable(jobRecorder);//使用lambda表达式实现默认参数
     });
 
+    QObject::connect(&l, &Login::userSignInSignal,
+                     &w, &Widget::show);
+
+    QObject::connect(&l, &Login::userSignInSignal,
+                     &r, &Register::show);
+
     l.show();
+    r.show();
 //    if(true){
 //        w.show();
 //    }
