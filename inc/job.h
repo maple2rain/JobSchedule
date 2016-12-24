@@ -24,12 +24,12 @@ public:
         us16 _joinTime,
         us16 _lastTime,
         us16 _deadLine,
-        us16 _PrioOrSlice = 0)
-        : jobName(name),
-          joinTime(_joinTime),
-          lastTime(_lastTime),
-          deadLine(_deadLine),
-          PrioOrSlice(_PrioOrSlice)
+        us16 _PrioOrSlice = 0) :
+        jobName(name),
+        joinTime(_joinTime),
+        lastTime(_lastTime),
+        deadLine(_deadLine),
+        PrioOrSlice(_PrioOrSlice)
     {
         startTime = 0;
         needTime = _lastTime;

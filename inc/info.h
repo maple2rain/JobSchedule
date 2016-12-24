@@ -6,8 +6,6 @@
 /* to record the info of sql operation */
 class Info
 {
-private:
-    Info operator=(Info&);
 public:
     Info() {
         status = false;

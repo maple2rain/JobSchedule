@@ -1137,14 +1137,17 @@
     </column>
    </widget>
   </widget>
-  <widget class="QGraphicsView" name="graphicsView">
+  <widget class="QLabel" name="graphLbl">
    <property name="geometry">
     <rect>
      <x>1230</x>
-     <y>10</y>
-     <width>131</width>
-     <height>221</height>
+     <y>20</y>
+     <width>121</width>
+     <height>211</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>GraphLabel</string>
    </property>
   </widget>
  </widget>

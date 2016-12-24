@@ -12,9 +12,38 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QPixmap>
+#include <QMovie>
 
 us16 Widget::runtime = 0;
 us16 Widget::waittime = 100; // ms
+
+void Widget::test()
+{
+    //    QByteArray bytes;
+    //    QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "../JobsSchedule/images/graph", tr("Image (*.jpg *.png *.bmp *.gif)"));//打开文件路径，使用this为当前父窗口，“Open File”为对话框标题，“.”为默认目录，过滤器为“Text Files(*.txt)”
+    //    if(!imagePath.isEmpty()) {
+    //        QFile file(imagePath);
+
+    //        if (!file.open(QIODevice::ReadOnly)) {//以只读方式打开text文件
+    //            QMessageBox::warning(this, tr("Read File"), tr("Cannot open file:\n%1").arg(imagePath));
+    //            return;
+    //        }
+
+    //        bytes = file.readAll();
+    //        file.close();
+    //    }
+
+    ////    QPixmap photo;
+    ////    photo.loadFromData(bytes, "JPG");
+    //    qDebug() << imagePath;
+
+    //    QMovie *movie = new QMovie(imagePath);
+    //    graphLbl->setPixmap(photo);
+    //    graphLbl->setMovie(movie);
+    //    graphLbl->setScaledContents(true);
+    //    movie->start();
+}
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent)
@@ -35,6 +64,7 @@ Widget::Widget(QWidget *parent) :
 
 
     InitModule();
+
 }
 
 void Widget::InitModule()

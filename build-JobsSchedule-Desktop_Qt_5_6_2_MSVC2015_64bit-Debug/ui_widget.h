@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -85,7 +84,7 @@ public:
     QLabel *WATTValue;
     QGroupBox *NextJob;
     QTableWidget *NextJobTbl;
-    QGraphicsView *graphicsView;
+    QLabel *graphLbl;
 
     void setupUi(QWidget *Widget)
     {
@@ -428,9 +427,9 @@ public:
         NextJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         NextJobTbl->horizontalHeader()->setDefaultSectionSize(60);
         NextJobTbl->horizontalHeader()->setStretchLastSection(true);
-        graphicsView = new QGraphicsView(Widget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(1230, 10, 131, 221));
+        graphLbl = new QLabel(Widget);
+        graphLbl->setObjectName(QStringLiteral("graphLbl"));
+        graphLbl->setGeometry(QRect(1230, 20, 121, 211));
 
         retranslateUi(Widget);
 
@@ -561,6 +560,7 @@ public:
         ___qtablewidgetitem30->setText(QApplication::translate("Widget", "Need", 0));
         QTableWidgetItem *___qtablewidgetitem31 = NextJobTbl->horizontalHeaderItem(6);
         ___qtablewidgetitem31->setText(QApplication::translate("Widget", "Priority", 0));
+        graphLbl->setText(QApplication::translate("Widget", "GraphLabel", 0));
     } // retranslateUi
 
 };

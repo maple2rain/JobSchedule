@@ -34,7 +34,10 @@ HEADERS  += \
     ../inc/require.h \
     ../inc/ConnectionPool.h \
     ../inc/jobsoperate.h \
-    ../inc/useroperate.h
+    ../inc/useroperate.h \
+    ../inc/info.h \
+    ../inc/graph.h \
+    ../inc/gif.h
 
 FORMS    += widget.ui
 

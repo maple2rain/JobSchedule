@@ -1,7 +1,7 @@
 create database Jobs;
 use Jobs;
 
-drop table jobAttribute;
+drop table gif;
 
 create table user (
 	userID     INT unsigned AUTO_INCREMENT,
@@ -13,20 +13,20 @@ create table user (
 
 create table graph(
 	graphID 	INT unsigned AUTO_INCREMENT,
-    userID	 	INT unsigned, 
+    username   	VARCHAR(20) UNIQUE, 
     graphName	varchar(256),
+    graphType	varchar(20),
     graph		blob,
     PRIMARY KEY (graphID),
-	FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE
+	FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE
 );
 
 create table gif(
 	gifID 	INT unsigned AUTO_INCREMENT,
-    userID	INT unsigned, 
+	username   VARCHAR(20) UNIQUE,
     gifName	varchar(256),
-    gif 	blob,
     PRIMARY KEY (gifID),
-	FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE
+	FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE
 );
 
 create table blackList (
@@ -36,9 +36,9 @@ create table blackList (
 
 create table job (
 	jobID		INT unsigned AUTO_INCREMENT,
-    userID		INT unsigned,
+    username   VARCHAR(20) UNIQUE,
 	PRIMARY KEY (jobID),
-    FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE
+    FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE
 );
 
 create table jobAttribute (
@@ -59,19 +59,24 @@ create table jobAttribute (
 
 create table jobFinished (
 	jobID		INT unsigned AUTO_INCREMENT,
-    userID		INT unsigned,
+    username   VARCHAR(20) UNIQUE,
 	PRIMARY KEY (jobID),
-    FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE, 
+    FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE, 
     FOREIGN KEY (jobID) REFERENCES  job (jobID) ON DELETE CASCADE
 );
 
 create table jobFailed (
 	jobID		INT unsigned AUTO_INCREMENT,
-    userID		INT unsigned,
+    username   VARCHAR(20) UNIQUE,
 	PRIMARY KEY (jobID),
-    FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE, 
+    FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE, 
     FOREIGN KEY (jobID) REFERENCES  job (jobID) ON DELETE CASCADE
 );
 
+alter table gif drop gif;
 select * from user;
 insert into user (username, passwd, signupdate) values('maple', '123456', '2016-12-10');
+#unsigned id = select userID from user where username = 'maple';
+insert into job(userID) values(1);
+insert into jobAttribute(jobID, jobName, committime, lasttime) values(1, 1, 1, 1);
+select distinct *  from job left outer Join jobAttribute using (jobID);

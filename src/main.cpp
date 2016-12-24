@@ -47,7 +47,10 @@ int main(int argc, char *argv[])
                     [&](const JobRecorder &jobRecorder){
                         w.drawTable(jobRecorder);//使用lambda表达式实现默认参数
                     });
-    user.AddUser("maple5", "123456");
+    Info info = user.AddUser("maple6", "123456");
+    qDebug() << info.getStatus() << " " << info.getInfo().c_str();
+    info = user.CheckUser("maple6", "123456");
+    qDebug() << info.getStatus() << " " << info.getInfo().c_str();
     w.show();
 
 

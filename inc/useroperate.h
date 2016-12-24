@@ -2,6 +2,8 @@
 #define USEROPERATE_H
 
 #include "ConnectionPool.h"
+#include "info.h"
+#include <string>
 
 class UserOperate
 {
@@ -10,10 +12,29 @@ private:
     UserOperate operator=(UserOperate&);
 public:
     UserOperate() {}
+    UserOperate(const std::string &_username, const std::string &_passwd) :
+        username(_username), passwd(_passwd) {}
     ~UserOperate() {}
 
-    bool AddUser(const std::string &username, const std::string &passwd);
+    /* sql operate */
+    const Info AddUser(const std::string &username, const std::string &passwd);
+    const Info CheckUser(const std::string &username, const std::string &passwd);
+    const Info CheckUser();
+    const Info UpdateGraph(const std::string &username);
+    const Info UpdateGraph();
 
+
+    /* setter */
+    void setUserName(const std::string &_username) { username = _username; }
+    void setPassword(const std::string &_passwd) { passwd = _passwd; }
+
+    /* getter */
+    const std::string &getUserName() { return username; }
+    const std::string &getPassword() { return passwd; }
+
+private:
+    std::string username;
+    std::string passwd;
 };
 
 
