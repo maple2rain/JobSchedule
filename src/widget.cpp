@@ -1,5 +1,6 @@
 ﻿#include "ui_widget.h"
 #include "../inc/widget.h"
+#include "../inc/person.h"
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -111,11 +112,19 @@ void Widget::initMap()
     radioBtnMap[std::string("RR")] = 5;
 }
 
+void Widget::showPersonInfo()
+{
+    Person *person = new Person;
+    person->setAttribute(Qt::WA_DeleteOnClose);
+    person->setWindowModality(Qt::ApplicationModal);//set parent window to lock
+    person->show();
+}
+
 bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == graphLbl){
         if(event->type() == QEvent::MouseButtonPress){//press event
-            QMessageBox::warning(this, tr("Warning"), tr("graph"));
+            showPersonInfo();
             return true;
         }else{
             return false;

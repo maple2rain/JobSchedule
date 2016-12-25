@@ -94,6 +94,7 @@ private:
     void commitJob(ValidJob *validJob);
     void dealWithJobFromFile(QTextStream &in);
     void stopEvent();
+    void showPersonInfo();
     void test();
 
 private:

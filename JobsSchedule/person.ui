@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>person</class>
- <widget class="QWidget" name="person">
+ <class>Person</class>
+ <widget class="QWidget" name="Person">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1051</width>
+    <width>985</width>
     <height>559</height>
    </rect>
   </property>
@@ -16,11 +16,18 @@
   <widget class="QGroupBox" name="FinishedJob">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>300</x>
      <y>240</y>
      <width>671</width>
      <height>301</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Finished Jobs</string>
@@ -170,7 +177,7 @@
       <x>40</x>
       <y>270</y>
       <width>200</width>
-      <height>14</height>
+      <height>16</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="ATTHL">
@@ -196,7 +203,7 @@
       <x>320</x>
       <y>270</y>
       <width>230</width>
-      <height>14</height>
+      <height>16</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="WATTHL">
@@ -220,11 +227,18 @@
   <widget class="QGroupBox" name="PreInput">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>300</x>
      <y>10</y>
      <width>671</width>
      <height>211</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="title">
     <string>Failed Jobs</string>
@@ -373,6 +387,13 @@
      <height>161</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>Person Information</string>
    </property>
@@ -507,6 +528,13 @@
      <height>161</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>Graph</string>
    </property>
@@ -533,6 +561,13 @@
      <height>171</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
     <string>Gif</string>
    </property>
@@ -550,6 +585,34 @@
     </property>
    </widget>
   </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>991</width>
+     <height>561</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url(:/images/images/Urban Dream.jpg)</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>FinishedJob</zorder>
+  <zorder>PreInput</zorder>
+  <zorder>personBox</zorder>
+  <zorder>graphBox</zorder>
+  <zorder>gifBox</zorder>
  </widget>
  <resources/>
  <connections/>

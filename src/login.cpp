@@ -37,5 +37,6 @@ void Login::on_RegisterBtn_clicked()
 {
     Register *r = new Register;
     r->setAttribute(Qt::WA_DeleteOnClose);
+    r->setWindowModality(Qt::ApplicationModal);//set parent window to lock
     r->show();
 }

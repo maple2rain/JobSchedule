@@ -1,12 +1,12 @@
 ﻿#include "../inc/person.h"
 #include "ui_person.h"
 
-person::person(QWidget *parent) :
+Person::Person(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
 }
 
-person::~person()
+Person::~Person()
 {
 }

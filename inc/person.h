@@ -5,16 +5,16 @@
 #include "ui_person.h"
 
 namespace Ui {
-class person;
+class Person;
 }
 
-class person : public QWidget, public Ui::person
+class Person : public QWidget, public Ui::Person
 {
     Q_OBJECT
 
 public:
-    explicit person(QWidget *parent = 0);
-    ~person();
+    explicit Person(QWidget *parent = 0);
+    ~Person();
 
 private:
 };

@@ -125,7 +125,7 @@ public:
         ClearAllDataBtn = new QPushButton(List);
         ClearAllDataBtn->setObjectName(QStringLiteral("ClearAllDataBtn"));
         ClearAllDataBtn->setGeometry(QRect(50, 80, 75, 23));
-        ClearAllDataBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        ClearAllDataBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249);"));
         RunBtn = new QPushButton(List);
         RunBtn->setObjectName(QStringLiteral("RunBtn"));
         RunBtn->setGeometry(QRect(140, 80, 75, 23));
