@@ -1,5 +1,4 @@
 ﻿#include "../inc/login.h"
-#include "ui_login.h"
 #include "../inc/useroperate.h"
 #include "../inc/info.h"
 #include "../inc/register.h"
@@ -27,6 +26,8 @@ void Login::on_LoginBtn_clicked()
 
     if(info.getStatus() == true){
         signInSignalSend();
+        user.GetUserID();
+        qDebug() << "userID" << user.getUserID();
         this->close();
     }else{
         QMessageBox::warning(this, tr("Warning"), tr(info.getInfo().c_str()));

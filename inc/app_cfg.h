@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+typedef unsigned int us16;
+
 /* debug print define */
 #define DEBUG_ON 1
 #if DEBUG_ON

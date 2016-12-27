@@ -3,34 +3,30 @@
 
 #include <string>
 #include <QByteArray>
+#include "app_cfg.h"
 
 class Graph
 {
 public:
-    Graph(const std::string &_username = "",
-          const std::string &_graphName = "",
+    Graph(const std::string &_id = "",
           const std::string &_graphType = "",
           const QByteArray &_graph = NULL) :
-          username(_username),
-          graphName(_graphName),
+          id(_id),
           graphType(_graphType),
           graph(_graph) {}
     ~Graph() {}
 
-    /* getter */
-    void setUsername(const std::string &_username) { username = _username; }
-    void setGraph(const QByteArray &byte) { graph = byte; }
-    void setGraphName(const std::string &_graphName) { graphName = _graphName; }
-    void setGraphType(const std::string &_graphType) { graphType = _graphType; }
-
     /* setter */
-    const std::string& getUsername() { return username; }
-    const std::string& getGraphName() { return graphName; }
+    void setGraph(const QByteArray &byte) { graph = byte; }
+    void setGraphType(const std::string &_graphType) { graphType = _graphType; }
+    void setGraphID(const std::string &_id) { id = _id; }
+
+    /* getter */
     const std::string& getGraphType() { return graphType; }
     const QByteArray& getGraph() { return graph; }
+    std::string& getGraphID() { return id; }
 private:
-    std::string username;
-    std::string graphName;
+    std::string id;
     std::string graphType;
     QByteArray graph;
 };

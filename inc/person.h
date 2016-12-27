@@ -15,8 +15,21 @@ class Person : public QWidget, public Ui::Person
 public:
     explicit Person(QWidget *parent = 0);
     ~Person();
+    void selectGraph();
+    void selectGif();
+
+private slots:
+    void on_ModifyBtn_clicked();
+    void on_EchoChkBox_clicked(bool checked);
 
 private:
+    void setUserData();
+
+public slots:
+    void changeUserData() { setUserData(); }
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
 };
 
 #endif // PERSON_H

@@ -1,8 +1,8 @@
 ﻿#ifndef JOB_H
 #define JOB_H
 #include <string>
+#include "app_cfg.h"
 
-typedef unsigned short us16;
 /* The Attribute of jobs */
 class Job
 {

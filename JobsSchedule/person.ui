@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Person</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="rsc.qrc">
+    <normaloff>:/images/images/ico.ico</normaloff>:/images/images/ico.ico</iconset>
   </property>
   <widget class="QGroupBox" name="FinishedJob">
    <property name="geometry">
@@ -53,8 +57,11 @@
     <property name="sortingEnabled">
      <bool>true</bool>
     </property>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>true</bool>
+    </attribute>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>65</number>
+     <number>58</number>
     </attribute>
     <attribute name="horizontalHeaderStretchLastSection">
      <bool>true</bool>
@@ -62,6 +69,18 @@
     <attribute name="verticalHeaderDefaultSectionSize">
      <number>25</number>
     </attribute>
+    <column>
+     <property name="text">
+      <string>ID</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
     <column>
      <property name="text">
       <string>Job Name</string>
@@ -160,7 +179,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Weight Trun over</string>
+      <string>Weight Turn over</string>
      </property>
      <property name="font">
       <font>
@@ -268,7 +287,7 @@
      <bool>false</bool>
     </attribute>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>75</number>
+     <number>65</number>
     </attribute>
     <attribute name="horizontalHeaderMinimumSectionSize">
      <number>15</number>
@@ -279,6 +298,18 @@
     <attribute name="verticalHeaderDefaultSectionSize">
      <number>25</number>
     </attribute>
+    <column>
+     <property name="text">
+      <string>ID</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </column>
     <column>
      <property name="text">
       <string>Job Name</string>
@@ -373,8 +404,11 @@
       <height>171</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/images/images/fail.png);</string>
+    </property>
     <property name="text">
-     <string>Fail Zone</string>
+     <string/>
     </property>
    </widget>
   </widget>
@@ -384,7 +418,7 @@
      <x>10</x>
      <y>10</y>
      <width>271</width>
-     <height>161</height>
+     <height>181</height>
     </rect>
    </property>
    <property name="font">
@@ -397,32 +431,6 @@
    <property name="title">
     <string>Person Information</string>
    </property>
-   <widget class="QPushButton" name="EchoBtn">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>120</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Calibri</family>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(249, 249, 249)</string>
-    </property>
-    <property name="text">
-     <string>Echo</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget_3">
     <property name="geometry">
      <rect>
@@ -518,14 +526,66 @@
      <string>Modify</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="DeleteBtn">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>150</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(249, 249, 249)</string>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="WarningChkBox">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>154</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Warning</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="EchoChkBox">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>123</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Echo</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="graphBox">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>190</y>
+     <y>210</y>
      <width>271</width>
-     <height>161</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="font">
@@ -542,9 +602,9 @@
     <property name="geometry">
      <rect>
       <x>13</x>
-      <y>21</y>
+      <y>20</y>
       <width>241</width>
-      <height>131</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="text">
@@ -614,6 +674,8 @@
   <zorder>graphBox</zorder>
   <zorder>gifBox</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="rsc.qrc"/>
+ </resources>
  <connections/>
 </ui>

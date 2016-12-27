@@ -23,14 +23,14 @@ SOURCES += \
     ../src/useroperate.cpp \
     ../src/login.cpp \
     ../src/register.cpp \
-    ../src/person.cpp
+    ../src/person.cpp \
+    ../src/personmodify.cpp
 
 HEADERS  += \
     ../inc/widget.h \
     ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_widget.h \
     ../inc/job.h \
     ../inc/scheduler.h \
-    ../inc/producer.h \
     ../inc/proxy.h \
     ../inc/jobrecorder.h \
     ../inc/app_cfg.h \
@@ -46,7 +46,8 @@ HEADERS  += \
     ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_login.h \
     ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_register.h \
     ../inc/person.h \
-    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_person.h
+    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_person.h \
+    ../inc/personmodify.h
 
 FORMS    += widget.ui \
     login.ui \

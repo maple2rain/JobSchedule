@@ -8,6 +8,8 @@
 #include <string>
 #include <QObject>
 #include <QTextStream>
+#include <QFileDialog>
+#include <QCryptographicHash>
 #include "../inc/scheduler.h"
 #include "../inc/proxy.h"
 #include "../inc/jobrecorder.h"
@@ -54,8 +56,23 @@ int main(int argc, char *argv[])
 //        w.show();
 //    }
 
+//    QString str = QFileDialog::getOpenFileName();
+//    if(str.isEmpty()){
+//        return 0;
+//    }
+//    QFile file(str);
+//    if(!file.open(QFile::ReadOnly)){
+//        return 0;
+//    }
 
-
+//    QCryptographicHash hash(QCryptographicHash::Md5);
+//    if(!file.atEnd()){
+//        hash.addData(file.readAll());
+//    }
+//    qDebug() << hash.result().size();
+//    QString md5;
+//    md5.append(hash.result().toHex());
+//    qDebug() << md5 << md5.size();
 
     return a.exec();
 }

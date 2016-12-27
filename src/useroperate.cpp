@@ -5,6 +5,46 @@
 #include <QMessageBox>
 #include <string>
 
+const Info UserOperate::GetUserID(const std::string &username)
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* select user id */
+        query.prepare("Select userID From user Where username = (:username)");
+        query.bindValue(":username", username.c_str());
+
+        if(query.exec()){
+            if(query.next()){
+                info.setStatus(true);
+                setUserID(query.value("userID").toUInt());
+                info.setInfo("Get UserID!");
+            }else{
+                info.setInfo("There is not such user whose username is " + username + "!");
+            }
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Get UserID Failed!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    qDebug() << info.getInfo().c_str();
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
+
+const Info UserOperate::GetUserID()
+{
+    return GetUserID(username);
+}
+
 const Info UserOperate::AddUser(const std::string &username, const std::string &passwd)
 {
     QSqlDatabase con;
@@ -15,14 +55,14 @@ const Info UserOperate::AddUser(const std::string &username, const std::string &
         QSqlQuery query(con);
 
         /* check if it is on black list */
-        query.prepare("Select * from blacklist where username = (:username) limit 1");
+        query.prepare("Select * From blacklist Where username = (:username) Limit 1");
         query.bindValue(":username", username.c_str());
         if(query.exec()){
             if(query.next()){
                 info.setInfo("The user is on blacklist");
             }else{
                 /* check if it it exists yet */
-                query.prepare("Select * from user where username = (:username) limit 1");
+                query.prepare("Select * From user Where username = (:username) Limit 1");
                 query.bindValue(":username", username.c_str());
 
                 if(query.exec()){
@@ -41,6 +81,7 @@ const Info UserOperate::AddUser(const std::string &username, const std::string &
                             info.setStatus(true);
                             info.setInfo("Sign up success!");
                         }else{
+                            qDebug() << query.lastError();
                             info.setInfo("Sign up failed!");
                         }
                     }
@@ -62,6 +103,44 @@ const Info UserOperate::AddUser()
     return AddUser(username, passwd);
 }
 
+const Info UserOperate::UpdateUser(const std::string &username, const std::string &passwd, us16 uid)
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* update user info */
+        query.prepare("Update user Set username = ?, passwd = ? Where userID = ?");
+        query.bindValue(0, username.c_str());
+        query.bindValue(1, passwd.c_str());
+        query.bindValue(2, uid);
+
+        if(query.exec()){
+            info.setStatus(true);
+            info.setInfo("Modify success!");
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Modify failed!\n"
+                         "Duplicate username!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    qDebug() << info.getInfo().c_str();
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
+
+const Info UserOperate::UpdateUser()
+{
+    return UpdateUser(username, passwd, uid);
+}
+
 const Info UserOperate::CheckUser(const std::string &username, const std::string &passwd)
 {
     QSqlDatabase con;
@@ -72,7 +151,7 @@ const Info UserOperate::CheckUser(const std::string &username, const std::string
         QSqlQuery query(con);
 
         /* check if username valid or if user exists */
-        query.prepare("Select username, passwd from user where username = (:username) limit 1");
+        query.prepare("Select username, passwd From user Where username = (:username) Limit 1");
         query.bindValue(":username", username.c_str());
 
         if(query.exec()){
@@ -86,6 +165,7 @@ const Info UserOperate::CheckUser(const std::string &username, const std::string
                                  "Password is not correct!");
                 }
             }else{
+                qDebug() << query.lastError();
                 info.setInfo("The user does not exist!");
             }
         }
@@ -102,31 +182,7 @@ const Info UserOperate::CheckUser()
     return CheckUser(username, passwd);
 }
 
-void getFileName(const std::string &path, std::string &filename)
-{
-    std::string::size_type pos;
-    pos = path.rfind("/");
-
-    if(std::string::npos == pos){
-        filename = path;
-    }else{
-        filename = path.substr(pos);
-    }
-}
-
-void getFileType(const std::string &path, std::string &filetype)
-{
-    std::string::size_type pos;
-    pos = path.rfind(".");
-
-    if(std::string::npos == pos){
-        filetype = "";
-    }else{
-        filetype = path.substr(pos);
-    }
-}
-
-const Info UserOperate::UpdateGraph(Graph &graph)
+const Info UserOperate::InsertGraph(Graph &graph)
 {
     QSqlDatabase con;
     Info info;
@@ -137,17 +193,17 @@ const Info UserOperate::UpdateGraph(Graph &graph)
         QVariant var(graph.getGraph());
 
         /* Insert */
-        query.prepare("Insert Into user (username, graphName, graph, graphType) Values(:username, :graphName, :graph, :graphType)");
-        query.bindValue(":username", graph.getUsername().c_str());
-        query.bindValue(":graphName", graph.getGraphName().c_str());
+        query.prepare("Insert Into graph (graphID, graph, graphType) Values(:graphID, :graph, :graphType)");
+        query.bindValue(":graphID", graph.getGraphID().c_str());
         query.bindValue(":graph", var);
         query.bindValue(":graphType", graph.getGraphType().c_str());
 
         if(query.exec()){
             info.setStatus(true);
-            info.setInfo("Update graph success!");
+            info.setInfo("Insert graph success!");
         }else{
-            info.setInfo("Update graph failed!");
+            qDebug() << query.lastError();
+            info.setInfo("Insert graph failed!");
         }
     }catch(QSqlError e){
         qDebug() << e;
@@ -157,7 +213,12 @@ const Info UserOperate::UpdateGraph(Graph &graph)
     return info;
 }
 
-const Info UpdateGif(Gif& gif)
+const Info UserOperate::InsertGraph()
+{
+    return InsertGraph(graph);
+}
+
+const Info UserOperate::UserAddGraph(us16 uid, std::string& graphID)
 {
     QSqlDatabase con;
     Info info;
@@ -167,15 +228,17 @@ const Info UpdateGif(Gif& gif)
         QSqlQuery query(con);
 
         /* Insert */
-        query.prepare("Insert Into user (username, gifName) Values(:username, :gifName)");
-        query.bindValue(":username", gif.getUsername().c_str());
-        query.bindValue(":gifName", gif.getGifName().c_str());
+        query.prepare("Insert Into user_graph (userID, graphID) Values(:userID, :graphID) "
+                      "On Duplicate Key Update graphID = (:graphID)");
+        query.bindValue(":userID", uid);
+        query.bindValue(":graphID", graphID.c_str());
 
         if(query.exec()){
             info.setStatus(true);
-            info.setInfo("Update gif success!");
+            info.setInfo("Insert user_graph success!");
         }else{
-            info.setInfo("Update gif failed!");
+            qDebug() << query.lastError();
+            info.setInfo("Insert user_graph failed!");
         }
     }catch(QSqlError e){
         qDebug() << e;
@@ -183,4 +246,147 @@ const Info UpdateGif(Gif& gif)
 
     ConnectionPool::closeConnection(con);
     return info;
+}
+
+const Info UserOperate::UserAddGraph()
+{
+    return UserAddGraph(uid, graph.getGraphID());
+}
+
+const Info UserOperate::InsertGif(Gif& gif)
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* Insert */
+        query.prepare("Insert Into gif (gifName) Values(:gifName)");
+        query.bindValue(":gifName", gif.getGifName().c_str());
+
+        if(query.exec()){
+            info.setStatus(true);
+            info.setInfo("Insert gif success!");
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Insert gif failed!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
+
+const Info UserOperate::InsertGif()
+{
+    return InsertGif(gif);
+}
+
+const Info UserOperate::UserAddGif(us16 uid, us16 gifID)
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* Insert */
+        query.prepare("Insert Into user_gif (userID, gifID) Values(:userID, :gifID)");
+        query.bindValue(":userID", uid);
+        query.bindValue(":gifID", gifID);
+
+        if(query.exec()){
+            info.setStatus(true);
+            info.setInfo("Insert user_gif success!");
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Insert user_gif failed!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
+
+const Info UserOperate::UserAddGif()
+{
+    return UserAddGif(uid, gif.getGifID());
+}
+
+const Info UserOperate::GetUserGraph()
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* Insert */
+        query.prepare("Select graphID, graphType, graph From graph, user_graph "
+                      "Where graph.graphID = user_graph.graphID and user_graph = (:userID) Limit 1");
+        query.bindValue(":userID", uid);
+        if(query.exec()){
+            /* set info */
+            graph.setGraphID(std::string((const char*)(query.value("graphID").toString().toLocal8Bit())));
+            graph.setGraphType(std::string((const char*)(query.value("graphType").toString().toLocal8Bit())));
+            graph.setGraph(query.value("graph").toByteArray());
+            info.setStatus(true);
+            info.setInfo("Get user_graph success!");
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Get user_graph failed!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
+
+const Info UserOperate::GetUserGif()
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* Insert */
+        query.prepare("Select gifID, gifName From gif, user_gif "
+                      "Where gif.gifID = user_gif.girID and user_gif.userID = (:userID) Limit 1");
+        query.bindValue(":userID", uid);
+        if(query.exec()){
+            /* set info */
+            gif.setGifID(query.value("gifID").toUInt());
+            gif.setGifName(std::string((const char*)(query.value("gifName").toString().toLocal8Bit())));
+            info.setStatus(true);
+            info.setInfo("Get user_graph success!");
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Get user_graph failed!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
+
+
+void UserOperate::getAllInfoFromDB()
+{
+    GetUserID();
+    GetUserGraph();
+    GetUserGif();
 }

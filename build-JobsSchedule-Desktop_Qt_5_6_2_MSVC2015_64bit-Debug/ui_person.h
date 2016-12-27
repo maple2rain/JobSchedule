@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -43,7 +44,6 @@ public:
     QTableWidget *FailedJobTbl;
     QLabel *FailLbl;
     QGroupBox *personBox;
-    QPushButton *EchoBtn;
     QWidget *layoutWidget_3;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
@@ -53,6 +53,9 @@ public:
     QLabel *PasswdLbl;
     QLineEdit *PasswdLineEdit;
     QPushButton *ModifyBtn;
+    QPushButton *DeleteBtn;
+    QCheckBox *WarningChkBox;
+    QCheckBox *EchoChkBox;
     QGroupBox *graphBox;
     QLabel *GraphLbl;
     QGroupBox *gifBox;
@@ -64,6 +67,9 @@ public:
         if (Person->objectName().isEmpty())
             Person->setObjectName(QStringLiteral("Person"));
         Person->resize(985, 559);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/images/images/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        Person->setWindowIcon(icon);
         FinishedJob = new QGroupBox(Person);
         FinishedJob->setObjectName(QStringLiteral("FinishedJob"));
         FinishedJob->setGeometry(QRect(300, 240, 671, 301));
@@ -73,8 +79,8 @@ public:
         font.setWeight(75);
         FinishedJob->setFont(font);
         FinishedJobTbl = new QTableWidget(FinishedJob);
-        if (FinishedJobTbl->columnCount() < 9)
-            FinishedJobTbl->setColumnCount(9);
+        if (FinishedJobTbl->columnCount() < 10)
+            FinishedJobTbl->setColumnCount(10);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         __qtablewidgetitem->setFont(font);
         FinishedJobTbl->setHorizontalHeaderItem(0, __qtablewidgetitem);
@@ -102,13 +108,17 @@ public:
         QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
         __qtablewidgetitem8->setFont(font);
         FinishedJobTbl->setHorizontalHeaderItem(8, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        __qtablewidgetitem9->setFont(font);
+        FinishedJobTbl->setHorizontalHeaderItem(9, __qtablewidgetitem9);
         FinishedJobTbl->setObjectName(QStringLiteral("FinishedJobTbl"));
         FinishedJobTbl->setGeometry(QRect(20, 20, 631, 231));
         FinishedJobTbl->setAutoFillBackground(true);
         FinishedJobTbl->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         FinishedJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         FinishedJobTbl->setSortingEnabled(true);
-        FinishedJobTbl->horizontalHeader()->setDefaultSectionSize(65);
+        FinishedJobTbl->horizontalHeader()->setCascadingSectionResizes(true);
+        FinishedJobTbl->horizontalHeader()->setDefaultSectionSize(58);
         FinishedJobTbl->horizontalHeader()->setStretchLastSection(true);
         FinishedJobTbl->verticalHeader()->setDefaultSectionSize(25);
         layoutWidget = new QWidget(FinishedJob);
@@ -148,29 +158,32 @@ public:
         PreInput->setGeometry(QRect(300, 10, 671, 211));
         PreInput->setFont(font);
         FailedJobTbl = new QTableWidget(PreInput);
-        if (FailedJobTbl->columnCount() < 7)
-            FailedJobTbl->setColumnCount(7);
-        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
-        __qtablewidgetitem9->setFont(font);
-        FailedJobTbl->setHorizontalHeaderItem(0, __qtablewidgetitem9);
+        if (FailedJobTbl->columnCount() < 8)
+            FailedJobTbl->setColumnCount(8);
         QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
         __qtablewidgetitem10->setFont(font);
-        FailedJobTbl->setHorizontalHeaderItem(1, __qtablewidgetitem10);
+        FailedJobTbl->setHorizontalHeaderItem(0, __qtablewidgetitem10);
         QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
         __qtablewidgetitem11->setFont(font);
-        FailedJobTbl->setHorizontalHeaderItem(2, __qtablewidgetitem11);
+        FailedJobTbl->setHorizontalHeaderItem(1, __qtablewidgetitem11);
         QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
         __qtablewidgetitem12->setFont(font);
-        FailedJobTbl->setHorizontalHeaderItem(3, __qtablewidgetitem12);
+        FailedJobTbl->setHorizontalHeaderItem(2, __qtablewidgetitem12);
         QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
         __qtablewidgetitem13->setFont(font);
-        FailedJobTbl->setHorizontalHeaderItem(4, __qtablewidgetitem13);
+        FailedJobTbl->setHorizontalHeaderItem(3, __qtablewidgetitem13);
         QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
         __qtablewidgetitem14->setFont(font);
-        FailedJobTbl->setHorizontalHeaderItem(5, __qtablewidgetitem14);
+        FailedJobTbl->setHorizontalHeaderItem(4, __qtablewidgetitem14);
         QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
         __qtablewidgetitem15->setFont(font);
-        FailedJobTbl->setHorizontalHeaderItem(6, __qtablewidgetitem15);
+        FailedJobTbl->setHorizontalHeaderItem(5, __qtablewidgetitem15);
+        QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
+        __qtablewidgetitem16->setFont(font);
+        FailedJobTbl->setHorizontalHeaderItem(6, __qtablewidgetitem16);
+        QTableWidgetItem *__qtablewidgetitem17 = new QTableWidgetItem();
+        __qtablewidgetitem17->setFont(font);
+        FailedJobTbl->setHorizontalHeaderItem(7, __qtablewidgetitem17);
         FailedJobTbl->setObjectName(QStringLiteral("FailedJobTbl"));
         FailedJobTbl->setGeometry(QRect(20, 20, 541, 171));
         FailedJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -178,23 +191,18 @@ public:
         FailedJobTbl->setAlternatingRowColors(true);
         FailedJobTbl->setSortingEnabled(true);
         FailedJobTbl->horizontalHeader()->setCascadingSectionResizes(false);
-        FailedJobTbl->horizontalHeader()->setDefaultSectionSize(75);
+        FailedJobTbl->horizontalHeader()->setDefaultSectionSize(65);
         FailedJobTbl->horizontalHeader()->setMinimumSectionSize(15);
         FailedJobTbl->horizontalHeader()->setStretchLastSection(true);
         FailedJobTbl->verticalHeader()->setDefaultSectionSize(25);
         FailLbl = new QLabel(PreInput);
         FailLbl->setObjectName(QStringLiteral("FailLbl"));
         FailLbl->setGeometry(QRect(580, 20, 81, 171));
+        FailLbl->setStyleSheet(QStringLiteral("image: url(:/images/images/fail.png);"));
         personBox = new QGroupBox(Person);
         personBox->setObjectName(QStringLiteral("personBox"));
-        personBox->setGeometry(QRect(10, 10, 271, 161));
+        personBox->setGeometry(QRect(10, 10, 271, 181));
         personBox->setFont(font);
-        EchoBtn = new QPushButton(personBox);
-        EchoBtn->setObjectName(QStringLiteral("EchoBtn"));
-        EchoBtn->setGeometry(QRect(150, 120, 75, 23));
-        EchoBtn->setFont(font);
-        EchoBtn->setAutoFillBackground(false);
-        EchoBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         layoutWidget_3 = new QWidget(personBox);
         layoutWidget_3->setObjectName(QStringLiteral("layoutWidget_3"));
         layoutWidget_3->setGeometry(QRect(30, 30, 214, 71));
@@ -247,13 +255,25 @@ public:
         ModifyBtn->setFont(font);
         ModifyBtn->setAutoFillBackground(false);
         ModifyBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        DeleteBtn = new QPushButton(personBox);
+        DeleteBtn->setObjectName(QStringLiteral("DeleteBtn"));
+        DeleteBtn->setGeometry(QRect(50, 150, 75, 23));
+        DeleteBtn->setFont(font);
+        DeleteBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        WarningChkBox = new QCheckBox(personBox);
+        WarningChkBox->setObjectName(QStringLiteral("WarningChkBox"));
+        WarningChkBox->setGeometry(QRect(150, 154, 71, 16));
+        WarningChkBox->setChecked(true);
+        EchoChkBox = new QCheckBox(personBox);
+        EchoChkBox->setObjectName(QStringLiteral("EchoChkBox"));
+        EchoChkBox->setGeometry(QRect(150, 123, 71, 16));
         graphBox = new QGroupBox(Person);
         graphBox->setObjectName(QStringLiteral("graphBox"));
-        graphBox->setGeometry(QRect(10, 190, 271, 161));
+        graphBox->setGeometry(QRect(10, 210, 271, 141));
         graphBox->setFont(font);
         GraphLbl = new QLabel(graphBox);
         GraphLbl->setObjectName(QStringLiteral("GraphLbl"));
-        GraphLbl->setGeometry(QRect(13, 21, 241, 131));
+        GraphLbl->setGeometry(QRect(13, 20, 241, 111));
         gifBox = new QGroupBox(Person);
         gifBox->setObjectName(QStringLiteral("gifBox"));
         gifBox->setGeometry(QRect(10, 370, 271, 171));
@@ -282,51 +302,57 @@ public:
 
     void retranslateUi(QWidget *Person)
     {
-        Person->setWindowTitle(QApplication::translate("Person", "Form", 0));
+        Person->setWindowTitle(QApplication::translate("Person", "Person", 0));
         FinishedJob->setTitle(QApplication::translate("Person", "Finished Jobs", 0));
         QTableWidgetItem *___qtablewidgetitem = FinishedJobTbl->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("Person", "Job Name", 0));
+        ___qtablewidgetitem->setText(QApplication::translate("Person", "ID", 0));
         QTableWidgetItem *___qtablewidgetitem1 = FinishedJobTbl->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("Person", "Join Time", 0));
+        ___qtablewidgetitem1->setText(QApplication::translate("Person", "Job Name", 0));
         QTableWidgetItem *___qtablewidgetitem2 = FinishedJobTbl->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QApplication::translate("Person", "Starting", 0));
+        ___qtablewidgetitem2->setText(QApplication::translate("Person", "Join Time", 0));
         QTableWidgetItem *___qtablewidgetitem3 = FinishedJobTbl->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QApplication::translate("Person", "Finish", 0));
+        ___qtablewidgetitem3->setText(QApplication::translate("Person", "Starting", 0));
         QTableWidgetItem *___qtablewidgetitem4 = FinishedJobTbl->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QApplication::translate("Person", "Last Time", 0));
+        ___qtablewidgetitem4->setText(QApplication::translate("Person", "Finish", 0));
         QTableWidgetItem *___qtablewidgetitem5 = FinishedJobTbl->horizontalHeaderItem(5);
-        ___qtablewidgetitem5->setText(QApplication::translate("Person", "Deadline", 0));
+        ___qtablewidgetitem5->setText(QApplication::translate("Person", "Last Time", 0));
         QTableWidgetItem *___qtablewidgetitem6 = FinishedJobTbl->horizontalHeaderItem(6);
-        ___qtablewidgetitem6->setText(QApplication::translate("Person", "Priority", 0));
+        ___qtablewidgetitem6->setText(QApplication::translate("Person", "Deadline", 0));
         QTableWidgetItem *___qtablewidgetitem7 = FinishedJobTbl->horizontalHeaderItem(7);
-        ___qtablewidgetitem7->setText(QApplication::translate("Person", "Turn Over", 0));
+        ___qtablewidgetitem7->setText(QApplication::translate("Person", "Priority", 0));
         QTableWidgetItem *___qtablewidgetitem8 = FinishedJobTbl->horizontalHeaderItem(8);
-        ___qtablewidgetitem8->setText(QApplication::translate("Person", "Weight Trun over", 0));
+        ___qtablewidgetitem8->setText(QApplication::translate("Person", "Turn Over", 0));
+        QTableWidgetItem *___qtablewidgetitem9 = FinishedJobTbl->horizontalHeaderItem(9);
+        ___qtablewidgetitem9->setText(QApplication::translate("Person", "Weight Turn over", 0));
         ATT->setText(QApplication::translate("Person", "Average Turnover Time:", 0));
         ATTValue->setText(QApplication::translate("Person", "time", 0));
         WATT->setText(QApplication::translate("Person", "Weighted Average Turnover Time:", 0));
         WATTValue->setText(QApplication::translate("Person", "time", 0));
         PreInput->setTitle(QApplication::translate("Person", "Failed Jobs", 0));
-        QTableWidgetItem *___qtablewidgetitem9 = FailedJobTbl->horizontalHeaderItem(0);
-        ___qtablewidgetitem9->setText(QApplication::translate("Person", "Job Name", 0));
-        QTableWidgetItem *___qtablewidgetitem10 = FailedJobTbl->horizontalHeaderItem(1);
-        ___qtablewidgetitem10->setText(QApplication::translate("Person", "Join Time", 0));
-        QTableWidgetItem *___qtablewidgetitem11 = FailedJobTbl->horizontalHeaderItem(2);
-        ___qtablewidgetitem11->setText(QApplication::translate("Person", "Starting", 0));
-        QTableWidgetItem *___qtablewidgetitem12 = FailedJobTbl->horizontalHeaderItem(3);
-        ___qtablewidgetitem12->setText(QApplication::translate("Person", "Finish", 0));
-        QTableWidgetItem *___qtablewidgetitem13 = FailedJobTbl->horizontalHeaderItem(4);
-        ___qtablewidgetitem13->setText(QApplication::translate("Person", "Last Time", 0));
-        QTableWidgetItem *___qtablewidgetitem14 = FailedJobTbl->horizontalHeaderItem(5);
-        ___qtablewidgetitem14->setText(QApplication::translate("Person", "DeadLine", 0));
-        QTableWidgetItem *___qtablewidgetitem15 = FailedJobTbl->horizontalHeaderItem(6);
-        ___qtablewidgetitem15->setText(QApplication::translate("Person", "Priority", 0));
-        FailLbl->setText(QApplication::translate("Person", "Fail Zone", 0));
+        QTableWidgetItem *___qtablewidgetitem10 = FailedJobTbl->horizontalHeaderItem(0);
+        ___qtablewidgetitem10->setText(QApplication::translate("Person", "ID", 0));
+        QTableWidgetItem *___qtablewidgetitem11 = FailedJobTbl->horizontalHeaderItem(1);
+        ___qtablewidgetitem11->setText(QApplication::translate("Person", "Job Name", 0));
+        QTableWidgetItem *___qtablewidgetitem12 = FailedJobTbl->horizontalHeaderItem(2);
+        ___qtablewidgetitem12->setText(QApplication::translate("Person", "Join Time", 0));
+        QTableWidgetItem *___qtablewidgetitem13 = FailedJobTbl->horizontalHeaderItem(3);
+        ___qtablewidgetitem13->setText(QApplication::translate("Person", "Starting", 0));
+        QTableWidgetItem *___qtablewidgetitem14 = FailedJobTbl->horizontalHeaderItem(4);
+        ___qtablewidgetitem14->setText(QApplication::translate("Person", "Finish", 0));
+        QTableWidgetItem *___qtablewidgetitem15 = FailedJobTbl->horizontalHeaderItem(5);
+        ___qtablewidgetitem15->setText(QApplication::translate("Person", "Last Time", 0));
+        QTableWidgetItem *___qtablewidgetitem16 = FailedJobTbl->horizontalHeaderItem(6);
+        ___qtablewidgetitem16->setText(QApplication::translate("Person", "DeadLine", 0));
+        QTableWidgetItem *___qtablewidgetitem17 = FailedJobTbl->horizontalHeaderItem(7);
+        ___qtablewidgetitem17->setText(QApplication::translate("Person", "Priority", 0));
+        FailLbl->setText(QString());
         personBox->setTitle(QApplication::translate("Person", "Person Information", 0));
-        EchoBtn->setText(QApplication::translate("Person", "Echo", 0));
         UserNameLbl->setText(QApplication::translate("Person", "User Name", 0));
         PasswdLbl->setText(QApplication::translate("Person", "Password   ", 0));
         ModifyBtn->setText(QApplication::translate("Person", "Modify", 0));
+        DeleteBtn->setText(QApplication::translate("Person", "Delete", 0));
+        WarningChkBox->setText(QApplication::translate("Person", "Warning", 0));
+        EchoChkBox->setText(QApplication::translate("Person", "Echo", 0));
         graphBox->setTitle(QApplication::translate("Person", "Graph", 0));
         GraphLbl->setText(QApplication::translate("Person", "Click to set graph", 0));
         gifBox->setTitle(QApplication::translate("Person", "Gif", 0));

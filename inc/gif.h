@@ -1,26 +1,25 @@
 ﻿#ifndef GIF_H
 #define GIF_H
 #include <string>
+#include "app_cfg.h"
 class Gif
 {
 public:
-	Gif(const std::string &_username = "",
-		const std::string &_gifName = "") :
-		username(_username),
+    Gif(const std::string &_gifName = "") :
 		gifName(_gifName){}
     
 	~Gif() {}
 
-	/* getter */
-	void setUsername(const std::string &_username) { username = _username; }
+    /* setter */
 	void setGifName(const std::string &_gifName) { gifName = _gifName; }
+    void setGifID(const us16 _id) { id = _id; }
 
-	/* setter */
-    const std::string& getUsername() { return username; }
+    /* getter */
     const std::string& getGifName() { return gifName; }
+    const us16 getGifID() { return id; }
 
 private:
-	std::string username;
+    us16 id;
 	std::string gifName;
 };
 #endif // GIF_H

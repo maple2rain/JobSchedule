@@ -22,7 +22,6 @@ private slots:
     void on_CancelBtn_clicked();
 
 private:
-    Ui::Register *ui;
 };
 
 #endif // REGISTER_H
