@@ -22,6 +22,7 @@ public:
     UserOperate(const std::string &_username, const std::string &_passwd) :
         username(_username), passwd(_passwd) {
         hasGif = hasGraph = false;
+        averTurnover = averWTurnOver = 0;
     }
     ~UserOperate() {}
 
@@ -61,6 +62,8 @@ public:
     const Info GetJobs(const std::string &type);
     const Info GetJob();
     const Info GetMaxJobId();
+    const Info GetTurnOver();
+
 
     void getAllInfoFromDB();
 
@@ -72,8 +75,10 @@ public:
     void setGif(const Gif &_gif) { gif = _gif; }
     void setHasGraph() { hasGraph = true; }
     void setHasGif() { hasGif = true; }
-    void setMaxJobId(us16 _jobMaxId) { jobMaxId = _jobMaxId; }
+    void setMaxJobId(const us16 _jobMaxId) { jobMaxId = _jobMaxId; }
     void clearJobs() { failedJobs.clear(); finishedJobs.clear(); }
+    void setAverTurnover(const float _averTurnover) { averTurnover = _averTurnover; }
+    void setAverWTurnover(const float _averWTurnover) { averWTurnOver = _averWTurnover; }
 
     /* getter */
     const std::string &getUserName() { return username; }
@@ -86,6 +91,8 @@ public:
     us16 getMaxJobId() { return ++jobMaxId; }
     const std::list<ptr>& getFailedJobs() const { return failedJobs; }
     const std::list<ptr>& getFinishedJobs() const { return finishedJobs; }
+    float getAverTurnover() { return averTurnover; }
+    float getAverWTurnover() { return averWTurnOver; }
 
 private:
     us16 uid;                   //user ID
@@ -96,6 +103,8 @@ private:
     Gif gif;                    //the gif belong to user which will show when jobs are running
     bool hasGraph;              //check if user has graph
     bool hasGif;                //check if user has gif
+    float averTurnover;         //average turnover time
+    float averWTurnOver;        //average weight turnover time
     std::list<ptr> finishedJobs;//list to store finished jobs
     std::list<ptr> failedJobs;  //list to store failed jobs
 };

@@ -21,6 +21,7 @@ Person::Person(QWidget *parent) :
     showGraph();
     showGif();
     drawTable();
+    drawTurnover();
     GraphLbl->installEventFilter(this);
     GifLbl->installEventFilter(this);
 
@@ -42,6 +43,22 @@ void Person::drawTable()
     for(auto it = user.getFinishedJobs().cbegin(); it != user.getFinishedJobs().cend(); ++it){
         Job *job = (*it).get();
         drawFinishedTable(job);
+    }
+}
+
+void Person::drawTurnover()
+{
+    extern QMutex UserLock;
+    extern UserOperate user;
+    QMutexLocker lockerWait(&UserLock);
+
+    Info info = user.GetTurnOver();
+    if(info.getStatus() == false){
+        ATTValue->setText("0");
+        WATTValue->setText("0");
+    }else{
+        ATTValue->setText(QString::number(user.getAverTurnover()));
+        WATTValue->setText(QString::number(user.getAverWTurnover()));
     }
 }
 
@@ -331,4 +348,7 @@ void Person::deleteTableItem(QTableWidget *table)
     extern UserOperate user;
     user.DeleteJobs(jobIDs);
 
+    if(table == FinishedJobTbl){
+        drawTurnover();
+    }
 }

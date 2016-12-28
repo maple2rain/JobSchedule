@@ -33,6 +33,7 @@ private:
     void drawFinishedTable(Job *job);
     void drawFailedTable(Job *job);
     void deleteTableItem(QTableWidget *table);
+    void drawTurnover();
 
 public slots:
     void changeUserData() { setUserData(); }

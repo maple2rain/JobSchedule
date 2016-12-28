@@ -63,7 +63,7 @@ create table blackList (
 create table job (
 	jobID				INT unsigned,
     userID  			INT unsigned, 
-    jobName   			VARCHAR(20) 	  not null,
+    joinTime   			VARCHAR(20) 	  not null,
     commitTime			smallint unsigned not null,
     lastTime			smallint unsigned not null,
     startTime			smallint unsigned,
@@ -110,7 +110,7 @@ from job;
 
 drop view jobRecords;
 
-delete from user where userID = 2;
+delete from jobs.job where userID = 3;
 select * from job;
 
 drop table jobRecord;

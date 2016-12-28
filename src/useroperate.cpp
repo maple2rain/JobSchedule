@@ -711,3 +711,38 @@ const Info UserOperate::GetJob()
     
     return GetJobs("failed");
 }
+
+const Info UserOperate::GetTurnOver()
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* aver turn over time */
+        query.prepare("Select averTurnover, averWTurnOver From overTime where userID = (:userID)");
+        query.bindValue(":userID", uid);
+
+        if(query.exec()){
+            if(query.next()){
+                setAverTurnover(query.value("averTurnover").toFloat());
+                setAverWTurnover(query.value("averWTurnOver").toFloat());
+                info.setStatus(true);
+                info.setInfo("Get turn over time success!");
+            }else{
+                qDebug() << query.lastError();
+                info.setInfo("Get turn over time failed!");
+            }
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Query error!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
