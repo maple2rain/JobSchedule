@@ -25,9 +25,8 @@ void Login::on_LoginBtn_clicked()
     Info info = user.CheckUser(); // check if uers valid
 
     if(info.getStatus() == true){
+        user.getAllInfoFromDB();
         signInSignalSend();
-        user.GetUserID();
-        qDebug() << "userID" << user.getUserID();
         this->close();
     }else{
         QMessageBox::warning(this, tr("Warning"), tr(info.getInfo().c_str()));

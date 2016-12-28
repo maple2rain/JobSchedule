@@ -16,10 +16,10 @@ Person::Person(QWidget *parent) :
 {
     setupUi(this);
     setUserData();
+    showGraph();
+    showGif();
 
-    GraphLbl->setScaledContents(true);
     GraphLbl->installEventFilter(this);
-    GifLbl->setScaledContents(true);
     GifLbl->installEventFilter(this);
 }
 
@@ -105,7 +105,6 @@ void Person::selectGraph()
         /* show pircure */
         QPixmap photo;
         photo.loadFromData(graph.getGraph(), graph.getGraphType().c_str());
-
         GraphLbl->setPixmap(photo);
 
         /* set graph attribute */
@@ -121,6 +120,32 @@ void Person::selectGraph()
     }
 }
 
+void Person::selectGif()
+{
+    QString path = QFileDialog::getOpenFileName(this, tr("Open File"), "../JobsSchedule/images/gif", tr("Image (*.gif)"));//打开文件路径，使用this为当前父窗口，“Open File”为对话框标题，“.”为默认目录，过滤器为“Text Files(*.txt)”
+    if(!path.isEmpty()) {
+        /* set gif attribute */
+        Gif gif;
+        // set gif name
+        gif.setGifName(std::string((const char*)path.toLocal8Bit()));
+
+        /* show pircure */
+        QMovie *movie = new QMovie(path, QByteArray(), this);
+
+//        movie->deleteLater();
+
+        GifLbl->setMovie(movie);
+        movie->start();
+
+        /* set graph attribute */
+
+        extern UserOperate user;
+        user.setGif(gif);
+        user.InsertGif();
+        user.UserAddGif();
+    }
+}
+
 bool Person::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == GraphLbl){
@@ -130,7 +155,34 @@ bool Person::eventFilter(QObject *watched, QEvent *event)
         }else{
             return false;
         }
+    }else if(watched = GifLbl){
+        if(event->type() == QEvent::MouseButtonPress){//press event
+            selectGif();
+            return true;
+        }else{
+            return false;
+        }
     }else{
         return QWidget::eventFilter(watched, event);
+    }
+}
+
+void Person::showGraph()
+{
+    extern UserOperate user;
+    if(user.isHasGraph()){
+        QPixmap photo;
+        photo.loadFromData(user.getGraph().getGraph(), user.getGraph().getGraphType().c_str());
+        GraphLbl->setPixmap(photo);
+    }
+}
+
+void Person::showGif()
+{
+    extern UserOperate user;
+    if(user.isHasGif()){
+        QMovie *movie = new QMovie(QString(user.getGif().getGifName().c_str()), QByteArray(), this);
+        GifLbl->setMovie(movie);
+        movie->start();
     }
 }

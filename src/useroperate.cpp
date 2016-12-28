@@ -286,6 +286,40 @@ const Info UserOperate::InsertGif()
     return InsertGif(gif);
 }
 
+const Info UserOperate::GetGifID()
+{
+    QSqlDatabase con;
+    Info info;
+    con = ConnectionPool::openConnection();
+
+    try{
+        QSqlQuery query(con);
+
+        /* get gif ID */
+        query.prepare("Select gifID From gif where gifName = (:gifName)");
+        query.bindValue(":gifName", gif.getGifName().c_str());
+
+        if(query.exec()){
+            if(query.next()){
+                info.setStatus(true);
+                gif.setGifID(query.value("gifID").toUInt());
+                info.setInfo("Get gifID success!");
+            }else{
+                qDebug() << query.lastError();
+                info.setInfo("Get gifID failed!");
+            }
+        }else{
+            qDebug() << query.lastError();
+            info.setInfo("Query error!");
+        }
+    }catch(QSqlError e){
+        qDebug() << e;
+    }
+
+    ConnectionPool::closeConnection(con);
+    return info;
+}
+
 const Info UserOperate::UserAddGif(us16 uid, us16 gifID)
 {
     QSqlDatabase con;
@@ -296,7 +330,8 @@ const Info UserOperate::UserAddGif(us16 uid, us16 gifID)
         QSqlQuery query(con);
 
         /* Insert */
-        query.prepare("Insert Into user_gif (userID, gifID) Values(:userID, :gifID)");
+        query.prepare("Insert Into user_gif (userID, gifID) Values(:userID, :gifID) "
+                      "On Duplicate Key Update gifID = (:gifID)");
         query.bindValue(":userID", uid);
         query.bindValue(":gifID", gifID);
 
@@ -317,6 +352,7 @@ const Info UserOperate::UserAddGif(us16 uid, us16 gifID)
 
 const Info UserOperate::UserAddGif()
 {
+    GetGifID();
     return UserAddGif(uid, gif.getGifID());
 }
 
@@ -330,16 +366,23 @@ const Info UserOperate::GetUserGraph()
         QSqlQuery query(con);
 
         /* Insert */
-        query.prepare("Select graphID, graphType, graph From graph, user_graph "
-                      "Where graph.graphID = user_graph.graphID and user_graph = (:userID) Limit 1");
+        query.prepare("Select graph.graphID, graphType, graph From graph, user_graph "
+                      "Where graph.graphID = user_graph.graphID and user_graph.userID = (:userID) Limit 1");
         query.bindValue(":userID", uid);
         if(query.exec()){
-            /* set info */
-            graph.setGraphID(std::string((const char*)(query.value("graphID").toString().toLocal8Bit())));
-            graph.setGraphType(std::string((const char*)(query.value("graphType").toString().toLocal8Bit())));
-            graph.setGraph(query.value("graph").toByteArray());
-            info.setStatus(true);
-            info.setInfo("Get user_graph success!");
+            if(query.next()){
+                /* set info */
+                graph.setGraphID(std::string((const char*)(query.value("graphID").toString().toLocal8Bit())));
+                graph.setGraphType(std::string((const char*)(query.value("graphType").toString().toLocal8Bit())));
+                graph.setGraph(query.value("graph").toByteArray());
+                info.setStatus(true);
+                setHasGraph();
+                info.setInfo("Get user_graph success!");
+                qDebug() << "Get user_graph success!";
+            }else{
+                info.setInfo("User doesn't has graph!");
+                qDebug() << "User doesn't has graph!";
+            }
         }else{
             qDebug() << query.lastError();
             info.setInfo("Get user_graph failed!");
@@ -362,18 +405,25 @@ const Info UserOperate::GetUserGif()
         QSqlQuery query(con);
 
         /* Insert */
-        query.prepare("Select gifID, gifName From gif, user_gif "
-                      "Where gif.gifID = user_gif.girID and user_gif.userID = (:userID) Limit 1");
+        query.prepare("Select gif.gifID, gifName From gif, user_gif "
+                      "Where gif.gifID = user_gif.gifID and user_gif.userID = (:userID) Limit 1");
         query.bindValue(":userID", uid);
         if(query.exec()){
-            /* set info */
-            gif.setGifID(query.value("gifID").toUInt());
-            gif.setGifName(std::string((const char*)(query.value("gifName").toString().toLocal8Bit())));
-            info.setStatus(true);
-            info.setInfo("Get user_graph success!");
+            if(query.next()){
+                /* set info */
+                gif.setGifID(query.value("gifID").toUInt());
+                gif.setGifName(std::string((const char*)(query.value("gifName").toString().toLocal8Bit())));
+                info.setStatus(true);
+                setHasGif();
+                qDebug() << "Get user_gif success!";
+                info.setInfo("Get user_gif success!");
+            }else{
+                info.setInfo("User doesn't has gif!");
+                qDebug() << "User doesn't has gif!";
+            }
         }else{
             qDebug() << query.lastError();
-            info.setInfo("Get user_graph failed!");
+            info.setInfo("Get user_gif failed!");
         }
     }catch(QSqlError e){
         qDebug() << e;

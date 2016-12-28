@@ -1,6 +1,7 @@
 ﻿#include "ui_widget.h"
 #include "../inc/widget.h"
 #include "../inc/person.h"
+#include "../inc/useroperate.h"
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -64,7 +65,6 @@ Widget::Widget(QWidget *parent) :
 
     graphLbl->installEventFilter(this);
 
-
     InitModule();
 
 }
@@ -118,6 +118,26 @@ void Widget::showPersonInfo()
     person->setAttribute(Qt::WA_DeleteOnClose);
     person->setWindowModality(Qt::ApplicationModal);//set parent window to lock
     person->show();
+}
+
+void Widget::showGraph()
+{
+    extern UserOperate user;
+    if(user.isHasGraph()){
+        QPixmap photo;
+        photo.loadFromData(user.getGraph().getGraph(), user.getGraph().getGraphType().c_str());
+        graphLbl->setPixmap(photo);
+    }
+}
+
+void Widget::showGif()
+{
+    extern UserOperate user;
+    if(user.isHasGif()){
+        QMovie *movie = new QMovie(QString(user.getGif().getGifName().c_str()), QByteArray(), this);
+        graphLbl->setMovie(movie);
+        movie->start();
+    }
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)

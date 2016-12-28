@@ -30,13 +30,13 @@ public:
     void jobSend(Job *job){
         emit jobCommingSignal(job);
     }
-
     void timeRun(){
         emit timeRunningSignal(runtime);
     }
 public slots:
     void drawTable(const JobRecorder &jobRecorder);
-
+    void showGraph();
+    void showGif();
 private slots:
     /* if PSA and PM chosed*/
     void on_PSA_clicked(bool checked);

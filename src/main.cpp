@@ -16,6 +16,7 @@
 #include "../inc/useroperate.h"
 
 QMutex JobLock;
+QMutex UserLock;
 UserOperate user;
 
 int main(int argc, char *argv[])
@@ -49,7 +50,10 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(&l, &Login::userSignInSignal,
-                     &w, &Widget::show);
+                     [&](){
+
+        w.show(); w.showGraph();
+    });
 
     l.show();
 //    if(true){

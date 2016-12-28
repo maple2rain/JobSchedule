@@ -461,7 +461,8 @@ public:
         graphLbl->setObjectName(QStringLiteral("graphLbl"));
         graphLbl->setGeometry(QRect(1230, 20, 121, 211));
         graphLbl->setFont(font);
-        graphLbl->setScaledContents(false);
+        graphLbl->setCursor(QCursor(Qt::PointingHandCursor));
+        graphLbl->setScaledContents(true);
         graphLbl->setWordWrap(true);
         frame = new QFrame(Widget);
         frame->setObjectName(QStringLiteral("frame"));

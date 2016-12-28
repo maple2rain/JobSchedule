@@ -46,7 +46,7 @@ public:
     bool statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, std::list<ptr> &changeJobs, unsigned short runtime);
     bool isJobNone() { return readyJobs.empty() && waitingJobs.empty(); }
     void addWaitingJob(ptr &job); //add waiting job
-    void addFinishedJob(ptr &jobs) { finishedJobs.push_back(jobs);  DEBUG_PRINT("add finished job" ); } //add finished job
+    void addFinishedJob(ptr &jobs, us16 runtime);
     void addReadyJob(ptr &job) { readyJobs.push_back(job); DEBUG_PRINT("add ready job" ); }   //add ready job
 
     void clearAllJob() { readyJobs.clear(); waitingJobs.clear(); }	//clear all the job

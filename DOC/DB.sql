@@ -8,6 +8,7 @@ drop table jobFinished;
 drop table job;
 drop table user_graph;
 drop table user_gif;
+drop table user;
 
 
 create table user (
@@ -16,40 +17,43 @@ create table user (
 	passwd     VARCHAR(20),
 	signupdate DATE,
 	PRIMARY KEY (userID)
-);
+)Engine = InnoDB;
 
 create table graph(
 	graphID 	char(32), #MD5
     graphType	varchar(20),
     graph		longblob,
     PRIMARY KEY (graphID)
-);
+)Engine = InnoDB;
 
 alter table graph modify graph longblob;
 
-delete from jobs.graph where graphType = '.jpg';
+truncate table jobs.user_graph;
 
 create table user_graph(
 	userID    	INT unsigned,
     graphID 	char(32),
-    primary key (graphID),
+    primary key (userID),
 	FOREIGN KEY (graphID) REFERENCES graph (graphID) ON DELETE CASCADE,
 	FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE
-);
+)Engine = InnoDB;
 
 create table user_gif(
 	userID    	INT unsigned,
-	gifID 		INT unsigned,
-    primary key (gifID),
+	gifID 		INT unsigned Unique,
+    primary key (userID),
 	FOREIGN KEY (gifID) REFERENCES gif (gifID) ON DELETE CASCADE,
 	FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE
-);
+)Engine = InnoDB;
 
 create table gif(
 	gifID 	INT unsigned AUTO_INCREMENT, 
     gifName	varchar(256),
     PRIMARY KEY (gifID)
-);
+)Engine = InnoDB;
+
+alter table gif
+add unique(gifName);
 
 create table blackList (
 	username   VARCHAR(20),
@@ -63,6 +67,7 @@ create table job (
     commitTime			smallint unsigned not null,
     lastTime			smallint unsigned not null,
     startTime			smallint unsigned,
+    finishedTime 		smallint unsigned,
     runTime				smallint unsigned,
     needTime			smallint unsigned,
     deadline			smallint unsigned,
@@ -71,7 +76,10 @@ create table job (
     weightTurnoverTime	float,
 	PRIMARY KEY (jobID, userID),
     FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE
-);
+)Engine = InnoDB;
+
+alter table job add finishedTime smallint unsigned;
+alter table job change column commitTime joinTime  smallint unsigned not null;
 
 create table jobFinished (
 	jobID		INT unsigned,
@@ -79,7 +87,7 @@ create table jobFinished (
 	PRIMARY KEY (jobID, userID),
     FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE, 
     FOREIGN KEY (jobID) REFERENCES  job (jobID) ON DELETE CASCADE
-);
+)Engine = InnoDB;
 
 create table jobFailed (
 	jobID		INT unsigned,
@@ -87,7 +95,7 @@ create table jobFailed (
 	PRIMARY KEY (jobID, userID),
     FOREIGN KEY (userID) REFERENCES user (userID) ON DELETE CASCADE, 
     FOREIGN KEY (jobID) REFERENCES  job (jobID) ON DELETE CASCADE
-);
+)Engine = InnoDB;
 
 #view
 create view jobRecords (userID, jobNum, failedJobNum, finishedJobNum)
@@ -95,17 +103,15 @@ As
 select jobRecord.userID, jobrecord.jobNum, jobRecordFail.failedJobNum, jobRecordFinished.finishedJobNum
 from jobRecord, jobRecordFail, jobRecordFinished;
 
-create view jobRecordFail (userID, failedJobNum)
+create view jobRecord(userID, jobNum)
 As
 select userID, count(*)
-from jobfailed;
-create view jobRecordFinished (userID, finishedJobNum)
-As
-select userID, count(*)
-from jobfinished;
+from job;
 
 drop view jobRecords;
 
+delete from user where userID = 2;
+select * from job;
 
 drop table jobRecord;
 alter table gif drop gif;
@@ -117,3 +123,5 @@ insert into jobFailed values(1, 1);
 insert into jobFinished values(2, 1);
 update user set username = '1', passwd = '1' where username = '1';
 select distinct *  from job left outer Join jobAttribute using (jobID);
+
+delete from user_graph where user_graph.graphID = graph.graphID;

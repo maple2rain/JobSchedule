@@ -274,6 +274,8 @@ public:
         GraphLbl = new QLabel(graphBox);
         GraphLbl->setObjectName(QStringLiteral("GraphLbl"));
         GraphLbl->setGeometry(QRect(13, 20, 241, 111));
+        GraphLbl->setCursor(QCursor(Qt::PointingHandCursor));
+        GraphLbl->setScaledContents(true);
         gifBox = new QGroupBox(Person);
         gifBox->setObjectName(QStringLiteral("gifBox"));
         gifBox->setGeometry(QRect(10, 370, 271, 171));
@@ -281,6 +283,8 @@ public:
         GifLbl = new QLabel(gifBox);
         GifLbl->setObjectName(QStringLiteral("GifLbl"));
         GifLbl->setGeometry(QRect(13, 21, 241, 141));
+        GifLbl->setCursor(QCursor(Qt::PointingHandCursor));
+        GifLbl->setScaledContents(true);
         frame = new QFrame(Person);
         frame->setObjectName(QStringLiteral("frame"));
         frame->setGeometry(QRect(0, 0, 991, 561));

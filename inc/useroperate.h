@@ -5,7 +5,10 @@
 #include "info.h"
 #include "graph.h"
 #include "gif.h"
+#include "job.h"
 #include <string>
+#include <memory>
+#include <list>
 
 class UserOperate
 {
@@ -13,11 +16,13 @@ private:
     UserOperate(UserOperate&);
     UserOperate operator=(UserOperate&);
 public:
+    typedef std::shared_ptr<Job> ptr; //smart pointer
     UserOperate() {}
     UserOperate(const std::string &_username, const std::string &_passwd) :
-        username(_username), passwd(_passwd) {}
+        username(_username), passwd(_passwd) {
+        hasGif = hasGraph = false;
+    }
     ~UserOperate() {}
-
 
     /* sql operate */
     // user operate
@@ -43,6 +48,7 @@ public:
     const Info UserAddGif(us16 uid, us16 gifID);
     const Info UserAddGif();
     const Info GetUserGif();
+    const Info GetGifID();
 
     void getAllInfoFromDB();
 
@@ -52,13 +58,18 @@ public:
     void setUserID(const us16 _uid) { uid = _uid; }
     void setGraph(const Graph &_graph) { graph = _graph; }
     void setGif(const Gif &_gif) { gif = _gif; }
+    void setHasGraph() { hasGraph = true; }
+    void setHasGif() { hasGif = true; }
 
     /* getter */
     const std::string &getUserName() { return username; }
     const std::string &getPassword() { return passwd; }
     const us16 getUserID() { return uid; }
-    const Graph& getGraph() { return graph; }
-    const Gif& getGif() { return gif; }
+    Graph& getGraph() { return graph; }
+    Gif& getGif() { return gif; }
+    bool isHasGraph() { return hasGraph; }
+    bool isHasGif() { return hasGif; }
+
 
 private:
     us16 uid;
@@ -66,6 +77,10 @@ private:
     std::string passwd;
     Graph graph;
     Gif gif;
+    bool hasGraph;
+    bool hasGif;
+    std::list<ptr> finishedJobs;//list to store finished jobs
+    std::list<ptr> failedJobs;//list to store failed jobs
 };
 
 

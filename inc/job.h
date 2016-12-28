@@ -15,6 +15,8 @@ class Job
             us16    deadLine;
             us16    finishedTime;
             us16    PrioOrSlice;
+            float   turnoverTime;
+            float   wTurnoverTime;
 
     //Prevent copy-construction & operator =
     Job(Job&);
@@ -35,6 +37,8 @@ public:
         needTime = _lastTime;
         runTime = 0;
         finishedTime = 0;
+        turnoverTime = 0;
+        wTurnoverTime = 0;
     }
 
     /* getter */
@@ -48,13 +52,23 @@ public:
     const us16 getFinishedTime() const { return finishedTime; }
     const us16 getPrioOrSlice() const { return PrioOrSlice; }
     const us16 getTurnOverTime() const { return finishedTime - joinTime; }
+    const float getWTurnoverTime() const { return wTurnoverTime; }
 
     /* setter */
     void addRunTime() { ++runTime; }
     void subNeedTime() { --needTime; }
-    void setStartTime(us16 _startTime) { startTime = _startTime; }
+    void setStartTime(const us16 _startTime) { startTime = _startTime; }
     void exec() { addRunTime(); subNeedTime(); }
-    void setJobFinished(us16 _finishedTime) { finishedTime = _finishedTime; }
+    void setTurnoverTime() { turnoverTime = finishedTime - joinTime; }
+    void setWTurnoverTime() { wTurnoverTime  = turnoverTime / lastTime; }
+    void setJobName(const std::string& _jobName) { jobName = _jobName; }
+    void setJoinTime(const us16 _joinTime) { joinTime = _joinTime; }
+    void setLastTime(const us16 _lastTime) { lastTime = _lastTime; }
+    void setRunTime(const us16 _runTime) { runTime = _runTime; }
+    void setNeedTime(const us16 _needTime) { needTime = _needTime; }
+    void setDeadLine(const us16 _deadLine) { deadLine = _deadLine; }
+    void setFinishedTime(const us16 _finishedTime) { finishedTime = _finishedTime; }
+    void setPrioOrSlice(const us16 _PrioOrSlice) { PrioOrSlice = _PrioOrSlice; }
 };
 
 #endif // JOB_H

@@ -73,3 +73,15 @@ Scheduler::ptr& Scheduler::selectNextJob()
     auto it = readyJobs.begin();
     return *++it;
 }
+
+void Scheduler::addFinishedJob(ptr &jobs, us16 runtime)
+{
+    jobs->setFinishedTime(runtime);
+    jobs->setRunTime(jobs->getLastTime());
+    jobs->setTurnoverTime();
+    jobs->setWTurnoverTime();
+    jobs->setNeedTime(0);
+    finishedJobs.push_back(jobs);
+
+    DEBUG_PRINT("add finished job" );
+} //add finished job
