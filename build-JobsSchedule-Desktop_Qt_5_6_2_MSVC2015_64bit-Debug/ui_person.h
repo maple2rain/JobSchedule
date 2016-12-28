@@ -68,7 +68,7 @@ public:
             Person->setObjectName(QStringLiteral("Person"));
         Person->resize(985, 559);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/images/images/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/images/images/icon/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
         Person->setWindowIcon(icon);
         FinishedJob = new QGroupBox(Person);
         FinishedJob->setObjectName(QStringLiteral("FinishedJob"));

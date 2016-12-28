@@ -8,6 +8,7 @@ PersonModify::PersonModify(QWidget *parent) :
 {
     setupUi(this);
     setFixedSize(this->width(), this->height());
+    setWindowTitle("Modify");
 }
 
 PersonModify::~PersonModify()

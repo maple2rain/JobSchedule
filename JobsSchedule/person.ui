@@ -14,8 +14,8 @@
    <string>Person</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/images/images/ico.ico</normaloff>:/images/images/ico.ico</iconset>
+   <iconset resource="rsc.qrc">
+    <normaloff>:/images/images/icon/ico.ico</normaloff>:/images/images/icon/ico.ico</iconset>
   </property>
   <widget class="QGroupBox" name="FinishedJob">
    <property name="geometry">
@@ -709,6 +709,8 @@ font: 75 14pt &quot;Calibri&quot;;</string>
   <zorder>graphBox</zorder>
   <zorder>gifBox</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="rsc.qrc"/>
+ </resources>
  <connections/>
 </ui>
