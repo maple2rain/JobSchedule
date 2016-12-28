@@ -104,7 +104,9 @@ private:
     void stopEvent();
     void showPersonInfo();
     void test();
+    void clearLbl();
     void showGif();
+    void settooltip();
 
 private:
     QTimer *timer;

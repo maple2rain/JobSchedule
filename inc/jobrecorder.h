@@ -31,6 +31,8 @@ public:
     void addRun2Run() { ++run2run; }
     void addRun2Finished() { ++run2finished; }
     void setJobEnd() { isJobNone = true; }
+    void setAverTurnover(const float _averTurnover) { averTurnover = _averTurnover; }
+    void setAverWTurnover(const float _averWTurnover) { averWTurnOver = _averWTurnover; }
     void clear() {
         wait2ready = ready2next = ready2run = next2run = next2ready = run2next = run2ready = run2run = run2finished = 0;
         isJobNone = false;
@@ -50,7 +52,8 @@ public:
     size_t getJobNum() const { return recorders.size(); }
     bool isAnyJobRun() const { return run2run != 0 || ready2run != 0 || next2run != 0; }
     bool isFinished() const { return isJobNone; }
-
+    float getAverTurnover() const { return averTurnover; }
+    float getAverWTurnover() const { return averWTurnOver; }
     const std::list<ptr>& getRecorder() const { return recorders; }
 
     /* add job*/
@@ -67,6 +70,8 @@ private:
     us16 run2run;
     us16 run2finished;
     bool isJobNone;
+    float averTurnover;         //average turnover time
+    float averWTurnOver;        //average weight turnover time
     std::list<ptr> recorders;    // store the status-changed jobs
 };
 

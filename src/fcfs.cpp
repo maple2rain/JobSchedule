@@ -9,6 +9,7 @@ void FCFS::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
             /* move job from ready jobs list to finished jobs list */
             addFinishedJob(runningJob, runtime);
             readyJobs.remove(runningJob);
+            setAverTurn(jobRecorder);
             AddRecord(jobRecorder, runningJob, Run2Finished);
             DEBUG_PRINT("running job is ", runningJob->getJobName(), "it quit ");
 

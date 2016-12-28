@@ -95,7 +95,7 @@ public:
         Widget->resize(1372, 563);
         Widget->setFocusPolicy(Qt::NoFocus);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/images/images/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/images/images/icon/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
         Widget->setWindowIcon(icon);
         Widget->setAutoFillBackground(false);
         Widget->setStyleSheet(QStringLiteral(""));
@@ -124,23 +124,29 @@ public:
         PM->setGeometry(QRect(140, 50, 35, 16));
         ClearAllDataBtn = new QPushButton(List);
         ClearAllDataBtn->setObjectName(QStringLiteral("ClearAllDataBtn"));
-        ClearAllDataBtn->setGeometry(QRect(50, 80, 75, 23));
-        ClearAllDataBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249);"));
+        ClearAllDataBtn->setGeometry(QRect(60, 80, 51, 23));
+        ClearAllDataBtn->setCursor(QCursor(Qt::PointingHandCursor));
+        ClearAllDataBtn->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/clear_128px_1186688_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         RunBtn = new QPushButton(List);
         RunBtn->setObjectName(QStringLiteral("RunBtn"));
-        RunBtn->setGeometry(QRect(140, 80, 75, 23));
-        RunBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        RunBtn->setGeometry(QRect(150, 80, 51, 23));
+        RunBtn->setCursor(QCursor(Qt::PointingHandCursor));
+        RunBtn->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/exec_128px_1068707_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         PauseBtn = new QPushButton(List);
         PauseBtn->setObjectName(QStringLiteral("PauseBtn"));
-        PauseBtn->setGeometry(QRect(50, 110, 75, 23));
-        PauseBtn->setCursor(QCursor(Qt::ArrowCursor));
+        PauseBtn->setGeometry(QRect(56, 110, 51, 23));
+        PauseBtn->setCursor(QCursor(Qt::PointingHandCursor));
         PauseBtn->setMouseTracking(true);
-        PauseBtn->setAutoFillBackground(false);
-        PauseBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        PauseBtn->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/pause_128px_1200673_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         StopBtn = new QPushButton(List);
         StopBtn->setObjectName(QStringLiteral("StopBtn"));
-        StopBtn->setGeometry(QRect(140, 110, 75, 23));
-        StopBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        StopBtn->setGeometry(QRect(150, 110, 51, 23));
+        StopBtn->setCursor(QCursor(Qt::PointingHandCursor));
+        StopBtn->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/stop_normal_red_128px_560469_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         Algorithm = new QGroupBox(Widget);
         Algorithm->setObjectName(QStringLiteral("Algorithm"));
         Algorithm->setGeometry(QRect(10, 160, 261, 71));
@@ -151,31 +157,37 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         FCFS = new QRadioButton(Algorithm);
         FCFS->setObjectName(QStringLiteral("FCFS"));
+        FCFS->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(FCFS, 0, 0, 1, 1);
 
         EDF = new QRadioButton(Algorithm);
         EDF->setObjectName(QStringLiteral("EDF"));
+        EDF->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(EDF, 1, 2, 1, 1);
 
         SJF = new QRadioButton(Algorithm);
         SJF->setObjectName(QStringLiteral("SJF"));
+        SJF->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(SJF, 1, 0, 1, 1);
 
         HRRN = new QRadioButton(Algorithm);
         HRRN->setObjectName(QStringLiteral("HRRN"));
+        HRRN->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(HRRN, 1, 1, 1, 1);
 
         MFQ = new QRadioButton(Algorithm);
         MFQ->setObjectName(QStringLiteral("MFQ"));
+        MFQ->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(MFQ, 0, 1, 1, 1);
 
         RR = new QRadioButton(Algorithm);
         RR->setObjectName(QStringLiteral("RR"));
+        RR->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(RR, 0, 2, 1, 1);
 
@@ -200,8 +212,10 @@ public:
         PriorityLbl->setGeometry(QRect(30, 140, 54, 12));
         ClearInputBtn = new QPushButton(Input);
         ClearInputBtn->setObjectName(QStringLiteral("ClearInputBtn"));
-        ClearInputBtn->setGeometry(QRect(30, 180, 71, 21));
-        ClearInputBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        ClearInputBtn->setGeometry(QRect(24, 169, 71, 41));
+        ClearInputBtn->setCursor(QCursor(Qt::PointingHandCursor));
+        ClearInputBtn->setStyleSheet(QLatin1String(" border-image: url(:/images/images/icon/broom_brush_clear_sweep_128px_1703_easyicon.net.png);\n"
+"font: 75 14pt \"Calibri\";"));
         JoinTimeEdit = new QLineEdit(Input);
         JoinTimeEdit->setObjectName(QStringLiteral("JoinTimeEdit"));
         JoinTimeEdit->setGeometry(QRect(100, 50, 111, 20));
@@ -210,15 +224,20 @@ public:
         LastTimeEdit->setGeometry(QRect(100, 80, 111, 20));
         CommitInputBtn = new QPushButton(Input);
         CommitInputBtn->setObjectName(QStringLiteral("CommitInputBtn"));
-        CommitInputBtn->setGeometry(QRect(110, 180, 71, 21));
-        CommitInputBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        CommitInputBtn->setGeometry(QRect(100, 168, 71, 41));
+        CommitInputBtn->setCursor(QCursor(Qt::PointingHandCursor));
+        CommitInputBtn->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/svn_commit_128px_540084_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         OpenFile = new QToolButton(Input);
         OpenFile->setObjectName(QStringLiteral("OpenFile"));
-        OpenFile->setGeometry(QRect(190, 180, 41, 21));
-        OpenFile->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        OpenFile->setGeometry(QRect(190, 168, 51, 41));
+        OpenFile->setCursor(QCursor(Qt::PointingHandCursor));
+        OpenFile->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/file_128px_1201742_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         PriorityCombo = new QComboBox(Input);
         PriorityCombo->setObjectName(QStringLiteral("PriorityCombo"));
         PriorityCombo->setGeometry(QRect(100, 140, 61, 20));
+        PriorityCombo->setCursor(QCursor(Qt::OpenHandCursor));
         PriorityCombo->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         DeadLineLbl = new QLabel(Input);
         DeadLineLbl->setObjectName(QStringLiteral("DeadLineLbl"));
@@ -495,13 +514,10 @@ public:
         CurTimeLbl->setText(QApplication::translate("Widget", "Current Time", 0));
         PSA->setText(QApplication::translate("Widget", "PSA", 0));
         PM->setText(QApplication::translate("Widget", "PM", 0));
-        ClearAllDataBtn->setText(QApplication::translate("Widget", "Clear", 0));
-        RunBtn->setText(QApplication::translate("Widget", "Run", 0));
-#ifndef QT_NO_STATUSTIP
-        PauseBtn->setStatusTip(QString());
-#endif // QT_NO_STATUSTIP
-        PauseBtn->setText(QApplication::translate("Widget", "Pause", 0));
-        StopBtn->setText(QApplication::translate("Widget", "Stop", 0));
+        ClearAllDataBtn->setText(QString());
+        RunBtn->setText(QString());
+        PauseBtn->setText(QString());
+        StopBtn->setText(QString());
         Algorithm->setTitle(QApplication::translate("Widget", "Algorithm", 0));
         FCFS->setText(QApplication::translate("Widget", "FCFS", 0));
         EDF->setText(QApplication::translate("Widget", "EDF", 0));
@@ -514,9 +530,9 @@ public:
         JoinTimeLbl->setText(QApplication::translate("Widget", "Join Time", 0));
         LastTimeLbl->setText(QApplication::translate("Widget", "Last Time", 0));
         PriorityLbl->setText(QApplication::translate("Widget", "Priority", 0));
-        ClearInputBtn->setText(QApplication::translate("Widget", "Clear", 0));
-        CommitInputBtn->setText(QApplication::translate("Widget", "Commit", 0));
-        OpenFile->setText(QApplication::translate("Widget", "File", 0));
+        ClearInputBtn->setText(QString());
+        CommitInputBtn->setText(QString());
+        OpenFile->setText(QString());
         PriorityCombo->clear();
         PriorityCombo->insertItems(0, QStringList()
          << QApplication::translate("Widget", "0", 0)
@@ -565,6 +581,12 @@ public:
         ___qtablewidgetitem10->setText(QApplication::translate("Widget", "Need", 0));
         QTableWidgetItem *___qtablewidgetitem11 = RunJobTbl->horizontalHeaderItem(6);
         ___qtablewidgetitem11->setText(QApplication::translate("Widget", "Priority", 0));
+#ifndef QT_NO_TOOLTIP
+        ReadyJob->setToolTip(QApplication::translate("Widget", "clear", 0));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_STATUSTIP
+        ReadyJob->setStatusTip(QApplication::translate("Widget", "clear", 0));
+#endif // QT_NO_STATUSTIP
         ReadyJob->setTitle(QApplication::translate("Widget", "Ready Jobs", 0));
         QTableWidgetItem *___qtablewidgetitem12 = ReadyJobTbl->horizontalHeaderItem(0);
         ___qtablewidgetitem12->setText(QApplication::translate("Widget", "Job Name", 0));

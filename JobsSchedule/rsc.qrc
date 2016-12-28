@@ -1,11 +1,24 @@
 <RCC>
     <qresource prefix="/images">
-        <file>images/ico.ico</file>
         <file>images/talent.png</file>
         <file>images/sun.jpg</file>
-        <file>images/cloud.jpg</file>
         <file>images/Leaves.jpg</file>
         <file>images/Urban Dream.jpg</file>
-        <file>images/fail.png</file>
+        <file>images/icon/broom_brush_clear_sweep_128px_1703_easyicon.net.png</file>
+        <file>images/icon/fail.png</file>
+        <file>images/icon/ico.ico</file>
+        <file>images/icon/icon.png</file>
+        <file>images/cloud.jpg</file>
+        <file>images/icon/svn_commit_128px_540084_easyicon.net.ico</file>
+        <file>images/icon/clear_128px_1186688_easyicon.net.ico</file>
+        <file>images/icon/exec_128px_1068707_easyicon.net.ico</file>
+        <file>images/icon/file_128px_1201742_easyicon.net.ico</file>
+        <file>images/icon/pause_128px_1200673_easyicon.net.ico</file>
+        <file>images/icon/stop_normal_red_128px_560469_easyicon.net.ico</file>
+        <file>images/icon/delete_128px_1190332_easyicon.net.ico</file>
+        <file>images/icon/document_edit_modify_write_48px_1631_easyicon.net.ico</file>
+        <file>images/icon/eye_128px_1153740_easyicon.net.ico</file>
+        <file>images/icon/sign_up_128px_1077440_easyicon.net.ico</file>
+        <file>images/icon/warning_128px_1186332_easyicon.net.ico</file>
     </qresource>
 </RCC>

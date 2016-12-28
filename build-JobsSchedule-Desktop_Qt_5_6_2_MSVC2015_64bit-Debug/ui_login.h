@@ -45,7 +45,7 @@ public:
             Login->setObjectName(QStringLiteral("Login"));
         Login->resize(268, 163);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/images/images/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/images/images/icon/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
         Login->setWindowIcon(icon);
         Login->setAutoFillBackground(true);
         Login->setStyleSheet(QStringLiteral(""));

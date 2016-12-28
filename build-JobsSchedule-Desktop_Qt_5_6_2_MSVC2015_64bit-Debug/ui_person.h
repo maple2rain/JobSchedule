@@ -198,7 +198,7 @@ public:
         FailLbl = new QLabel(PreInput);
         FailLbl->setObjectName(QStringLiteral("FailLbl"));
         FailLbl->setGeometry(QRect(580, 20, 81, 171));
-        FailLbl->setStyleSheet(QStringLiteral("image: url(:/images/images/fail.png);"));
+        FailLbl->setStyleSheet(QStringLiteral("image: url(:/images/images/icon/fail.png);"));
         personBox = new QGroupBox(Person);
         personBox->setObjectName(QStringLiteral("personBox"));
         personBox->setGeometry(QRect(10, 10, 271, 181));
@@ -251,22 +251,37 @@ public:
 
         ModifyBtn = new QPushButton(personBox);
         ModifyBtn->setObjectName(QStringLiteral("ModifyBtn"));
-        ModifyBtn->setGeometry(QRect(50, 120, 75, 23));
-        ModifyBtn->setFont(font);
-        ModifyBtn->setAutoFillBackground(false);
-        ModifyBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        ModifyBtn->setGeometry(QRect(50, 112, 75, 31));
+        QFont font2;
+        font2.setFamily(QStringLiteral("Calibri"));
+        font2.setPointSize(14);
+        font2.setBold(false);
+        font2.setItalic(false);
+        font2.setWeight(9);
+        ModifyBtn->setFont(font2);
+        ModifyBtn->setCursor(QCursor(Qt::PointingHandCursor));
+        ModifyBtn->setStyleSheet(QLatin1String(" border-image: url(:/images/images/icon/document_edit_modify_write_48px_1631_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         DeleteBtn = new QPushButton(personBox);
         DeleteBtn->setObjectName(QStringLiteral("DeleteBtn"));
-        DeleteBtn->setGeometry(QRect(50, 150, 75, 23));
-        DeleteBtn->setFont(font);
-        DeleteBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
+        DeleteBtn->setGeometry(QRect(50, 145, 75, 28));
+        DeleteBtn->setFont(font2);
+        DeleteBtn->setCursor(QCursor(Qt::PointingHandCursor));
+        DeleteBtn->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/delete_128px_1190332_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         WarningChkBox = new QCheckBox(personBox);
         WarningChkBox->setObjectName(QStringLiteral("WarningChkBox"));
-        WarningChkBox->setGeometry(QRect(150, 154, 71, 16));
+        WarningChkBox->setGeometry(QRect(150, 144, 71, 31));
+        WarningChkBox->setCursor(QCursor(Qt::PointingHandCursor));
+        WarningChkBox->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/warning_128px_1186332_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         WarningChkBox->setChecked(true);
         EchoChkBox = new QCheckBox(personBox);
         EchoChkBox->setObjectName(QStringLiteral("EchoChkBox"));
         EchoChkBox->setGeometry(QRect(150, 123, 71, 16));
+        EchoChkBox->setCursor(QCursor(Qt::PointingHandCursor));
+        EchoChkBox->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/eye_128px_1153740_easyicon.net.ico);\n"
+"font: 75 14pt \"Calibri\";"));
         graphBox = new QGroupBox(Person);
         graphBox->setObjectName(QStringLiteral("graphBox"));
         graphBox->setGeometry(QRect(10, 210, 271, 141));
@@ -353,10 +368,10 @@ public:
         personBox->setTitle(QApplication::translate("Person", "Person Information", 0));
         UserNameLbl->setText(QApplication::translate("Person", "User Name", 0));
         PasswdLbl->setText(QApplication::translate("Person", "Password   ", 0));
-        ModifyBtn->setText(QApplication::translate("Person", "Modify", 0));
-        DeleteBtn->setText(QApplication::translate("Person", "Delete", 0));
-        WarningChkBox->setText(QApplication::translate("Person", "Warning", 0));
-        EchoChkBox->setText(QApplication::translate("Person", "Echo", 0));
+        ModifyBtn->setText(QString());
+        DeleteBtn->setText(QString());
+        WarningChkBox->setText(QString());
+        EchoChkBox->setText(QString());
         graphBox->setTitle(QApplication::translate("Person", "Graph", 0));
         GraphLbl->setText(QApplication::translate("Person", "Click to set graph", 0));
         gifBox->setTitle(QApplication::translate("Person", "Gif", 0));

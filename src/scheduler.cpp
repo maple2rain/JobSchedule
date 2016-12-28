@@ -96,3 +96,18 @@ void Scheduler::storeJobs()
     user.InsertJobs(scheduler->getFinishedJobs(), "finished");
     scheduler->clearAllJob();
 }
+
+void Scheduler::setAverTurn(JobRecorder &jobRecorder)
+{
+    float sum = 0, sumW = 0;
+    for(auto it = finishedJobs.cbegin(); it != finishedJobs.cend(); ++it){
+        sum += (*it)->getTurnOverTime();
+        sumW += (*it)->getWTurnoverTime();
+    }
+
+    if(!finishedJobs.empty()){
+        size_t size = finishedJobs.size();
+        jobRecorder.setAverTurnover(sum / size);
+        jobRecorder.setAverWTurnover(sumW / size);
+    }
+}

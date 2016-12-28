@@ -48,7 +48,7 @@ public:
             Register->setObjectName(QStringLiteral("Register"));
         Register->resize(287, 172);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/images/images/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/images/images/icon/ico.ico"), QSize(), QIcon::Normal, QIcon::Off);
         Register->setWindowIcon(icon);
         OkBtn = new QPushButton(Register);
         OkBtn->setObjectName(QStringLiteral("OkBtn"));

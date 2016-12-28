@@ -56,9 +56,9 @@ Widget::Widget(QWidget *parent) :
     connect(timer, &QTimer::timeout, [=](){
         CurTimeClock->display(QString::number(++runtime));
         timeRun();
-//        if(runtime == 1){
-//            addJob();
-//        }
+        //        if(runtime == 1){
+        //            addJob();
+        //        }
 
         qDebug() << "runtime is " << runtime ;
     });
@@ -66,7 +66,7 @@ Widget::Widget(QWidget *parent) :
     graphLbl->installEventFilter(this);
 
     InitModule();
-
+    settooltip();
 }
 
 void Widget::InitModule()
@@ -223,6 +223,7 @@ void Widget::on_ClearAllDataBtn_clicked()
         ClearTable();
         EnableRadioBtn();
         sendClearSignal();
+        clearLbl();
     }
 }
 
@@ -278,11 +279,11 @@ void Widget::stopEvent()
     EnableRadioBtn();
     
     bool isStore = QMessageBox::question(this,
-                                       tr("Store"),
-                                       tr("Do you want to store your job in DB?"),
-                                       QMessageBox::Yes | QMessageBox::No,
-                                       QMessageBox::No)
-                                      == QMessageBox::Yes;
+                                         tr("Store"),
+                                         tr("Do you want to store your job in DB?"),
+                                         QMessageBox::Yes | QMessageBox::No,
+                                         QMessageBox::No)
+            == QMessageBox::Yes;
     showGraph();
 
     if(isStore)
@@ -606,10 +607,20 @@ void Widget::on_OpenFile_clicked()
 
 void Widget::on_PauseBtn_pressed()
 {
-//    PauseBtn->setStyleSheet("QPushButton:hover{background: red;}");//setting background to be red when hover
-//    PauseBtn->setToolTip(tr("Transfer File(s) from Left to Right"));//setting tool tip when hover
+    //    PauseBtn->setStyleSheet("QPushButton:hover{background: red;}");//setting background to be red when hover
+    //    PauseBtn->setToolTip(tr("Transfer File(s) from Left to Right"));//setting tool tip when hover
 }
 
+void Widget::settooltip()
+{
+    ClearAllDataBtn->setToolTip(tr("Clear All Data"));
+    RunBtn->setToolTip(tr("Execute"));
+    PauseBtn->setToolTip(tr("Pause"));
+    StopBtn->setToolTip(tr("Stop"));
+    ClearInputBtn->setToolTip(tr("Clear Input"));
+    CommitInputBtn->setToolTip(tr("Commit Job"));
+    OpenFile->setToolTip(tr("Open File"));
+}
 
 bool Widget::ValidJob::checkJobValid()
 {
@@ -746,4 +757,13 @@ void Widget::drawTable(const JobRecorder &jobRecorder)
         TableSetRunOrNextJobItem(NextJobTbl, job);
         DEBUG_PRINT("job Ready2Next is to draw");
     }
+
+    ATTValue->setText(QString::number(jobRecorder.getAverTurnover()));
+    WATTValue->setText(QString::number(jobRecorder.getAverWTurnover()));
+}
+
+void Widget::clearLbl()
+{
+    ATTValue->setText("0");
+    WATTValue->setText("0");
 }

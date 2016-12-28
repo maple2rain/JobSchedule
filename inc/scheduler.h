@@ -51,7 +51,7 @@ public:
     void addFinishedJob(ptr &jobs, us16 runtime);
     void addReadyJob(ptr &job) { readyJobs.push_back(job); DEBUG_PRINT("add ready job" ); }   //add ready job
     void storeJobs();
-
+    void setAverTurn(JobRecorder &jobRecorder);
     void clearAllJob() { readyJobs.clear(); waitingJobs.clear(); nextJobs.clear(); finishedJobs.clear(); }	//clear all the job
     void setFlag(bool isPSA = false, bool isPM = false) { flag = 0; flag |= isPSA; flag <<= 1; flag |= isPM; }
     void clear() { scheduler->clearAllJob(); }

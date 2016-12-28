@@ -22,9 +22,18 @@ Person::Person(QWidget *parent) :
     showGif();
     drawTable();
     drawTurnover();
+    settooltip();
     GraphLbl->installEventFilter(this);
     GifLbl->installEventFilter(this);
 
+}
+
+void Person::settooltip()
+{
+    ModifyBtn->setToolTip(tr("Modify User Data"));
+    DeleteBtn->setToolTip(tr("Delete Job"));
+    EchoChkBox->setToolTip(tr("Echo Password"));
+    WarningChkBox->setToolTip(tr("Delete Warning"));
 }
 
 void Person::drawTable()
@@ -53,7 +62,7 @@ void Person::drawTurnover()
     QMutexLocker lockerWait(&UserLock);
 
     Info info = user.GetTurnOver();
-    if(info.getStatus() == false){
+    if(info.getStatus() == false){//if not record, then set time as 0
         ATTValue->setText("0");
         WATTValue->setText("0");
     }else{
@@ -322,8 +331,21 @@ void Person::drawFailedTable(Job *job)
 
 void Person::on_DeleteBtn_clicked()
 {
+    if(WarningChkBox->isChecked() == true){
+        bool isDelete = QMessageBox::question(this,
+                                             tr("Warning"),
+                                             tr("It will clear all information about the job!\n"
+                                                "Are you sure to delete your job?"),
+                                             QMessageBox::Yes | QMessageBox::No,
+                                             QMessageBox::No)
+                                                == QMessageBox::Yes;
+        if(!isDelete)
+            return;
+    }
+
     deleteTableItem(FailedJobTbl);
     deleteTableItem(FinishedJobTbl);
+
 }
 
 void Person::deleteTableItem(QTableWidget *table)

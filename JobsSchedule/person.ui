@@ -14,7 +14,7 @@
    <string>Person</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="rsc.qrc">
+   <iconset>
     <normaloff>:/images/images/ico.ico</normaloff>:/images/images/ico.ico</iconset>
   </property>
   <widget class="QGroupBox" name="FinishedJob">
@@ -405,7 +405,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">image: url(:/images/images/fail.png);</string>
+     <string notr="true">image: url(:/images/images/icon/fail.png);</string>
     </property>
     <property name="text">
      <string/>
@@ -504,62 +504,78 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>120</y>
+      <y>112</y>
       <width>75</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Calibri</family>
-      <weight>75</weight>
-      <bold>true</bold>
+      <pointsize>14</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(249, 249, 249)</string>
+     <string notr="true"> border-image: url(:/images/images/icon/document_edit_modify_write_48px_1631_easyicon.net.ico);
+font: 75 14pt &quot;Calibri&quot;;</string>
     </property>
     <property name="text">
-     <string>Modify</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="DeleteBtn">
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>150</y>
+      <y>145</y>
       <width>75</width>
-      <height>23</height>
+      <height>28</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Calibri</family>
-      <weight>75</weight>
-      <bold>true</bold>
+      <pointsize>14</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(249, 249, 249)</string>
+     <string notr="true">border-image: url(:/images/images/icon/delete_128px_1190332_easyicon.net.ico);
+font: 75 14pt &quot;Calibri&quot;;</string>
     </property>
     <property name="text">
-     <string>Delete</string>
+     <string/>
     </property>
    </widget>
    <widget class="QCheckBox" name="WarningChkBox">
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>154</y>
+      <y>144</y>
       <width>71</width>
-      <height>16</height>
+      <height>31</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/images/images/icon/warning_128px_1186332_easyicon.net.ico);
+font: 75 14pt &quot;Calibri&quot;;</string>
+    </property>
     <property name="text">
-     <string>Warning</string>
+     <string/>
     </property>
     <property name="checked">
      <bool>true</bool>
@@ -574,8 +590,15 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/images/images/icon/eye_128px_1153740_easyicon.net.ico);
+font: 75 14pt &quot;Calibri&quot;;</string>
+    </property>
     <property name="text">
-     <string>Echo</string>
+     <string/>
     </property>
    </widget>
   </widget>
@@ -686,8 +709,6 @@
   <zorder>graphBox</zorder>
   <zorder>gifBox</zorder>
  </widget>
- <resources>
-  <include location="rsc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

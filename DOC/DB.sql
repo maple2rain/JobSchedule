@@ -108,6 +108,19 @@ As
 select userID, count(*)
 from job;
 
+drop view overTime;
+
+create view overTime
+As
+select userID, (sum(turnoverTime) / count(*)) as averTurnover, 
+		(sum(weightTurnoverTime) / count(*)) as averWTurnOver 
+from job
+where needTime = 0
+group by userID;
+
+select * from overtime;
+select * from job;
+
 drop view jobRecords;
 
 delete from jobs.job where userID = 3;

@@ -34,6 +34,7 @@ private:
     void drawFailedTable(Job *job);
     void deleteTableItem(QTableWidget *table);
     void drawTurnover();
+    void settooltip();
 
 public slots:
     void changeUserData() { setUserData(); }
