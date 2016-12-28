@@ -16,7 +16,9 @@ PersonModify::~PersonModify()
 
 void PersonModify::on_OkBtn_clicked()
 {
+    extern QMutex UserLock;
     extern UserOperate user;
+    QMutexLocker lockerWait(&UserLock);
 
     QString passwd = PasswdLineEdit->text();
     QString confirm = ConfirmLineEdit->text();

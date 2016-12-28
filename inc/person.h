@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "ui_person.h"
+#include "../inc/job.h"
 
 namespace Ui {
 class Person;
@@ -24,8 +25,14 @@ private slots:
     void on_ModifyBtn_clicked();
     void on_EchoChkBox_clicked(bool checked);
 
+    void on_DeleteBtn_clicked();
+
 private:
     void setUserData();
+    void drawTable();
+    void drawFinishedTable(Job *job);
+    void drawFailedTable(Job *job);
+    void deleteTableItem(QTableWidget *table);
 
 public slots:
     void changeUserData() { setUserData(); }

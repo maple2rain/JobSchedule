@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QTimer>
+#include <QMovie>
 #include <QWidget>
 #include <string>
 #include <vector>
@@ -33,10 +34,17 @@ public:
     void timeRun(){
         emit timeRunningSignal(runtime);
     }
+    void timeStop(){
+        emit timeStopSignal();
+    }
+    void sendClearSignal(){
+        emit clearSignal();
+    }
+
 public slots:
     void drawTable(const JobRecorder &jobRecorder);
     void showGraph();
-    void showGif();
+
 private slots:
     /* if PSA and PM chosed*/
     void on_PSA_clicked(bool checked);
@@ -96,9 +104,11 @@ private:
     void stopEvent();
     void showPersonInfo();
     void test();
+    void showGif();
 
 private:
     QTimer *timer;
+    QMovie *movie;
     std::string scheduleMethod;
     bool    isRun;
     bool    isPSA;
@@ -120,6 +130,8 @@ signals://使用signals标记信号函数，信号是一个函数声明，返回
     void methodFixedSignal(const std::string &scheduleMethod, bool _isPM, bool _isPSA);
     void jobCommingSignal(Job* job);
     void timeRunningSignal(us16 runtime);
+    void timeStopSignal();
+    void clearSignal();
 };
 
 #endif // WIDGET_H

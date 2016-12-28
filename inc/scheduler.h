@@ -41,16 +41,20 @@ public:
 
     std::list<ptr> &getReadyJobs() { return readyJobs; }
     std::list<ptr> &getWaitingJobs() { return waitingJobs; }
+    std::list<ptr> &getFinishedJobs() { return finishedJobs; }
+    std::list<ptr> &getNextJobs() { return nextJobs; }
 
     //as time goes by, jobs status will change
     bool statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, std::list<ptr> &changeJobs, unsigned short runtime);
-    bool isJobNone() { return readyJobs.empty() && waitingJobs.empty(); }
+    bool isJobNone() { return readyJobs.empty() && waitingJobs.empty() && nextJobs.empty(); }
     void addWaitingJob(ptr &job); //add waiting job
     void addFinishedJob(ptr &jobs, us16 runtime);
     void addReadyJob(ptr &job) { readyJobs.push_back(job); DEBUG_PRINT("add ready job" ); }   //add ready job
+    void storeJobs();
 
-    void clearAllJob() { readyJobs.clear(); waitingJobs.clear(); }	//clear all the job
+    void clearAllJob() { readyJobs.clear(); waitingJobs.clear(); nextJobs.clear(); finishedJobs.clear(); }	//clear all the job
     void setFlag(bool isPSA = false, bool isPM = false) { flag = 0; flag |= isPSA; flag <<= 1; flag |= isPM; }
+    void clear() { scheduler->clearAllJob(); }
 
     virtual ~Scheduler () {
         if (scheduler) {

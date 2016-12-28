@@ -18,6 +18,7 @@ public:
 
 private:
     QString paperName;
+    void schedule(std::shared_ptr<Scheduler> &scheduler, JobRecorder &jobRecorder, us16 runtime);
 
 public slots:
     //when commit a new job, add it to waiting-job list
@@ -28,6 +29,12 @@ public slots:
 
     //when time goes on, continue to schedule
     void toSchedule(std::shared_ptr<Scheduler> &scheduler, JobRecorder &jobRecorder, us16 runtime);
+
+    //when time stop, decide to store job
+    void toStore(std::shared_ptr<Scheduler> &scheduler);
+
+    //when clear button is click, it should clear all data
+    void clearScheduler(std::shared_ptr<Scheduler> &scheduler);
 
 signals://使用signals标记信号函数，信号是一个函数声明，返回void，不需要函数的实现代码
     //when the jobs-status change, send the information to the table view

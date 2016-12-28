@@ -31,10 +31,28 @@ void Proxy::addWaitingJob(Job *job, std::shared_ptr<Scheduler> &scheduler)
 
 void Proxy::toSchedule(std::shared_ptr<Scheduler> &scheduler, JobRecorder &jobRecorder, us16 runtime)
 {
+    jobRecorder.clear();
+    schedule(scheduler, jobRecorder, runtime);
+    statusSend(jobRecorder);
+}
+
+void Proxy::schedule(std::shared_ptr<Scheduler> &scheduler, JobRecorder &jobRecorder, us16 runtime)
+{
     extern QMutex JobLock;
     QMutexLocker lockerWait(&JobLock);
-
-    jobRecorder.clear();
     scheduler->schedule(runtime, jobRecorder);
-    statusSend(jobRecorder);
+}
+
+void Proxy::toStore(std::shared_ptr<Scheduler> &scheduler)
+{
+    extern QMutex JobLock;
+    QMutexLocker lockerWait(&JobLock);
+    scheduler->storeJobs();
+}
+
+void Proxy::clearScheduler(std::shared_ptr<Scheduler> &scheduler)
+{
+    extern QMutex JobLock;
+    QMutexLocker lockerWait(&JobLock);
+    scheduler->clear();
 }

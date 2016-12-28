@@ -46,7 +46,7 @@
      </rect>
     </property>
     <property name="autoFillBackground">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::AdjustToContents</enum>
@@ -61,7 +61,7 @@
      <bool>true</bool>
     </attribute>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>58</number>
+     <number>56</number>
     </attribute>
     <attribute name="horizontalHeaderStretchLastSection">
      <bool>true</bool>
@@ -167,7 +167,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Turn Over</string>
+      <string>Turnover</string>
      </property>
      <property name="font">
       <font>
@@ -179,7 +179,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Weight Turn over</string>
+      <string>Weight Turnover</string>
      </property>
      <property name="font">
       <font>
@@ -275,10 +275,10 @@
      <set>QAbstractItemView::NoEditTriggers</set>
     </property>
     <property name="dragEnabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="alternatingRowColors">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="sortingEnabled">
      <bool>true</bool>
@@ -348,7 +348,7 @@
     </column>
     <column>
      <property name="text">
-      <string>Finish</string>
+      <string>RunTime</string>
      </property>
      <property name="font">
       <font>

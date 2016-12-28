@@ -7,6 +7,7 @@
 class Job
 {
     std::string     jobName;
+            us16    jobID;
             us16    joinTime;
             us16    lastTime;
             us16    startTime;
@@ -41,7 +42,11 @@ public:
         wTurnoverTime = 0;
     }
 
+    Job() {}
+    ~Job() {}
+
     /* getter */
+    const us16 getJobID() const { return jobID; }
     const std::string& getJobName() const { return jobName; }
     const us16 getJoinTime() const { return joinTime; }
     const us16 getLastTime() const { return lastTime; }
@@ -61,6 +66,9 @@ public:
     void exec() { addRunTime(); subNeedTime(); }
     void setTurnoverTime() { turnoverTime = finishedTime - joinTime; }
     void setWTurnoverTime() { wTurnoverTime  = turnoverTime / lastTime; }
+    void setTurnoverTime(const us16 _turnoverTime) { turnoverTime = _turnoverTime; }
+    void setWTurnoverTime(const float _wTurnoverTime) { wTurnoverTime  = _wTurnoverTime; }
+    void setJobID(const us16 _jobID) { jobID = _jobID; }
     void setJobName(const std::string& _jobName) { jobName = _jobName; }
     void setJoinTime(const us16 _joinTime) { joinTime = _joinTime; }
     void setLastTime(const us16 _lastTime) { lastTime = _lastTime; }

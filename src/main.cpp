@@ -51,32 +51,19 @@ int main(int argc, char *argv[])
 
     QObject::connect(&l, &Login::userSignInSignal,
                      [&](){
-
         w.show(); w.showGraph();
+    });
+    
+    QObject::connect(&w, &Widget::timeStopSignal,
+                     [=, &scheduler](){
+        proxy->toStore(scheduler);//使用lambda表达式实现默认参数
+    });
+
+    QObject::connect(&w, &Widget::clearSignal,
+                     [=, &scheduler](){
+        proxy->clearScheduler(scheduler);//使用lambda表达式实现默认参数
     });
 
     l.show();
-//    if(true){
-//        w.show();
-//    }
-
-//    QString str = QFileDialog::getOpenFileName();
-//    if(str.isEmpty()){
-//        return 0;
-//    }
-//    QFile file(str);
-//    if(!file.open(QFile::ReadOnly)){
-//        return 0;
-//    }
-
-//    QCryptographicHash hash(QCryptographicHash::Md5);
-//    if(!file.atEnd()){
-//        hash.addData(file.readAll());
-//    }
-//    qDebug() << hash.result().size();
-//    QString md5;
-//    md5.append(hash.result().toHex());
-//    qDebug() << md5 << md5.size();
-
     return a.exec();
 }

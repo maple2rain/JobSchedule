@@ -1,4 +1,5 @@
 ﻿#include "../inc/scheduler.h"
+#include "../inc/useroperate.h"
 void Scheduler::addWaitingJob(ptr &job)
 {
     auto it = scheduler->waitingJobs.begin();
@@ -76,12 +77,22 @@ Scheduler::ptr& Scheduler::selectNextJob()
 
 void Scheduler::addFinishedJob(ptr &jobs, us16 runtime)
 {
+    /* set time */
     jobs->setFinishedTime(runtime);
-    jobs->setRunTime(jobs->getLastTime());
     jobs->setTurnoverTime();
     jobs->setWTurnoverTime();
-    jobs->setNeedTime(0);
+
     finishedJobs.push_back(jobs);
 
     DEBUG_PRINT("add finished job" );
 } //add finished job
+
+void Scheduler::storeJobs()
+{
+    extern UserOperate user;
+    user.InsertJobs(scheduler->getWaitingJobs(), "failed");
+    user.InsertJobs(scheduler->getReadyJobs(), "failed");
+    user.InsertJobs(scheduler->getNextJobs(), "failed");
+    user.InsertJobs(scheduler->getFinishedJobs(), "finished");
+    scheduler->clearAllJob();
+}

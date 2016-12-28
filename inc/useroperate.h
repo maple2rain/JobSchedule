@@ -6,6 +6,7 @@
 #include "graph.h"
 #include "gif.h"
 #include "job.h"
+#include <vector>
 #include <string>
 #include <memory>
 #include <list>
@@ -50,6 +51,17 @@ public:
     const Info GetUserGif();
     const Info GetGifID();
 
+    // job operate, type mean failed or finished job
+    const Info InsertJobs(us16 uid, std::list<ptr> &jobs);
+    const Info InsertJobs(std::list<ptr> &jobs, const char *type);
+    const Info UserAddJobs(std::list<ptr> &jobs, std::string &type);
+    const Info DeleteJobs(us16 uid, const std::vector<us16> &jobIDVec);
+    const Info DeleteJobs(const std::vector<us16> &jobIDVec);
+    const Info GetJobs(us16 uid, std::list<ptr> &jobs, const char *type);
+    const Info GetJobs(const std::string &type);
+    const Info GetJob();
+    const Info GetMaxJobId();
+
     void getAllInfoFromDB();
 
     /* setter */
@@ -60,6 +72,8 @@ public:
     void setGif(const Gif &_gif) { gif = _gif; }
     void setHasGraph() { hasGraph = true; }
     void setHasGif() { hasGif = true; }
+    void setMaxJobId(us16 _jobMaxId) { jobMaxId = _jobMaxId; }
+    void clearJobs() { failedJobs.clear(); finishedJobs.clear(); }
 
     /* getter */
     const std::string &getUserName() { return username; }
@@ -69,18 +83,21 @@ public:
     Gif& getGif() { return gif; }
     bool isHasGraph() { return hasGraph; }
     bool isHasGif() { return hasGif; }
-
+    us16 getMaxJobId() { return ++jobMaxId; }
+    const std::list<ptr>& getFailedJobs() const { return failedJobs; }
+    const std::list<ptr>& getFinishedJobs() const { return finishedJobs; }
 
 private:
-    us16 uid;
-    std::string username;
-    std::string passwd;
-    Graph graph;
-    Gif gif;
-    bool hasGraph;
-    bool hasGif;
+    us16 uid;                   //user ID
+    us16 jobMaxId;              //the max job ID of user that user own since it sing up
+    std::string username;       //user name
+    std::string passwd;         //user password
+    Graph graph;                //the graph belong to user
+    Gif gif;                    //the gif belong to user which will show when jobs are running
+    bool hasGraph;              //check if user has graph
+    bool hasGif;                //check if user has gif
     std::list<ptr> finishedJobs;//list to store finished jobs
-    std::list<ptr> failedJobs;//list to store failed jobs
+    std::list<ptr> failedJobs;  //list to store failed jobs
 };
 
 

@@ -18,7 +18,7 @@
 #include <QMovie>
 
 us16 Widget::runtime = 0;
-us16 Widget::waittime = 100; // ms
+us16 Widget::waittime = 500; // ms
 
 void Widget::test()
 {
@@ -76,6 +76,7 @@ void Widget::InitModule()
     initTableVec();
     initMap();
     initPalette();
+    movie = new QMovie(this);
 }
 
 inline
@@ -115,6 +116,8 @@ void Widget::initMap()
 void Widget::showPersonInfo()
 {
     Person *person = new Person;
+    connect(person, &Person::destroyed,
+            this, &Widget::showGraph);
     person->setAttribute(Qt::WA_DeleteOnClose);
     person->setWindowModality(Qt::ApplicationModal);//set parent window to lock
     person->show();
@@ -122,7 +125,9 @@ void Widget::showPersonInfo()
 
 void Widget::showGraph()
 {
+    extern QMutex UserLock;
     extern UserOperate user;
+    QMutexLocker lockerWait(&UserLock);
     if(user.isHasGraph()){
         QPixmap photo;
         photo.loadFromData(user.getGraph().getGraph(), user.getGraph().getGraphType().c_str());
@@ -132,9 +137,12 @@ void Widget::showGraph()
 
 void Widget::showGif()
 {
+    extern QMutex UserLock;
     extern UserOperate user;
+    QMutexLocker lockerWait(&UserLock);
+
     if(user.isHasGif()){
-        QMovie *movie = new QMovie(QString(user.getGif().getGifName().c_str()), QByteArray(), this);
+        movie->setFileName(QString(user.getGif().getGifName().c_str()));
         graphLbl->setMovie(movie);
         movie->start();
     }
@@ -159,7 +167,7 @@ void Widget::RemoveRowByName(QTableWidget *table, const std::string &name)
     QList<QTableWidgetItem*> list = table->findItems(name.c_str(), Qt::MatchExactly);
 
     if(list.size() > 0)
-        table->removeRow(list.at(0)->row());  //excatly, there must be only one item,
+        table->removeRow(list.at(0)->row());  //excatly, there must be only one item
 }
 
 Widget::~Widget()
@@ -214,6 +222,7 @@ void Widget::on_ClearAllDataBtn_clicked()
         isMethodFixed = false;
         ClearTable();
         EnableRadioBtn();
+        sendClearSignal();
     }
 }
 
@@ -226,6 +235,7 @@ void Widget::on_RunBtn_clicked()
         timer->start(waittime);
         isRun = true;
         RunBtn->setDisabled(true);
+        showGif();
     }
 }
 
@@ -239,11 +249,13 @@ void Widget::on_PauseBtn_clicked()
             timer->start(waittime);
             PauseBtn->setText(tr("Pause"));     //change the text show on the button
             isPause = false;
+            movie->start();
         }else{
             timer->stop();
             CurTimeClock->setPalette(Qt::red);
             PauseBtn->setText(tr("Continue"));  //change the text show on the button
             isPause = true;
+            movie->stop();
         }
     }
 
@@ -254,6 +266,7 @@ void Widget::stopEvent()
     timer->stop();
     runtime = 0;
     CurTimeClock->display(0);
+    movie->stop();
 
     //change status
     isRun = false;
@@ -262,13 +275,24 @@ void Widget::stopEvent()
     RunBtn->setEnabled(true);
     PauseBtn->setText(tr("Pause"));     //change the text show on the button
 
-
     EnableRadioBtn();
+    
+    bool isStore = QMessageBox::question(this,
+                                       tr("Store"),
+                                       tr("Do you want to store your job in DB?"),
+                                       QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No)
+                                      == QMessageBox::Yes;
+    showGraph();
+
+    if(isStore)
+        timeStop();
 }
 
 void Widget::on_StopBtn_clicked()
 {
-    stopEvent();
+    if(isRun)
+        stopEvent();
 }
 
 /* select schedule type */
@@ -539,7 +563,7 @@ void Widget::DrawFinishedTable(Job *job)
     QTableWidgetItem *turnoverItem = new QTableWidgetItem();
     turnoverItem->setData(Qt::DisplayRole, job->getTurnOverTime());
     QTableWidgetItem *wTurnoverItem = new QTableWidgetItem();
-    wTurnoverItem->setData(Qt::DisplayRole, (double)job->getTurnOverTime() / job->getLastTime());
+    wTurnoverItem->setData(Qt::DisplayRole, job->getWTurnoverTime());
 
     //if sorting enabled was true, that it will lose some item due to the sorting
     FinishedJobTbl->setSortingEnabled(false);
@@ -580,12 +604,10 @@ void Widget::on_OpenFile_clicked()
     file.close();
 }
 
-
-
 void Widget::on_PauseBtn_pressed()
 {
-    PauseBtn->setStyleSheet("QPushButton:hover{background: red;}");//setting background to be red when hover
-    PauseBtn->setToolTip(tr("Transfer File(s) from Left to Right"));//setting tool tip when hover
+//    PauseBtn->setStyleSheet("QPushButton:hover{background: red;}");//setting background to be red when hover
+//    PauseBtn->setToolTip(tr("Transfer File(s) from Left to Right"));//setting tool tip when hover
 }
 
 

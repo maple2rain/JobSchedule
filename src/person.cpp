@@ -15,12 +15,34 @@ Person::Person(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+    setFixedSize(this->width(), this->height());
+
     setUserData();
     showGraph();
     showGif();
-
+    drawTable();
     GraphLbl->installEventFilter(this);
     GifLbl->installEventFilter(this);
+
+}
+
+void Person::drawTable()
+{
+    extern QMutex UserLock;
+    extern UserOperate user;
+    QMutexLocker lockerWait(&UserLock);
+
+    user.GetJob();
+
+    for(auto it = user.getFailedJobs().cbegin(); it != user.getFailedJobs().cend(); ++it){
+        Job *job = (*it).get();
+        drawFailedTable(job);
+    }
+
+    for(auto it = user.getFinishedJobs().cbegin(); it != user.getFinishedJobs().cend(); ++it){
+        Job *job = (*it).get();
+        drawFinishedTable(job);
+    }
 }
 
 Person::~Person()
@@ -41,7 +63,9 @@ void Person::on_ModifyBtn_clicked()
 
 void Person::setUserData()
 {
+    extern QMutex UserLock;
     extern UserOperate user;
+    QMutexLocker lockerWait(&UserLock);
     UserNameLineEdit->setText(user.getUserName().c_str());
     PasswdLineEdit->setText(user.getPassword().c_str());
 }
@@ -132,7 +156,7 @@ void Person::selectGif()
         /* show pircure */
         QMovie *movie = new QMovie(path, QByteArray(), this);
 
-//        movie->deleteLater();
+        //        movie->deleteLater();
 
         GifLbl->setMovie(movie);
         movie->start();
@@ -185,4 +209,126 @@ void Person::showGif()
         GifLbl->setMovie(movie);
         movie->start();
     }
+}
+
+void Person::drawFinishedTable(Job *job)
+{
+    int rowCount = FinishedJobTbl->rowCount();
+    FinishedJobTbl->setRowCount(rowCount + 1); //change row count
+
+    /* add new item */
+    //set as text
+    QTableWidgetItem *jobNameItem = new QTableWidgetItem();
+    jobNameItem->setText(job->getJobName().c_str());
+
+    //set as data
+    QTableWidgetItem *jobIDItem = new QTableWidgetItem();
+    jobIDItem->setData(Qt::DisplayRole, job->getJobID());
+    QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
+    joinTimeItem->setData(Qt::DisplayRole, job->getJoinTime());
+    QTableWidgetItem *lastTimeItem = new QTableWidgetItem();
+    lastTimeItem->setData(Qt::DisplayRole, job->getLastTime());
+    QTableWidgetItem *startTimeItem = new QTableWidgetItem();
+    startTimeItem->setData(Qt::DisplayRole, job->getStartTime());
+    QTableWidgetItem *finishedTimeItem = new QTableWidgetItem();
+    finishedTimeItem->setData(Qt::DisplayRole, job->getFinishedTime());
+    QTableWidgetItem *deadLineItem = new QTableWidgetItem();
+    deadLineItem->setData(Qt::DisplayRole, job->getDeadLine());
+    QTableWidgetItem *turnoverItem = new QTableWidgetItem();
+    turnoverItem->setData(Qt::DisplayRole, job->getTurnOverTime());
+    QTableWidgetItem *wTurnoverItem = new QTableWidgetItem();
+    wTurnoverItem->setData(Qt::DisplayRole, job->getWTurnoverTime());
+    QTableWidgetItem *priorityItem = new QTableWidgetItem();
+    priorityItem->setData(Qt::DisplayRole, job->getPrioOrSlice());
+
+    //if sorting enabled was true, that it will lose some item due to the sorting
+    FinishedJobTbl->setSortingEnabled(false);
+
+    /* set new item */
+    FinishedJobTbl->setItem(rowCount, 0, jobIDItem);
+    FinishedJobTbl->setItem(rowCount, 1, jobNameItem);
+    FinishedJobTbl->setItem(rowCount, 2, joinTimeItem);
+    FinishedJobTbl->setItem(rowCount, 3, startTimeItem);
+    FinishedJobTbl->setItem(rowCount, 4, finishedTimeItem);
+    FinishedJobTbl->setItem(rowCount, 5, lastTimeItem);
+    FinishedJobTbl->setItem(rowCount, 6, deadLineItem);
+    FinishedJobTbl->setItem(rowCount, 7, priorityItem);
+    FinishedJobTbl->setItem(rowCount, 8, turnoverItem);
+    FinishedJobTbl->setItem(rowCount, 9, wTurnoverItem);
+
+    //enable sorting again
+    FinishedJobTbl->setSortingEnabled(true);
+}
+
+void Person::drawFailedTable(Job *job)
+{
+    int rowCount = FailedJobTbl->rowCount();
+    FailedJobTbl->setRowCount(rowCount + 1); //change row count
+
+    /* add new item */
+    //set as text
+    QTableWidgetItem *jobNameItem = new QTableWidgetItem();
+    jobNameItem->setText(job->getJobName().c_str());
+
+    //set as data
+    QTableWidgetItem *jobIDItem = new QTableWidgetItem();
+    jobIDItem->setData(Qt::DisplayRole, job->getJobID());
+    QTableWidgetItem *joinTimeItem = new QTableWidgetItem();
+    joinTimeItem->setData(Qt::DisplayRole, job->getJoinTime());
+    QTableWidgetItem *lastTimeItem = new QTableWidgetItem();
+    lastTimeItem->setData(Qt::DisplayRole, job->getLastTime());
+    QTableWidgetItem *startTimeItem = new QTableWidgetItem();
+    startTimeItem->setData(Qt::DisplayRole, job->getStartTime());
+    QTableWidgetItem *runTimeItem = new QTableWidgetItem();
+    runTimeItem->setData(Qt::DisplayRole, job->getRunTime());
+    QTableWidgetItem *deadLineItem = new QTableWidgetItem();
+    deadLineItem->setData(Qt::DisplayRole, job->getDeadLine());
+    QTableWidgetItem *priorityItem = new QTableWidgetItem();
+    priorityItem->setData(Qt::DisplayRole, job->getPrioOrSlice());
+
+    //if sorting enabled was true, that it will lose some item due to the sorting
+    FailedJobTbl->setSortingEnabled(false);
+
+    /* set new item */
+    FailedJobTbl->setItem(rowCount, 0, jobIDItem);
+    FailedJobTbl->setItem(rowCount, 1, jobNameItem);
+    FailedJobTbl->setItem(rowCount, 2, joinTimeItem);
+    FailedJobTbl->setItem(rowCount, 3, startTimeItem);
+    FailedJobTbl->setItem(rowCount, 4, runTimeItem);
+    FailedJobTbl->setItem(rowCount, 5, lastTimeItem);
+    FailedJobTbl->setItem(rowCount, 6, deadLineItem);
+    FailedJobTbl->setItem(rowCount, 7, priorityItem);
+
+    //enable sorting again
+    FailedJobTbl->setSortingEnabled(true);
+}
+
+void Person::on_DeleteBtn_clicked()
+{
+    deleteTableItem(FailedJobTbl);
+    deleteTableItem(FinishedJobTbl);
+}
+
+void Person::deleteTableItem(QTableWidget *table)
+{
+    QList<QTableWidgetSelectionRange> ranges = table->selectedRanges();
+    std::vector<us16> jobIDs;
+
+    /* select selected range to delete */
+    for(int i = 0; i < ranges.count(); ++i){
+        int topRow = ranges.at(i).topRow();
+        int bottomRow = ranges.at(i).bottomRow();
+
+        /* get the value of first column of each selected row and remove it from table */
+        for(int j = topRow; j <= bottomRow; ++j){
+            QTableWidgetItem *item = table->item(topRow, 0);
+            jobIDs.push_back(item->text().toUInt());
+            table->removeRow(topRow);
+        }
+
+    }
+
+    extern UserOperate user;
+    user.DeleteJobs(jobIDs);
+
 }

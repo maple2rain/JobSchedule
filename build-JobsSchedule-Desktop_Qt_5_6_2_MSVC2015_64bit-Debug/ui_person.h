@@ -113,12 +113,12 @@ public:
         FinishedJobTbl->setHorizontalHeaderItem(9, __qtablewidgetitem9);
         FinishedJobTbl->setObjectName(QStringLiteral("FinishedJobTbl"));
         FinishedJobTbl->setGeometry(QRect(20, 20, 631, 231));
-        FinishedJobTbl->setAutoFillBackground(true);
+        FinishedJobTbl->setAutoFillBackground(false);
         FinishedJobTbl->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         FinishedJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
         FinishedJobTbl->setSortingEnabled(true);
         FinishedJobTbl->horizontalHeader()->setCascadingSectionResizes(true);
-        FinishedJobTbl->horizontalHeader()->setDefaultSectionSize(58);
+        FinishedJobTbl->horizontalHeader()->setDefaultSectionSize(56);
         FinishedJobTbl->horizontalHeader()->setStretchLastSection(true);
         FinishedJobTbl->verticalHeader()->setDefaultSectionSize(25);
         layoutWidget = new QWidget(FinishedJob);
@@ -187,8 +187,8 @@ public:
         FailedJobTbl->setObjectName(QStringLiteral("FailedJobTbl"));
         FailedJobTbl->setGeometry(QRect(20, 20, 541, 171));
         FailedJobTbl->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        FailedJobTbl->setDragEnabled(true);
-        FailedJobTbl->setAlternatingRowColors(true);
+        FailedJobTbl->setDragEnabled(false);
+        FailedJobTbl->setAlternatingRowColors(false);
         FailedJobTbl->setSortingEnabled(true);
         FailedJobTbl->horizontalHeader()->setCascadingSectionResizes(false);
         FailedJobTbl->horizontalHeader()->setDefaultSectionSize(65);
@@ -325,9 +325,9 @@ public:
         QTableWidgetItem *___qtablewidgetitem7 = FinishedJobTbl->horizontalHeaderItem(7);
         ___qtablewidgetitem7->setText(QApplication::translate("Person", "Priority", 0));
         QTableWidgetItem *___qtablewidgetitem8 = FinishedJobTbl->horizontalHeaderItem(8);
-        ___qtablewidgetitem8->setText(QApplication::translate("Person", "Turn Over", 0));
+        ___qtablewidgetitem8->setText(QApplication::translate("Person", "Turnover", 0));
         QTableWidgetItem *___qtablewidgetitem9 = FinishedJobTbl->horizontalHeaderItem(9);
-        ___qtablewidgetitem9->setText(QApplication::translate("Person", "Weight Turn over", 0));
+        ___qtablewidgetitem9->setText(QApplication::translate("Person", "Weight Turnover", 0));
         ATT->setText(QApplication::translate("Person", "Average Turnover Time:", 0));
         ATTValue->setText(QApplication::translate("Person", "time", 0));
         WATT->setText(QApplication::translate("Person", "Weighted Average Turnover Time:", 0));
@@ -342,7 +342,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem13 = FailedJobTbl->horizontalHeaderItem(3);
         ___qtablewidgetitem13->setText(QApplication::translate("Person", "Starting", 0));
         QTableWidgetItem *___qtablewidgetitem14 = FailedJobTbl->horizontalHeaderItem(4);
-        ___qtablewidgetitem14->setText(QApplication::translate("Person", "Finish", 0));
+        ___qtablewidgetitem14->setText(QApplication::translate("Person", "RunTime", 0));
         QTableWidgetItem *___qtablewidgetitem15 = FailedJobTbl->horizontalHeaderItem(5);
         ___qtablewidgetitem15->setText(QApplication::translate("Person", "Last Time", 0));
         QTableWidgetItem *___qtablewidgetitem16 = FailedJobTbl->horizontalHeaderItem(6);
