@@ -89,9 +89,7 @@ void Person::on_ModifyBtn_clicked()
 
 void Person::setUserData()
 {
-    extern QMutex UserLock;
     extern UserOperate user;
-    QMutexLocker lockerWait(&UserLock);
     UserNameLineEdit->setText(user.getUserName().c_str());
     PasswdLineEdit->setText(user.getPassword().c_str());
 }

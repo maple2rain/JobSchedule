@@ -63,7 +63,6 @@ public:
     const Info GetMaxJobId();
     const Info GetTurnOver();
 
-
     void getAllInfoFromDB();
 
     /* setter */

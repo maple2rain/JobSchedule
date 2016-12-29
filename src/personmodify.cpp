@@ -38,8 +38,8 @@ void PersonModify::on_OkBtn_clicked()
 
         if(info.getStatus() == true){
             QMessageBox::warning(this, tr("Information"), tr(info.getInfo().c_str()));
-            sendChangeUserDataSignal();
             this->close();
+            sendChangeUserDataSignal();
         }else{
             user.setUserName(oldName);
             QMessageBox::warning(this, tr("Warning"), tr(info.getInfo().c_str()));

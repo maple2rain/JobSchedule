@@ -649,7 +649,6 @@ const Info UserOperate::GetJobs(us16 uid, std::list<ptr> &jobs, const char *type
     try{
         QSqlQuery query(con);
         
-        /* get max Job ID */
         query.prepare("select * "
                       //                    "Select job.jobID, jobName, joinTime, lastTime, startTime, runTime, "
                       //                    "needTime, deadline, PrioOrSlice, turnoverTime, weightTurnoverTime, finishedTime "
