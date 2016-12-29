@@ -21,22 +21,25 @@ void FCFS::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
                 readyJob->exec();   //execute the first job
                 AddRecord(jobRecorder, readyJob, Next2Run);
 
-                if(readyJobs.size() >= 2){
+                if(readyJobNum >= 1){
                     ptr nextJob = selectNextJob();  //if more than 2 job exists, then add it to next jobs list
                     AddRecord(jobRecorder, nextJob, Ready2Next);
+                    subReadyJobNum();
                 }
             }
         }else{
             if(runningJob->getRunTime() == 0){
                 runningJob->setStartTime(runtime);
                 AddRecord(jobRecorder, runningJob, Ready2Run);
+                subReadyJobNum();
             }else{
                 AddRecord(jobRecorder, runningJob, Run2Run);
             }
 
-            if(readyJobs.size() >= 2){
+            if(readyJobNum >= 1){
                 ptr nextJob = selectNextJob();  //if more than 2 job exists, then add it to next jobs list
                 AddRecord(jobRecorder, nextJob, Ready2Next);
+                subReadyJobNum();
             }
 
             runningJob->exec();
@@ -49,3 +52,5 @@ void FCFS::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
 void FCFS::schedule_PM(us16 runtime, JobRecorder &jobRecorder) { std::cout << "schedule_PM" << std::endl; }
 void FCFS::schedule_PSA(us16 runtime, JobRecorder &jobRecorder) { std::cout << "schedule_PSA" << std::endl; }
 void FCFS::schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder) { std::cout << "schedule_PM_PSA" << std::endl; }
+
+

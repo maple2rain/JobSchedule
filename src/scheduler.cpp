@@ -71,10 +71,20 @@ bool Scheduler::statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, s
 
 Scheduler::ptr& Scheduler::selectNextJob()
 {
-    require(readyJobs.size() >= 2, "The size of ready jobs list is less than 2!");
+    require(readyJobNum >= 1, "The size of ready jobs list is less than 2!");
     auto it = readyJobs.begin();
     return *++it;
 }
+
+//Scheduler::ptr& Scheduler::selectFirstJobPrio()
+//{
+
+//}
+
+//Scheduler::ptr& Scheduler::selectNextJobPrio()
+//{
+
+//}
 
 void Scheduler::addFinishedJob(ptr &jobs, us16 runtime)
 {
@@ -121,6 +131,6 @@ void Scheduler::clearAllJob()
     nextJobs.clear();
     finishedJobs.clear();
 
-    for(int i = 0; i <= 15; ++i)
+    for(int i = 0; i <= MaxPrio; ++i)
         jobVec[i].clear();
 }	//clear all the job

@@ -19,12 +19,14 @@ protected:
     Scheduler() {
         scheduler = 0;
         jobNum = 0;
+        readyJobNum = 0;
         DEBUG_PRINT("create scheduler");
         jobVec = { readyJobs0, readyJobs1, readyJobs2, readyJobs3, readyJobs4, readyJobs5, readyJobs6, readyJobs7,
                    readyJobs8, readyJobs9, readyJobs10, readyJobs11, readyJobs12, readyJobs13, readyJobs14, readyJobs15 };
     }
 public:
     typedef std::shared_ptr<Job> ptr; //smart pointer
+    static const size_t MaxPrio = 15;
 
     void schedule(us16 runtime, JobRecorder &jobRecorder);
     void checkWaitingJob(us16 runtime, JobRecorder &jobRecorder);
@@ -34,7 +36,9 @@ public:
     virtual void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder) { DEBUG_PRINT("schedule_PM_PSA"); }
 
     ptr &selectFirstJob() { return readyJobs.front(); }	//select the job to run, which is in the front of the readyJobs list
-    ptr &selectNextJob();   //return next job, require detect the size of job-list by user
+    ptr &selectNextJob();       //return next job, require detect the size of job-list by user
+    ptr &selectFirstJobPrio(); 	//select the job to run, which is in the front of the readyJobs0-15 list
+    ptr &selectNextJobPrio();   //return next job, require detect the size of job-list by user
 
     void clearJob(std::list<ptr> &jobs) {
         jobs.clear();
@@ -56,7 +60,8 @@ public:
     bool isJobNone() { return jobNum == 0; }
     void addWaitingJob(ptr &job); //add waiting job
     void addFinishedJob(ptr &jobs, us16 runtime);
-    void addReadyJob(ptr &job) { readyJobs.push_back(job); DEBUG_PRINT("add ready job" ); }   //add ready job
+    void addReadyJob(ptr &job) { readyJobs.push_back(job); addReadyJobNum(); DEBUG_PRINT("add ready job" ); }   //add ready job
+    void addReadyJobToPrio();
     void storeJobs();
     void setAverTurn(JobRecorder &jobRecorder);
     void clearAllJob();
@@ -64,6 +69,8 @@ public:
     void clear() { scheduler->clearAllJob(); }
     void addJobNum() { ++jobNum; }
     void subJobNum() { --jobNum; }
+    void addReadyJobNum() { ++readyJobNum; }
+    void subReadyJobNum() { --readyJobNum; }
 
     virtual ~Scheduler () {
         if (scheduler) {
@@ -112,6 +119,7 @@ protected:
 #define _PM_PSA 0x03
     unsigned char flag;
     us16 jobNum;    //record the num of job
+    us16 readyJobNum;//record the num of ready Job
 };
 
 /* FCFS, inherit from Scheduler */
@@ -129,6 +137,9 @@ public:
     void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
+
+
+
 };
 
 inline
