@@ -55,4 +55,6 @@ FORMS    += widget.ui \
     person.ui
 
 RESOURCES += \
-    rsc.qrc
+	rsc.qrc
+
+RC_FILE =  appico.qrc
