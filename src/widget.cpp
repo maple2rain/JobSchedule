@@ -282,7 +282,7 @@ void Widget::stopEvent()
                                          tr("Store"),
                                          tr("Do you want to store your job in DB?"),
                                          QMessageBox::Yes | QMessageBox::No,
-                                         QMessageBox::No)
+                                         QMessageBox::Yes)
             == QMessageBox::Yes;
     showGraph();
 

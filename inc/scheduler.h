@@ -4,6 +4,7 @@
 #include "require.h"
 #include "app_cfg.h"
 #include <list>
+#include <vector>
 #include <stdexcept>
 #include <memory>
 #include <iostream>
@@ -15,7 +16,13 @@ class Scheduler {
     Scheduler(Scheduler&);
     Scheduler operator=(Scheduler&);
 protected:
-    Scheduler() { scheduler = 0; DEBUG_PRINT("create scheduler"); }
+    Scheduler() {
+        scheduler = 0;
+        jobNum = 0;
+        DEBUG_PRINT("create scheduler");
+        jobVec = { readyJobs0, readyJobs1, readyJobs2, readyJobs3, readyJobs4, readyJobs5, readyJobs6, readyJobs7,
+                   readyJobs8, readyJobs9, readyJobs10, readyJobs11, readyJobs12, readyJobs13, readyJobs14, readyJobs15 };
+    }
 public:
     typedef std::shared_ptr<Job> ptr; //smart pointer
 
@@ -46,15 +53,17 @@ public:
 
     //as time goes by, jobs status will change
     bool statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, std::list<ptr> &changeJobs, unsigned short runtime);
-    bool isJobNone() { return readyJobs.empty() && waitingJobs.empty() && nextJobs.empty(); }
+    bool isJobNone() { return jobNum == 0; }
     void addWaitingJob(ptr &job); //add waiting job
     void addFinishedJob(ptr &jobs, us16 runtime);
     void addReadyJob(ptr &job) { readyJobs.push_back(job); DEBUG_PRINT("add ready job" ); }   //add ready job
     void storeJobs();
     void setAverTurn(JobRecorder &jobRecorder);
-    void clearAllJob() { readyJobs.clear(); waitingJobs.clear(); nextJobs.clear(); finishedJobs.clear(); }	//clear all the job
+    void clearAllJob();
     void setFlag(bool isPSA = false, bool isPM = false) { flag = 0; flag |= isPSA; flag <<= 1; flag |= isPM; }
     void clear() { scheduler->clearAllJob(); }
+    void addJobNum() { ++jobNum; }
+    void subJobNum() { --jobNum; }
 
     virtual ~Scheduler () {
         if (scheduler) {
@@ -77,12 +86,32 @@ protected:
     std::list<ptr> nextJobs;    //list to store next job, though there is only one next job
     std::list<ptr> finishedJobs;//list to store finished jobs
 
+    /* different priority list*/
+    std::list<ptr> readyJobs0;
+    std::list<ptr> readyJobs1;
+    std::list<ptr> readyJobs2;
+    std::list<ptr> readyJobs3;
+    std::list<ptr> readyJobs4;
+    std::list<ptr> readyJobs5;
+    std::list<ptr> readyJobs6;
+    std::list<ptr> readyJobs7;
+    std::list<ptr> readyJobs8;
+    std::list<ptr> readyJobs9;
+    std::list<ptr> readyJobs10;
+    std::list<ptr> readyJobs11;
+    std::list<ptr> readyJobs12;
+    std::list<ptr> readyJobs13;
+    std::list<ptr> readyJobs14;
+    std::list<ptr> readyJobs15;
+    std::vector<std::list<ptr>> jobVec;
+
 //what flag mean is that :
 #define _NONE	0x00
 #define _PM		0x01
 #define _PSA	0x02
 #define _PM_PSA 0x03
     unsigned char flag;
+    us16 jobNum;    //record the num of job
 };
 
 /* FCFS, inherit from Scheduler */

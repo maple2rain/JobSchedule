@@ -10,6 +10,7 @@ void Scheduler::addWaitingJob(ptr &job)
             break;
     }
     scheduler->waitingJobs.insert(it, job);
+    scheduler->addJobNum();
     DEBUG_PRINT_JOB(waitingJobs, JoinTime);
 }
 
@@ -83,6 +84,7 @@ void Scheduler::addFinishedJob(ptr &jobs, us16 runtime)
     jobs->setWTurnoverTime();
 
     finishedJobs.push_back(jobs);
+    subJobNum();
 
     DEBUG_PRINT("add finished job" );
 } //add finished job
@@ -111,3 +113,14 @@ void Scheduler::setAverTurn(JobRecorder &jobRecorder)
         jobRecorder.setAverWTurnover(sumW / size);
     }
 }
+
+void Scheduler::clearAllJob()
+{
+    readyJobs.clear();
+    waitingJobs.clear();
+    nextJobs.clear();
+    finishedJobs.clear();
+
+    for(int i = 0; i <= 15; ++i)
+        jobVec[i].clear();
+}	//clear all the job
