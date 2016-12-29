@@ -55,7 +55,6 @@ public:
     // job operate, type mean failed or finished job
     const Info InsertJobs(us16 uid, std::list<ptr> &jobs);
     const Info InsertJobs(std::list<ptr> &jobs, const char *type);
-    const Info UserAddJobs(std::list<ptr> &jobs, std::string &type);
     const Info DeleteJobs(us16 uid, const std::vector<us16> &jobIDVec);
     const Info DeleteJobs(const std::vector<us16> &jobIDVec);
     const Info GetJobs(us16 uid, std::list<ptr> &jobs, const char *type);

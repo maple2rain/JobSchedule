@@ -368,7 +368,8 @@ const Info UserOperate::GetUserGraph()
         QSqlQuery query(con);
         
         /* Insert */
-        query.prepare("Select graph.graphID, graphType, graph From graph, user_graph "
+        query.prepare("Select graph.graphID, graphType, graph "
+                      "From graph, user_graph "
                       "Where graph.graphID = user_graph.graphID and user_graph.userID = (:userID) Limit 1");
         query.bindValue(":userID", uid);
         if(query.exec()){
@@ -653,8 +654,8 @@ const Info UserOperate::GetJobs(us16 uid, std::list<ptr> &jobs, const char *type
                       //                    "Select job.jobID, jobName, joinTime, lastTime, startTime, runTime, "
                       //                    "needTime, deadline, PrioOrSlice, turnoverTime, weightTurnoverTime, finishedTime "
                       "From job Left Outer Join job" + QString(type) + " "
-                                                                       "Using (userID, jobID) "
-                                                                       "where userID = (:userID) and job.jobID = job" + QString(type) + ".jobID");
+                      "Using (userID, jobID) "
+                      "where userID = (:userID) and job.jobID = job" + QString(type) + ".jobID");
         query.bindValue(":userID", uid);
         
         if(query.exec()){
