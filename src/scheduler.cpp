@@ -1,5 +1,5 @@
 ﻿#include "../inc/scheduler.h"
-#include "../inc/useroperate.h"
+#include "../inc/dbOperate/useroperate.h"
 void Scheduler::addWaitingJob(ptr &job)
 {
     auto it = scheduler->waitingJobs.begin();

@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "job.h"
-#include "jobrecorder.h"
+#include "job/job.h"
+#include "job/jobrecorder.h"
 #include "require.h"
 #include "app_cfg.h"
 #include <list>
@@ -184,6 +184,23 @@ public:
     void sortJobNone();
 };
 
+/* RR, inherit from Scheduler */
+class RR : public Scheduler
+{
+    //Prevent copy-construction & operator =
+    RR(RR&);
+    RR operator=(RR&);
+
+    RR() { DEBUG_PRINT("create RR scheduler"); } //private constructor, prevent to be instanced by other operation
+    friend class Scheduler;
+public:
+    ~RR() {}
+    void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void sortJobNone();
+};
 
 inline
 Scheduler::Scheduler(const std::string &type) {

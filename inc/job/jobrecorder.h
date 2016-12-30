@@ -2,7 +2,7 @@
 #define JOBRECORDER_H
 
 #include "job.h"
-#include "require.h"
+#include "../inc/require.h"
 #include <memory>
 #include <list>
 

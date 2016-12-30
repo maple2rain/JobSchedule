@@ -1,8 +1,6 @@
 <RCC>
     <qresource prefix="/images">
         <file>images/talent.png</file>
-        <file>images/sun.jpg</file>
-        <file>images/Leaves.jpg</file>
         <file>images/Urban Dream.jpg</file>
         <file>images/icon/broom_brush_clear_sweep_128px_1703_easyicon.net.png</file>
         <file>images/icon/fail.png</file>

@@ -10,8 +10,8 @@
 #include <map>
 #include <QTextStream>
 #include "ui_widget.h"
-#include "scheduler.h"
-#include "job.h"
+#include "../inc/scheduler.h"
+#include "../inc/job/job.h"
 
 namespace Ui {
 class Widget;

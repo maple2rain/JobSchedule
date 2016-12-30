@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "ui_person.h"
-#include "../inc/job.h"
+#include "../inc/job/job.h"
 
 namespace Ui {
 class Person;

@@ -1,7 +1,7 @@
 ﻿#ifndef JOB_H
 #define JOB_H
 #include <string>
-#include "app_cfg.h"
+#include "../inc/app_cfg.h"
 #include <memory>
 
 /* The Attribute of jobs */

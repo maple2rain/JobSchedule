@@ -1,14 +1,14 @@
-﻿#include "../inc/person.h"
-#include "../inc/useroperate.h"
-#include "../inc/personmodify.h"
+﻿#include "../../inc/ui/person.h"
+#include "../../inc/dbOperate/useroperate.h"
+#include "../../inc/ui/personmodify.h"
 #include <QPixmap>
 #include <QMovie>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QByteArray>
 #include <QCryptographicHash>
-#include "../inc/graph.h"
-#include "../inc/gif.h"
+#include "../../inc/dbOperate/graph.h"
+#include "../../inc/dbOperate/gif.h"
 
 
 Person::Person(QWidget *parent) :

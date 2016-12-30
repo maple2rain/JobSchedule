@@ -1,6 +1,6 @@
-﻿#include "../inc/widget.h"
-#include "../inc/login.h"
-#include "../inc/register.h"
+﻿#include "../inc/ui/widget.h"
+#include "../inc/ui/login.h"
+#include "../inc/ui/register.h"
 #include <QApplication>
 #include <QMutexLocker>
 #include <QDebug>
@@ -12,8 +12,8 @@
 #include <QCryptographicHash>
 #include "../inc/scheduler.h"
 #include "../inc/proxy.h"
-#include "../inc/jobrecorder.h"
-#include "../inc/useroperate.h"
+#include "../inc/job/jobrecorder.h"
+#include "../inc/dbOperate/useroperate.h"
 
 QMutex JobLock;
 QMutex UserLock;

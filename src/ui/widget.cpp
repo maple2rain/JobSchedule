@@ -1,7 +1,7 @@
 ﻿#include "ui_widget.h"
-#include "../inc/widget.h"
-#include "../inc/person.h"
-#include "../inc/useroperate.h"
+#include "../../inc/ui/widget.h"
+#include "../../inc/ui/person.h"
+#include "../../inc/dbOperate/useroperate.h"
 #include <algorithm>
 #include <iostream>
 #include <sstream>

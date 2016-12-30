@@ -5,7 +5,7 @@
 #include "info.h"
 #include "graph.h"
 #include "gif.h"
-#include "job.h"
+#include "../inc/job/job.h"
 #include <vector>
 #include <string>
 #include <memory>

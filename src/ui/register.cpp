@@ -1,21 +1,20 @@
-﻿#include "../inc/personmodify.h"
-#include "../inc/useroperate.h"
-#include "../inc/info.h"
+﻿#include "../../inc/ui/register.h"
+#include "../../inc/dbOperate/useroperate.h"
+#include "../../inc/dbOperate/info.h"
 #include <QMessageBox>
 
-PersonModify::PersonModify(QWidget *parent) :
+Register::Register(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
     setFixedSize(this->width(), this->height());
-    setWindowTitle("Modify");
 }
 
-PersonModify::~PersonModify()
+Register::~Register()
 {
 }
 
-void PersonModify::on_OkBtn_clicked()
+void Register::on_OkBtn_clicked()
 {
     extern QMutex UserLock;
     extern UserOperate user;
@@ -25,23 +24,14 @@ void PersonModify::on_OkBtn_clicked()
     QString confirm = ConfirmLineEdit->text();
 
     if(passwd.compare(confirm) == 0){
-        std::string oldName = user.getUserName();
-        //can set newName constraint
-        std::string newName = std::string((const char*)UserNameLineEdit->text().toLocal8Bit());
-
-        if(!newName.empty()){
-            user.setUserName(newName);
-        }
-
+        user.setUserName(std::string((const char*)UserNameLineEdit->text().toLocal8Bit()));
         user.setPassword(std::string((const char*)PasswdLineEdit->text().toLocal8Bit()));
-        Info info = user.UpdateUser();//add user
+        Info info = user.AddUser();//add user
 
         if(info.getStatus() == true){
             QMessageBox::warning(this, tr("Information"), tr(info.getInfo().c_str()));
             this->close();
-            sendChangeUserDataSignal();
         }else{
-            user.setUserName(oldName);
             QMessageBox::warning(this, tr("Warning"), tr(info.getInfo().c_str()));
         }
 
@@ -51,7 +41,7 @@ void PersonModify::on_OkBtn_clicked()
 
 }
 
-void PersonModify::on_CancelBtn_clicked()
+void Register::on_CancelBtn_clicked()
 {
     this->close();
 }

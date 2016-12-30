@@ -3,8 +3,8 @@
 #include <QObject>
 #include <QString>
 #include "scheduler.h"
-#include "job.h"
-#include "jobrecorder.h"
+#include "job/job.h"
+#include "job/jobrecorder.h"
 class Proxy : public QObject{
     Q_OBJECT
 

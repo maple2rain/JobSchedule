@@ -3,7 +3,7 @@
 
 #include <string>
 #include <QByteArray>
-#include "app_cfg.h"
+#include "../inc/app_cfg.h"
 
 class Graph
 {

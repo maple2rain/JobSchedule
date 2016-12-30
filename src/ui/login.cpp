@@ -1,7 +1,7 @@
-﻿#include "../inc/login.h"
-#include "../inc/useroperate.h"
-#include "../inc/info.h"
-#include "../inc/register.h"
+﻿#include "../../inc/ui/login.h"
+#include "../../inc/dbOperate/useroperate.h"
+#include "../../inc/dbOperate/info.h"
+#include "../../inc/ui/register.h"
 #include <QMessageBox>
 
 Login::Login(QWidget *parent) :

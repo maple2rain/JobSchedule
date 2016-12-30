@@ -1,4 +1,4 @@
-﻿#include "../inc/ConnectionPool.h"
+﻿#include "../../inc/dbOperate/ConnectionPool.h"
 
 QMutex ConnectionPool::mutex;
 QWaitCondition ConnectionPool::waitConnection;

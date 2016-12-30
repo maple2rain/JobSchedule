@@ -1,7 +1,7 @@
 ﻿#ifndef GIF_H
 #define GIF_H
 #include <string>
-#include "app_cfg.h"
+#include "../inc/app_cfg.h"
 class Gif
 {
 public:

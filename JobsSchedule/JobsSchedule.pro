@@ -15,48 +15,44 @@ TEMPLATE = app
 
 SOURCES += \
     ../src/main.cpp \
-    ../src/widget.cpp \
-    ../src/fcfs.cpp \
-    ../src/scheduler.cpp \
+    ../src/dbOperate/connectionpool.cpp \
+    ../src/dbOperate/useroperate.cpp \
+    ../src/schedule/edf.cpp \
+    ../src/schedule/fcfs.cpp \
+    ../src/schedule/sjf.cpp \
+    ../src/ui/login.cpp \
+    ../src/ui/person.cpp \
+    ../src/ui/personmodify.cpp \
+    ../src/ui/register.cpp \
+    ../src/ui/widget.cpp \
     ../src/proxy.cpp \
-    ../src/connectionpool.cpp \
-    ../src/useroperate.cpp \
-    ../src/login.cpp \
-    ../src/register.cpp \
-    ../src/person.cpp \
-    ../src/personmodify.cpp \
-    ../src/sjf.cpp \
-    ../src/edf.cpp
+    ../src/scheduler.cpp
 
 HEADERS  += \
-    ../inc/widget.h \
-    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_widget.h \
-    ../inc/job.h \
-    ../inc/scheduler.h \
-    ../inc/proxy.h \
-    ../inc/jobrecorder.h \
+    ../inc/dbOperate/ConnectionPool.h \
+    ../inc/dbOperate/gif.h \
+    ../inc/dbOperate/graph.h \
+    ../inc/dbOperate/info.h \
+    ../inc/dbOperate/useroperate.h \
+    ../inc/job/job.h \
+    ../inc/job/jobrecorder.h \
+    ../inc/ui/login.h \
+    ../inc/ui/person.h \
+    ../inc/ui/personmodify.h \
+    ../inc/ui/register.h \
+    ../inc/ui/widget.h \
     ../inc/app_cfg.h \
+    ../inc/proxy.h \
     ../inc/require.h \
-    ../inc/ConnectionPool.h \
-    ../inc/jobsoperate.h \
-    ../inc/useroperate.h \
-    ../inc/info.h \
-    ../inc/graph.h \
-    ../inc/gif.h \
-    ../inc/login.h \
-    ../inc/register.h \
-    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_login.h \
-    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_register.h \
-    ../inc/person.h \
-    ../build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_person.h \
-    ../inc/personmodify.h
-
-FORMS    += widget.ui \
-    login.ui \
-    register.ui \
-    person.ui
+    ../inc/scheduler.h
 
 RESOURCES += \
 	rsc.qrc
 
 RC_FILE =  appico.rc
+
+FORMS += \
+    widget.ui \
+    login.ui \
+    person.ui \
+    register.ui
