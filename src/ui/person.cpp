@@ -66,8 +66,8 @@ void Person::drawTurnover()
         ATTValue->setText("0");
         WATTValue->setText("0");
     }else{
-        ATTValue->setText(QString::number(user.getAverTurnover()));
-        WATTValue->setText(QString::number(user.getAverWTurnover()));
+        ATTValue->setText(QString::number(user.getAverTurnover(), 'f'));
+        WATTValue->setText(QString::number(user.getAverWTurnover(), 'f'));
     }
 }
 

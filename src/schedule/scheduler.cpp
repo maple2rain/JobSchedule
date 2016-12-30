@@ -1,5 +1,5 @@
-﻿#include "../inc/scheduler.h"
-#include "../inc/dbOperate/useroperate.h"
+﻿#include "../../inc/scheduler.h"
+#include "../../inc/dbOperate/useroperate.h"
 void Scheduler::addWaitingJob(ptr &job)
 {
     auto it = scheduler->waitingJobs.begin();
@@ -72,7 +72,7 @@ bool Scheduler::statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, s
 
 Scheduler::ptr& Scheduler::selectNextJob()
 {
-    require(readyJobNum >= 1, "The size of ready jobs list is less than 2!");
+    require(execableJobNum >= 1, "The size of ready jobs list is less than 2!");
     auto it = readyJobs.begin();
     subReadyJobNum();
     nextJobs.push_back(*++it);
@@ -179,7 +179,7 @@ void Scheduler::clearAllJob()
 
 void Scheduler::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
 {
-    std::cout << "FCFS: schedule_NONE" << std::endl;
+    std::cout << "Scheduler: schedule_NONE" << std::endl;
     if(execableJobNum != 0){
         ptr runningJob = selectFirstJob();
         if(runningJob->getNeedTime() == 0){
@@ -200,6 +200,7 @@ void Scheduler::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
                 }else{
                     readyJob = selectFirstJob();
                     readyJob->exec();   //execute the first job
+                    subReadyJobNum();
                     AddRecord(jobRecorder, readyJob, Ready2Run);
                 }
 
@@ -212,7 +213,7 @@ void Scheduler::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
                 }
             }
         }else{
-            if(runningJob->getRunTime() == 0){
+            if(runningJob->getRunTime() == 0){  //first run
                 runningJob->setStartTime(runtime);
                 AddRecord(jobRecorder, runningJob, Ready2Run);
                 subReadyJobNum();

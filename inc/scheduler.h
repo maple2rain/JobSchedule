@@ -200,6 +200,8 @@ public:
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
     void sortJobNone();
+
+    static const us16 Slice = 3;
 };
 
 inline
@@ -210,6 +212,8 @@ Scheduler::Scheduler(const std::string &type) {
         scheduler = new SJF;
     else if(type == "EDF")
         scheduler = new EDF;
+    else if(type == "RR")
+        scheduler = new RR;
     else    throw BadSchedulerCreation(type);
 }
 

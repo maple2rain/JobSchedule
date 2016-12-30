@@ -18,7 +18,7 @@
 #include <QMovie>
 
 us16 Widget::runtime = 0;
-us16 Widget::waittime = 500; // ms
+us16 Widget::waittime = 1000; // ms
 
 void Widget::test()
 {
@@ -56,9 +56,9 @@ Widget::Widget(QWidget *parent) :
     connect(timer, &QTimer::timeout, [=](){
         CurTimeClock->display(QString::number(++runtime));
         timeRun();
-        //        if(runtime == 1){
-        //            addJob();
-        //        }
+//                if(runtime == 1){
+//                    addJob();
+//                }
 
         qDebug() << "runtime is " << runtime ;
     });
@@ -463,7 +463,7 @@ void Widget::addJob()
 {
     Job *job =
             new Job("x",
-                    2,
+                    3,
                     2,
                     99,
                     0);
@@ -595,7 +595,7 @@ void Widget::on_OpenFile_clicked()
     QString path = QFileDialog::getOpenFileName(this, tr("Open File"), "../JobsSchedule/file", tr("Text Files(*.txt)"));//打开文件路径，使用this为当前父窗口，“Open File”为对话框标题，“.”为默认目录，过滤器为“Text Files(*.txt)”
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {//以只读方式打开text文件
-        QMessageBox::warning(this, tr("Read File"), tr("Cannot open file:\n%1").arg(path));
+        QMessageBox::warning(this, tr("Read File"), tr("Do not open any file!"));
         return;
     }
 
@@ -700,7 +700,8 @@ void Widget::drawTable(const JobRecorder &jobRecorder)
     /* run to next */
     if(jobRecorder.getRun2Next() > 0){
         job = (*it++).get();
-        TableSetRunOrNextJobItem(RunJobTbl, job);
+        RemoveRowByName(RunJobTbl, job->getJobName());
+        TableSetRunOrNextJobItem(NextJobTbl, job);
         DEBUG_PRINT("job Run2Next is to draw");
     }
 
@@ -708,7 +709,7 @@ void Widget::drawTable(const JobRecorder &jobRecorder)
     if(jobRecorder.getRun2Ready() > 0){
         job = (*it++).get();
         RemoveRowByName(RunJobTbl, job->getJobName());
-        TableSetRunOrNextJobItem(ReadyJobTbl, job);
+        TableAddJobItem(ReadyJobTbl, job);
         DEBUG_PRINT("job Run2Ready is to draw");
     }
 
@@ -759,8 +760,8 @@ void Widget::drawTable(const JobRecorder &jobRecorder)
         DEBUG_PRINT("job Ready2Next is to draw");
     }
 
-    ATTValue->setText(QString::number(jobRecorder.getAverTurnover()));
-    WATTValue->setText(QString::number(jobRecorder.getAverWTurnover()));
+    ATTValue->setText(QString::number(jobRecorder.getAverTurnover(), 'f'));
+    WATTValue->setText(QString::number(jobRecorder.getAverWTurnover(), 'f'));
 }
 
 void Widget::clearLbl()

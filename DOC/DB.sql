@@ -12,6 +12,8 @@ drop table user_graph;
 drop table user_gif;
 drop table user;
 
+select * from jobs.useruser;
+
 insert into jobs.blacklist values('black');
 
 select * from overtime;

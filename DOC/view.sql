@@ -27,6 +27,7 @@ create view overTime
 As
 select userID, (sum(turnoverTime) / count(*)) as averTurnover, 
 		(sum(weightTurnoverTime) / count(*)) as averWTurnOver 
-from job
-where needTime = 0
+from job left outer join jobfinished
+using (userID, jobID)
+where needTime = 0 and job.jobID = jobfinished.jobID
 group by userID;
