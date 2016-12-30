@@ -324,8 +324,6 @@ void Widget::DisableRadioBtn(std::string exception)
     PSA->setDisabled(true);
 }
 
-
-
 void Widget::EnableRadioBtn()
 {
     for(size_t i = 0; i < radioBtnVec.size(); ++i){
@@ -369,6 +367,10 @@ void Widget::on_ClearInputBtn_clicked()
 
 void Widget::on_CommitInputBtn_clicked()
 {
+    if(scheduleMethod == ""){
+        QMessageBox::warning(this, tr("Warning"), tr("Please select one algorithm first!"));
+        return;
+    }
     validJob = new ValidJob;
 
     /* set attribute of job */
