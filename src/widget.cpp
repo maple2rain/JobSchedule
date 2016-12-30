@@ -248,18 +248,19 @@ void Widget::on_PauseBtn_clicked()
         if(isPause){
             CurTimeClock->setPalette(Qt::green);
             timer->start(waittime);
-            PauseBtn->setText(tr("Pause"));     //change the text show on the button
+//            PauseBtn->setText(tr("Pause"));     //change the text show on the button
+            PauseBtn->setStyleSheet("border-image: url(:/images/images/icon/pause_128px_1200673_easyicon.net.ico);");
             isPause = false;
             movie->start();
         }else{
             timer->stop();
             CurTimeClock->setPalette(Qt::red);
-            PauseBtn->setText(tr("Continue"));  //change the text show on the button
+//            PauseBtn->setText(tr("Continue"));  //change the text show on the button
+            PauseBtn->setStyleSheet("border-image: url(:/images/images/icon/play_128px_1205833_easyicon.net.ico);");
             isPause = true;
             movie->stop();
         }
     }
-
 }
 
 void Widget::stopEvent()
@@ -274,8 +275,8 @@ void Widget::stopEvent()
     isMethodFixed = false;
 
     RunBtn->setEnabled(true);
-    PauseBtn->setText(tr("Pause"));     //change the text show on the button
-
+//    PauseBtn->setText(tr("Pause"));     //change the text show on the button
+    PauseBtn->setStyleSheet("border-image: url(:/images/images/icon/pause_128px_1200673_easyicon.net.ico);");
     EnableRadioBtn();
     
     bool isStore = QMessageBox::question(this,

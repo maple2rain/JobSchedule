@@ -9,6 +9,8 @@
 #include <memory>
 #include <iostream>
 
+#include <algorithm>
+
 class Scheduler {
     Scheduler* scheduler; //envelope
 
@@ -20,6 +22,7 @@ protected:
         scheduler = 0;
         jobNum = 0;
         readyJobNum = 0;
+        execableJobNum = 0;
         DEBUG_PRINT("create scheduler");
         jobVec = { readyJobs0, readyJobs1, readyJobs2, readyJobs3, readyJobs4, readyJobs5, readyJobs6, readyJobs7,
                    readyJobs8, readyJobs9, readyJobs10, readyJobs11, readyJobs12, readyJobs13, readyJobs14, readyJobs15 };
@@ -30,15 +33,16 @@ public:
 
     void schedule(us16 runtime, JobRecorder &jobRecorder);
     void checkWaitingJob(us16 runtime, JobRecorder &jobRecorder);
-    virtual void schedule_NONE(us16 runtime, JobRecorder &jobRecorder) { DEBUG_PRINT("schedule_NONE"); }
+    virtual void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);// { DEBUG_PRINT("schedule_NONE"); }
     virtual void schedule_PM(us16 runtime, JobRecorder &jobRecorder) { DEBUG_PRINT("schedule_PM"); }
     virtual void schedule_PSA(us16 runtime, JobRecorder &jobRecorder) { DEBUG_PRINT("schedule_PSA"); }
     virtual void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder) { DEBUG_PRINT("schedule_PM_PSA"); }
+    virtual void sortJobNone() {}
 
     ptr &selectFirstJob() { return readyJobs.front(); }	//select the job to run, which is in the front of the readyJobs list
     ptr &selectNextJob();       //return next job, require detect the size of job-list by user
     ptr &selectFirstJobPrio(); 	//select the job to run, which is in the front of the readyJobs0-15 list
-    ptr &selectNextJobPrio();   //return next job, require detect the size of job-list by user
+    ptr &selectNextJobPrio(ptr &job);   //return next job, require detect the size of job-list by user
 
     void clearJob(std::list<ptr> &jobs) {
         jobs.clear();
@@ -60,8 +64,8 @@ public:
     bool isJobNone() { return jobNum == 0; }
     void addWaitingJob(ptr &job); //add waiting job
     void addFinishedJob(ptr &jobs, us16 runtime);
-    void addReadyJob(ptr &job) { readyJobs.push_back(job); addReadyJobNum(); DEBUG_PRINT("add ready job" ); }   //add ready job
-    void addReadyJobToPrio();
+    void addReadyJob(ptr &job) { readyJobs.push_back(job); addReadyJobNum(); addExecableJobNum();  DEBUG_PRINT("add ready job" ); }   //add ready job
+    void addReadyJobToPrio();   //add ready job to different prio job
     void storeJobs();
     void setAverTurn(JobRecorder &jobRecorder);
     void clearAllJob();
@@ -71,6 +75,9 @@ public:
     void subJobNum() { --jobNum; }
     void addReadyJobNum() { ++readyJobNum; }
     void subReadyJobNum() { --readyJobNum; }
+    void addExecableJobNum() { ++execableJobNum; }
+    void subExecableJobNum() { --execableJobNum; }
+
 
     virtual ~Scheduler () {
         if (scheduler) {
@@ -119,6 +126,7 @@ protected:
 #define _PM_PSA 0x03
     unsigned char flag;
     us16 jobNum;    //record the num of job
+    us16 execableJobNum;    //record the num of executable job;
     us16 readyJobNum;//record the num of ready Job
 };
 
@@ -137,15 +145,54 @@ public:
     void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
-
-
-
+    void sortJobNone() { Scheduler::sortJobNone(); }
 };
+
+/* SJF, inherit from Scheduler */
+class SJF : public Scheduler
+{
+    //Prevent copy-construction & operator =
+    SJF(SJF&);
+    SJF operator=(SJF&);
+
+    SJF() { DEBUG_PRINT("create SJF scheduler"); } //private constructor, prevent to be instanced by other operation
+    friend class Scheduler;
+public:
+    ~SJF() {}
+    void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void sortJobNone();
+};
+
+/* EDF, inherit from Scheduler */
+class EDF : public Scheduler
+{
+    //Prevent copy-construction & operator =
+    EDF(EDF&);
+    EDF operator=(EDF&);
+
+    EDF() { DEBUG_PRINT("create EDF scheduler"); } //private constructor, prevent to be instanced by other operation
+    friend class Scheduler;
+public:
+    ~EDF() {}
+    void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void sortJobNone();
+};
+
 
 inline
 Scheduler::Scheduler(const std::string &type) {
     if (type == "FCFS")
         scheduler = new FCFS;
+    else if(type == "SJF")
+        scheduler = new SJF;
+    else if(type == "EDF")
+        scheduler = new EDF;
     else    throw BadSchedulerCreation(type);
 }
 

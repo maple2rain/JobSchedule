@@ -440,7 +440,7 @@ font: 75 14pt &quot;Calibri&quot;;</string>
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>OpenHandCursor</cursorShape>
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color:rgb(249, 249, 249)</string>

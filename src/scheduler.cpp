@@ -48,6 +48,7 @@ void Scheduler::schedule(us16 runtime, JobRecorder &jobRecorder)
     switch (flag)
     {
     case _NONE:
+        scheduler->sortJobNone();
         scheduler->schedule_NONE(runtime, jobRecorder);
         break;
     case _PM:
@@ -73,18 +74,58 @@ Scheduler::ptr& Scheduler::selectNextJob()
 {
     require(readyJobNum >= 1, "The size of ready jobs list is less than 2!");
     auto it = readyJobs.begin();
-    return *++it;
+    subReadyJobNum();
+    nextJobs.push_back(*++it);
+    return *it;
 }
 
-//Scheduler::ptr& Scheduler::selectFirstJobPrio()
-//{
+void Scheduler::addReadyJobToPrio()
+{
+    while(!readyJobs.empty()){
+        ptr job = readyJobs.front();
+        us16 prio = job->getPrioOrSlice();
+        jobVec[prio].push_back(job);
+        readyJobs.pop_front();
+    }
+}
 
-//}
+Scheduler::ptr& Scheduler::selectFirstJobPrio()
+{
+    require(execableJobNum >= 1, "The size of ready jobs is less than 1");
+    for(size_t i = 0; i <= MaxPrio; ++i){
+        if(!jobVec[i].empty()){
+            return jobVec[i].front();
+        }
+    }
+}
 
-//Scheduler::ptr& Scheduler::selectNextJobPrio()
-//{
+Scheduler::ptr& Scheduler::selectNextJobPrio(ptr &job)
+{
+    require(readyJobNum >= 1, "The size of ready jobs is less than 1");
+    int count = 0;
+    for(size_t i = 0; i <= MaxPrio; ++i){
+        if(!jobVec[i].empty()){
+            if(++count == 2){
+                subReadyJobNum();
+                ptr _job = jobVec[i].front();
+                if(job.get() == _job.get()){
+                    --count;
+                    continue;
+                }
+                nextJobs.push_back(jobVec[i].front());
+                return jobVec[i].front();
+            }else{
+                if(jobVec[i].size() > 1){
+                    auto it = jobVec[i].begin();
 
-//}
+                    subReadyJobNum();
+                    nextJobs.push_back(*++it);
+                    return *it;
+                }
+            }
+        }
+    }
+}
 
 void Scheduler::addFinishedJob(ptr &jobs, us16 runtime)
 {
@@ -95,6 +136,7 @@ void Scheduler::addFinishedJob(ptr &jobs, us16 runtime)
 
     finishedJobs.push_back(jobs);
     subJobNum();
+    subExecableJobNum();
 
     DEBUG_PRINT("add finished job" );
 } //add finished job
@@ -134,3 +176,59 @@ void Scheduler::clearAllJob()
     for(int i = 0; i <= MaxPrio; ++i)
         jobVec[i].clear();
 }	//clear all the job
+
+void Scheduler::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
+{
+    std::cout << "FCFS: schedule_NONE" << std::endl;
+    if(execableJobNum != 0){
+        ptr runningJob = selectFirstJob();
+        if(runningJob->getNeedTime() == 0){
+            /* move job from ready jobs list to finished jobs list */
+            addFinishedJob(runningJob, runtime);
+            readyJobs.remove(runningJob);
+            setAverTurn(jobRecorder);
+            AddRecord(jobRecorder, runningJob, Run2Finished);
+            DEBUG_PRINT("running job is ", runningJob->getJobName(), "it quit ");
+
+            if(execableJobNum >= 1){  //if there is any ready job on next or ready jobs list
+                ptr readyJob;
+                if(!nextJobs.empty()){
+                    readyJob = nextJobs.front();
+                    nextJobs.pop_front();
+                    readyJob->exec();   //execute the first job
+                    AddRecord(jobRecorder, readyJob, Next2Run);
+                }else{
+                    readyJob = selectFirstJob();
+                    readyJob->exec();   //execute the first job
+                    AddRecord(jobRecorder, readyJob, Ready2Run);
+                }
+
+                if(readyJob->getStartTime() == 0)// first time to run, set its starttime
+                    readyJob->setStartTime(runtime);
+
+                if(nextJobs.empty() && readyJobNum >= 1){
+                    ptr nextJob = selectNextJob();  //if more than 2 job exists, then add it to next jobs list
+                    AddRecord(jobRecorder, nextJob, Ready2Next);
+                }
+            }
+        }else{
+            if(runningJob->getRunTime() == 0){
+                runningJob->setStartTime(runtime);
+                AddRecord(jobRecorder, runningJob, Ready2Run);
+                subReadyJobNum();
+            }else{
+                AddRecord(jobRecorder, runningJob, Run2Run);
+            }
+
+            if(nextJobs.empty() && readyJobNum >= 1){
+                ptr nextJob = selectNextJob();  //if more than 2 job exists, then add it to next jobs list
+                AddRecord(jobRecorder, nextJob, Ready2Next);
+            }
+
+            runningJob->exec();
+
+            DEBUG_PRINT("running job is ", runningJob->getJobName(), "it needs ", runningJob->getNeedTime());
+        }
+    }
+    DEBUG_PRINT("ready job num is", readyJobNum);
+}

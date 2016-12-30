@@ -24,7 +24,9 @@ SOURCES += \
     ../src/login.cpp \
     ../src/register.cpp \
     ../src/person.cpp \
-    ../src/personmodify.cpp
+    ../src/personmodify.cpp \
+    ../src/sjf.cpp \
+    ../src/edf.cpp
 
 HEADERS  += \
     ../inc/widget.h \

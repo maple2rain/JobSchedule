@@ -2,6 +2,7 @@
 #define JOB_H
 #include <string>
 #include "app_cfg.h"
+#include <memory>
 
 /* The Attribute of jobs */
 class Job
@@ -20,9 +21,10 @@ class Job
             float   wTurnoverTime;
 
     //Prevent copy-construction & operator =
-    Job(Job&);
-    Job operator=(Job&);
+//    Job(Job&);
+//    Job operator=(Job&);
 public:
+    typedef std::shared_ptr<Job> ptr; //smart pointer
     Job(const std::string &name,
         us16 _joinTime,
         us16 _lastTime,
@@ -77,6 +79,26 @@ public:
     void setDeadLine(const us16 _deadLine) { deadLine = _deadLine; }
     void setFinishedTime(const us16 _finishedTime) { finishedTime = _finishedTime; }
     void setPrioOrSlice(const us16 _PrioOrSlice) { PrioOrSlice = _PrioOrSlice; }
+
+    bool compareRule(const Job *l, const Job *r) {
+        return l->getLastTime() < r->getLastTime();
+    }
+
+    bool operator ()(const Job *l, const Job *r) {
+        return l->getLastTime() < r->getLastTime();
+    }
+
+    bool operator <(const Job* l){
+        return lastTime < l->lastTime;
+    }
+
+    bool operator <(const ptr l){
+        return lastTime < l->lastTime;
+    }
+
+    bool operator()(const ptr l, const ptr r){
+        return l->getLastTime() < r->getLastTime();
+    }
 };
 
 #endif // JOB_H
