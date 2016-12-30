@@ -16,7 +16,7 @@ class Job
             us16    needTime;
             us16    deadLine;
             us16    finishedTime;
-            us16    PrioOrSlice;
+            float    PrioOrSlice;
             float   turnoverTime;
             float   wTurnoverTime;
 
@@ -29,7 +29,7 @@ public:
         us16 _joinTime,
         us16 _lastTime,
         us16 _deadLine,
-        us16 _PrioOrSlice = 0) :
+        float _PrioOrSlice = 0) :
         jobName(name),
         joinTime(_joinTime),
         lastTime(_lastTime),
@@ -57,7 +57,7 @@ public:
     const us16 getNeedTime() const { return needTime; }
     const us16 getDeadLine() const { return deadLine; }
     const us16 getFinishedTime() const { return finishedTime; }
-    const us16 getPrioOrSlice() const { return PrioOrSlice; }
+    const float getPrioOrSlice() const { return PrioOrSlice; }
     const us16 getTurnOverTime() const { return finishedTime - joinTime; }
     const float getWTurnoverTime() const { return wTurnoverTime; }
 
@@ -78,7 +78,7 @@ public:
     void setNeedTime(const us16 _needTime) { needTime = _needTime; }
     void setDeadLine(const us16 _deadLine) { deadLine = _deadLine; }
     void setFinishedTime(const us16 _finishedTime) { finishedTime = _finishedTime; }
-    void setPrioOrSlice(const us16 _PrioOrSlice) { PrioOrSlice = _PrioOrSlice; }
+    void setPrioOrSlice(const float _PrioOrSlice) { PrioOrSlice = _PrioOrSlice; }
 
     bool compareRule(const Job *l, const Job *r) {
         return l->getLastTime() < r->getLastTime();

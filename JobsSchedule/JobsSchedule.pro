@@ -27,7 +27,8 @@ SOURCES += \
     ../src/ui/widget.cpp \
     ../src/proxy.cpp \
     ../src/schedule/scheduler.cpp \
-    ../src/schedule/rr.cpp
+    ../src/schedule/rr.cpp \
+    ../src/schedule/hrrn.cpp
 
 HEADERS  += \
     ../inc/dbOperate/ConnectionPool.h \

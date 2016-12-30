@@ -14,9 +14,9 @@ private:
 public:
     typedef std::shared_ptr<Job> ptr; //smart pointer
     enum Status{
-        Wait2Ready, Ready2Next, Ready2Run, Next2Run, Next2Ready, Run2Next, Run2Ready, Run2Run, Run2Finished
+        Wait2Ready, Ready2Next, Ready2Run, Next2Run, Next2Ready, Run2Next, Run2Ready, Run2Run, Run2Finished, Ready2Ready
     };
-    JobRecorder() { wait2ready = ready2next = ready2run = next2run = next2ready = run2next = run2ready = run2run = run2finished = 0; isJobNone = false; }
+    JobRecorder() { ready2ready = wait2ready = ready2next = ready2run = next2run = next2ready = run2next = run2ready = run2run = run2finished = 0; isJobNone = false; }
     ~JobRecorder() { recorders.clear(); }
 
     /* setter */
@@ -30,16 +30,18 @@ public:
     void addRun2Ready() { ++run2ready; }
     void addRun2Run() { ++run2run; }
     void addRun2Finished() { ++run2finished; }
+    void addReady2Ready() { ++ready2ready; }
     void setJobEnd() { isJobNone = true; }
     void setAverTurnover(const float _averTurnover) { averTurnover = _averTurnover; }
     void setAverWTurnover(const float _averWTurnover) { averWTurnOver = _averWTurnover; }
     void clear() {
-        wait2ready = ready2next = ready2run = next2run = next2ready = run2next = run2ready = run2run = run2finished = 0;
+        ready2ready = wait2ready = ready2next = ready2run = next2run = next2ready = run2next = run2ready = run2run = run2finished = 0;
         isJobNone = false;
         recorders.clear();
     }
 
     /* getter */
+    us16 getReady2Ready() const { return ready2ready; }
     us16 getWait2Ready() const { return wait2ready; }
     us16 getReady2Next() const { return ready2next; }
     us16 getReady2Run() const { return ready2run; }
@@ -69,6 +71,7 @@ private:
     us16 run2ready;
     us16 run2run;
     us16 run2finished;
+    us16 ready2ready;
     bool isJobNone;
     float averTurnover;         //average turnover time
     float averWTurnOver;        //average weight turnover time

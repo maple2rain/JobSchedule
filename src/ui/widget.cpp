@@ -760,6 +760,20 @@ void Widget::drawTable(const JobRecorder &jobRecorder)
         DEBUG_PRINT("job Ready2Next is to draw");
     }
 
+    /* ready to ready */
+    for(us16 count = jobRecorder.getReady2Ready(); count > 0; --count){
+        job = (*it++).get();
+        ReadyJobTbl->setSortingEnabled(false);
+        QList<QTableWidgetItem*> list = ReadyJobTbl->findItems(job->getJobName().c_str(), Qt::MatchExactly);
+        if(list.size() > 0){
+            int row = list.at(0)->row();
+            QTableWidgetItem* item = ReadyJobTbl->item(row, 4);
+            item->setData(Qt::DisplayRole, job->getPrioOrSlice());
+            ReadyJobTbl->setItem(row, 4, item);
+        }
+        ReadyJobTbl->setSortingEnabled(true);
+    }
+
     ATTValue->setText(QString::number(jobRecorder.getAverTurnover(), 'f'));
     WATTValue->setText(QString::number(jobRecorder.getAverWTurnover(), 'f'));
 }

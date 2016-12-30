@@ -32,10 +32,8 @@ void SJF::sortJobNone()
         /* swap out first job which doesn't need to be sorted */
         ptr firstJob = readyJobs.front();
         readyJobs.pop_front();
-
-        readyJobs.sort([](const ptr l, const ptr r){
-            return l->getLastTime() < r->getLastTime(); });
-
+            readyJobs.sort([](const ptr l, const ptr r){
+                return l->getLastTime() < r->getLastTime(); });
         readyJobs.push_front(firstJob);
     }else if(execableJobNum - readyJobNum == 2){
 
@@ -44,10 +42,8 @@ void SJF::sortJobNone()
         readyJobs.pop_front();
         ptr secondJob = readyJobs.front();
         readyJobs.pop_front();
-
-        readyJobs.sort([](const ptr l, const ptr r){
-            return l->getLastTime() < r->getLastTime(); });
-
+            readyJobs.sort([](const ptr l, const ptr r){
+                return l->getLastTime() < r->getLastTime(); });
         readyJobs.push_front(secondJob);
         readyJobs.push_front(firstJob);
     }else{

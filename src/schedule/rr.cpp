@@ -2,7 +2,7 @@
 
 void RR::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
 {
-    std::cout << "Scheduler: schedule_NONE" << std::endl;
+    std::cout << "RR: schedule_NONE" << std::endl;
     if(execableJobNum != 0){
         ptr runningJob = selectFirstJob();
         if(runningJob->getNeedTime() == 0){
@@ -27,7 +27,7 @@ void RR::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
                     AddRecord(jobRecorder, readyJob, Ready2Run);
                 }
 
-                if(readyJob->getStartTime() == 0)// first time to run, set its starttime
+                if(readyJob->getRunTime() == 0)// first time to run, set its starttime
                     readyJob->setStartTime(runtime);
 
                 if(nextJobs.empty() && readyJobNum >= 1){

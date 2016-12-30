@@ -29,16 +29,16 @@ void EDF::sortJobNone()
     }else if(execableJobNum - readyJobNum == 1){
         ptr firstJob = readyJobs.front();
         readyJobs.pop_front();
-        readyJobs.sort([](const ptr l, const ptr r){
-                            return l->getDeadLine() < r->getDeadLine(); });
+            readyJobs.sort([](const ptr l, const ptr r){
+                return l->getDeadLine() < r->getDeadLine(); });
         readyJobs.push_front(firstJob);
     }else if(execableJobNum - readyJobNum == 2){
         ptr firstJob = readyJobs.front();
         readyJobs.pop_front();
         ptr secondJob = readyJobs.front();
         readyJobs.pop_front();
-        readyJobs.sort([](const ptr l, const ptr r){
-                            return l->getDeadLine() < r->getDeadLine(); });
+            readyJobs.sort([](const ptr l, const ptr r){
+                return l->getDeadLine() < r->getDeadLine(); });
         readyJobs.push_front(secondJob);
         readyJobs.push_front(firstJob);
     }else{

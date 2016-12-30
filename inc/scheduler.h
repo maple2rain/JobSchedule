@@ -204,6 +204,27 @@ public:
     static const us16 Slice = 3;
 };
 
+/* HRRN, inherit from Scheduler */
+class HRRN : public Scheduler
+{
+    //Prevent copy-construction & operator =
+    HRRN(HRRN&);
+    HRRN operator=(HRRN&);
+
+    HRRN() { DEBUG_PRINT("create HRRN scheduler"); } //private constructor, prevent to be instanced by other operation
+    friend class Scheduler;
+public:
+    ~HRRN() {}
+    void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void sortJobNone(us16 runtime);
+    void sortReadyJob(us16 runtime);
+    void changePrio(us16 runtime);
+
+};
+
 inline
 Scheduler::Scheduler(const std::string &type) {
     if (type == "FCFS")
@@ -214,6 +235,8 @@ Scheduler::Scheduler(const std::string &type) {
         scheduler = new EDF;
     else if(type == "RR")
         scheduler = new RR;
+    else if(type == "HRRN")
+        scheduler = new HRRN;
     else    throw BadSchedulerCreation(type);
 }
 
