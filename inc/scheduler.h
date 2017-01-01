@@ -157,6 +157,33 @@ public:
     void sortJobPM_PSA();
 };
 
+/* MFQ, inherit from Scheduler */
+class MFQ : public Scheduler
+{
+    //Prevent copy-construction & operator =
+    MFQ(MFQ&);
+    MFQ operator=(MFQ&);
+
+    MFQ() {
+        DEBUG_PRINT("create FCFS scheduler"); } //private constructor, prevent to be instanced by other operation
+    friend class Scheduler;
+public:
+    ~MFQ() {}
+    void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PSA(us16 runtime, JobRecorder &jobRecorder){}
+    void schedule_PM(us16 runtime, JobRecorder &jobRecorder){}
+    void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder){}
+    void sortJobNone();
+    void sortJobPM() {}
+    void sortJobPSA() {}
+    void sortJobPM_PSA() {}
+
+    ptr &selectFirstJob() { return jobVec[MaxPrio].front(); }	//select the job to run, which is in the front of the readyJobs list
+    ptr &selectNextJob();       //return next job, require detect the size of job-list by user
+
+    static const us16 Slice = 3;
+};
+
 /* SJF, inherit from Scheduler */
 class SJF : public Scheduler
 {
@@ -293,6 +320,8 @@ Scheduler::Scheduler(const std::string &type) {
         scheduler = new RR;
     else if(type == "HRRN")
         scheduler = new HRRN;
+    else if(type == "MFQ")
+        scheduler = new MFQ;
     else    throw BadSchedulerCreation(type);
 }
 

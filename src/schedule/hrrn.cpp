@@ -23,7 +23,7 @@ void HRRN::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
                 AddRecord(jobRecorder, readyJob, Ready2Run);
             }
         }else{
-            if(runningJob->getStartTime() == 0){  //first run
+            if(runningJob->getRunTime() == 0){  //first run
                 runningJob->setStartTime(runtime);
                 AddRecord(jobRecorder, runningJob, Ready2Run);
                 subReadyJobNum();
@@ -78,7 +78,7 @@ void HRRN::schedule_PM(us16 runtime, JobRecorder &jobRecorder)
                 AddRecord(jobRecorder, runningJob, Ready2Run);
                 subReadyJobNum();
             }else{
-                if(runningJob->getStartTime() == 0){  //first run
+                if(runningJob->getRunTime() == 0){  //first run
                     runningJob->setStartTime(runtime);
                     AddRecord(jobRecorder, runningJob, Ready2Run);
                     subReadyJobNum();

@@ -28,7 +28,8 @@ SOURCES += \
     ../src/proxy.cpp \
     ../src/schedule/scheduler.cpp \
     ../src/schedule/rr.cpp \
-    ../src/schedule/hrrn.cpp
+    ../src/schedule/hrrn.cpp \
+    ../src/schedule/mfq.cpp
 
 HEADERS  += \
     ../inc/dbOperate/ConnectionPool.h \

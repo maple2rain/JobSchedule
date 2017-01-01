@@ -75,7 +75,7 @@ bool Scheduler::statusChange(std::list<ptr> &srcJobs, std::list<ptr> &dstJobs, s
 
 Scheduler::ptr& Scheduler::selectNextJob()
 {
-    require(execableJobNum >= 1, "The size of ready jobs list is less than 2!");
+    require(readyJobNum >= 1, "The size of ready jobs list is less than 2!");
     auto it = readyJobs.begin();
     subReadyJobNum();
     nextJobs.push_back(*++it);
