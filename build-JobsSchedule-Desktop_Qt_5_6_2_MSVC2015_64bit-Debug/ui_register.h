@@ -136,6 +136,10 @@ public:
 
         retranslateUi(Register);
 
+        OkBtn->setDefault(true);
+        CancelBtn->setDefault(true);
+
+
         QMetaObject::connectSlotsByName(Register);
     } // setupUi
 

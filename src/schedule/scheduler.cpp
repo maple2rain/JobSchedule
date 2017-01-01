@@ -52,12 +52,15 @@ void Scheduler::schedule(us16 runtime, JobRecorder &jobRecorder)
         scheduler->schedule_NONE(runtime, jobRecorder);
         break;
     case _PM:
+        scheduler->sortJobPM();
         scheduler->schedule_PM(runtime, jobRecorder);
         break;
     case _PSA:
+        scheduler->sortJobPSA();
         scheduler->schedule_PSA(runtime, jobRecorder);
         break;
     case _PM_PSA:
+        scheduler->sortJobPM_PSA();
         scheduler->schedule_PM_PSA(runtime, jobRecorder);
         break;
     default:

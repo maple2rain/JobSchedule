@@ -18,7 +18,7 @@
 #include <QMovie>
 
 us16 Widget::runtime = 0;
-us16 Widget::waittime = 1000; // ms
+us16 Widget::waittime = 500; // ms
 
 void Widget::test()
 {

@@ -532,6 +532,9 @@ public:
         PriorityLbl->setText(QApplication::translate("Widget", "Priority", 0));
         ClearInputBtn->setText(QString());
         CommitInputBtn->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        OpenFile->setToolTip(QApplication::translate("Widget", "<html><head/><body><p>Open File</p></body></html>", 0));
+#endif // QT_NO_TOOLTIP
         OpenFile->setText(QString());
         PriorityCombo->clear();
         PriorityCombo->insertItems(0, QStringList()

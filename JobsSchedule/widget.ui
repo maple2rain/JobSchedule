@@ -422,6 +422,9 @@ font: 75 14pt &quot;Calibri&quot;;</string>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open File&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">border-image: url(:/images/images/icon/file_128px_1201742_easyicon.net.ico);
 font: 75 14pt &quot;Calibri&quot;;</string>

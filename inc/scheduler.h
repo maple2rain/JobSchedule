@@ -8,9 +8,9 @@
 #include <stdexcept>
 #include <memory>
 #include <iostream>
-
+#include <functional>
 #include <algorithm>
-
+using namespace std;
 class Scheduler {
     Scheduler* scheduler; //envelope
 
@@ -31,6 +31,9 @@ public:
     typedef std::shared_ptr<Job> ptr; //smart pointer
     static const size_t MaxPrio = 15;
 
+    template<typename Comp>
+    void sort(Comp comp);
+
     void schedule(us16 runtime, JobRecorder &jobRecorder);
     void checkWaitingJob(us16 runtime, JobRecorder &jobRecorder);
     virtual void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);// { DEBUG_PRINT("schedule_NONE"); }
@@ -38,6 +41,9 @@ public:
     virtual void schedule_PSA(us16 runtime, JobRecorder &jobRecorder) { DEBUG_PRINT("schedule_PSA"); }
     virtual void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder) { DEBUG_PRINT("schedule_PM_PSA"); }
     virtual void sortJobNone() {}
+    virtual void sortJobPM() {}
+    virtual void sortJobPSA() {}
+    virtual void sortJobPM_PSA() {}
 
     ptr &selectFirstJob() { return readyJobs.front(); }	//select the job to run, which is in the front of the readyJobs list
     ptr &selectNextJob();       //return next job, require detect the size of job-list by user
@@ -145,7 +151,10 @@ public:
     void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
-    void sortJobNone() { Scheduler::sortJobNone(); }
+    void sortJobNone();
+    void sortJobPM();
+    void sortJobPSA();
+    void sortJobPM_PSA();
 };
 
 /* SJF, inherit from Scheduler */
@@ -164,7 +173,37 @@ public:
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
     void sortJobNone();
+    void sortJobPM();
+    void sortJobPSA();
+    void sortJobPM_PSA();
 };
+
+template<typename Comp>
+void Scheduler::sort(Comp comp)
+{
+    if(execableJobNum == readyJobNum){
+        readyJobs.sort(comp);
+    }else if(execableJobNum - readyJobNum == 1){
+
+        /* swap out first job which doesn't need to be sorted */
+        ptr firstJob = readyJobs.front();
+        readyJobs.pop_front();
+            readyJobs.sort(comp);
+        readyJobs.push_front(firstJob);
+    }else if(execableJobNum - readyJobNum == 2){
+
+        /* swap out first and second job, which don't need to be sorted */
+        ptr firstJob = readyJobs.front();
+        readyJobs.pop_front();
+        ptr secondJob = readyJobs.front();
+        readyJobs.pop_front();
+            readyJobs.sort(comp);
+        readyJobs.push_front(secondJob);
+        readyJobs.push_front(firstJob);
+    }else{
+        std::cout << "counting error , execablenum is " << execableJobNum << " readyJobNum is " << readyJobNum << std::endl;
+    }
+}
 
 /* EDF, inherit from Scheduler */
 class EDF : public Scheduler
@@ -177,11 +216,16 @@ class EDF : public Scheduler
     friend class Scheduler;
 public:
     ~EDF() {}
+    typedef bool (*sortMethod)(const ptr l, const ptr r);
     void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
     void sortJobNone();
+    void sortJobPM();
+    void sortJobPSA();
+    void sortJobPM_PSA();
+    void sort(sortMethod);
 };
 
 /* RR, inherit from Scheduler */
@@ -195,11 +239,15 @@ class RR : public Scheduler
     friend class Scheduler;
 public:
     ~RR() {}
+
     void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
     void sortJobNone();
+    void sortJobPM();
+    void sortJobPSA();
+    void sortJobPM_PSA();
 
     static const us16 Slice = 3;
 };
@@ -211,7 +259,7 @@ class HRRN : public Scheduler
     HRRN(HRRN&);
     HRRN operator=(HRRN&);
 
-    HRRN() { DEBUG_PRINT("create HRRN scheduler"); } //private constructor, prevent to be instanced by other operation
+    HRRN() { lastJob.reset(); DEBUG_PRINT("create HRRN scheduler"); } //private constructor, prevent to be instanced by other operation
     friend class Scheduler;
 public:
     ~HRRN() {}
@@ -220,8 +268,16 @@ public:
     void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
     void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
     void sortJobNone(us16 runtime);
+    void sortJobNone() {}
+    void sortJobPM(us16 runtime);
+    void sortJobPM() {}
+    void sortJobPSA(us16 runtime);
+    void sortJobPM_PSA(us16 runtime);
     void sortReadyJob(us16 runtime);
     void changePrio(us16 runtime);
+
+private:
+    ptr lastJob;
 
 };
 

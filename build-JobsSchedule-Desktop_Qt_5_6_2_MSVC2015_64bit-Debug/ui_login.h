@@ -57,6 +57,7 @@ public:
         font.setBold(true);
         font.setWeight(75);
         LoginBtn->setFont(font);
+        LoginBtn->setFocusPolicy(Qt::StrongFocus);
         LoginBtn->setAutoFillBackground(false);
         LoginBtn->setStyleSheet(QStringLiteral("background-color:rgb(249, 249, 249)"));
         RegisterBtn = new QPushButton(Login);
@@ -122,6 +123,10 @@ public:
         RegisterBtn->raise();
 
         retranslateUi(Login);
+
+        LoginBtn->setDefault(true);
+        RegisterBtn->setDefault(true);
+
 
         QMetaObject::connectSlotsByName(Login);
     } // setupUi
