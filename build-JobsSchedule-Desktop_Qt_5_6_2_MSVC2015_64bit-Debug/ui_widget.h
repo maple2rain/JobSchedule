@@ -43,13 +43,14 @@ public:
     QPushButton *RunBtn;
     QPushButton *PauseBtn;
     QPushButton *StopBtn;
+    QLabel *waittimeLbl;
     QGroupBox *Algorithm;
     QGridLayout *gridLayout;
-    QRadioButton *FCFS;
-    QRadioButton *EDF;
     QRadioButton *SJF;
-    QRadioButton *HRRN;
+    QRadioButton *EDF;
     QRadioButton *MFQ;
+    QRadioButton *FCFS;
+    QRadioButton *HRRN;
     QRadioButton *RR;
     QGroupBox *Input;
     QLabel *JobNameLbl;
@@ -147,6 +148,20 @@ public:
         StopBtn->setCursor(QCursor(Qt::PointingHandCursor));
         StopBtn->setStyleSheet(QLatin1String("border-image: url(:/images/images/icon/stop_normal_red_128px_560469_easyicon.net.ico);\n"
 "font: 75 14pt \"Calibri\";"));
+        waittimeLbl = new QLabel(List);
+        waittimeLbl->setObjectName(QStringLiteral("waittimeLbl"));
+        waittimeLbl->setGeometry(QRect(50, 31, 121, 19));
+        waittimeLbl->setStyleSheet(QLatin1String("background-color: rgba(252, 252, 252, 252);\n"
+"font: 75 12pt \"Calibri\";"));
+        CurTimeLbl->raise();
+        CurTimeClock->raise();
+        PSA->raise();
+        PM->raise();
+        ClearAllDataBtn->raise();
+        RunBtn->raise();
+        PauseBtn->raise();
+        StopBtn->raise();
+        waittimeLbl->raise();
         Algorithm = new QGroupBox(Widget);
         Algorithm->setObjectName(QStringLiteral("Algorithm"));
         Algorithm->setGeometry(QRect(10, 160, 261, 71));
@@ -155,11 +170,11 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        FCFS = new QRadioButton(Algorithm);
-        FCFS->setObjectName(QStringLiteral("FCFS"));
-        FCFS->setCursor(QCursor(Qt::PointingHandCursor));
+        SJF = new QRadioButton(Algorithm);
+        SJF->setObjectName(QStringLiteral("SJF"));
+        SJF->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(FCFS, 0, 0, 1, 1);
+        gridLayout->addWidget(SJF, 1, 0, 1, 1);
 
         EDF = new QRadioButton(Algorithm);
         EDF->setObjectName(QStringLiteral("EDF"));
@@ -167,23 +182,23 @@ public:
 
         gridLayout->addWidget(EDF, 1, 2, 1, 1);
 
-        SJF = new QRadioButton(Algorithm);
-        SJF->setObjectName(QStringLiteral("SJF"));
-        SJF->setCursor(QCursor(Qt::PointingHandCursor));
+        MFQ = new QRadioButton(Algorithm);
+        MFQ->setObjectName(QStringLiteral("MFQ"));
+        MFQ->setCursor(QCursor(Qt::PointingHandCursor));
 
-        gridLayout->addWidget(SJF, 1, 0, 1, 1);
+        gridLayout->addWidget(MFQ, 0, 1, 1, 1);
+
+        FCFS = new QRadioButton(Algorithm);
+        FCFS->setObjectName(QStringLiteral("FCFS"));
+        FCFS->setCursor(QCursor(Qt::PointingHandCursor));
+
+        gridLayout->addWidget(FCFS, 0, 0, 1, 1);
 
         HRRN = new QRadioButton(Algorithm);
         HRRN->setObjectName(QStringLiteral("HRRN"));
         HRRN->setCursor(QCursor(Qt::PointingHandCursor));
 
         gridLayout->addWidget(HRRN, 1, 1, 1, 1);
-
-        MFQ = new QRadioButton(Algorithm);
-        MFQ->setObjectName(QStringLiteral("MFQ"));
-        MFQ->setCursor(QCursor(Qt::PointingHandCursor));
-
-        gridLayout->addWidget(MFQ, 0, 1, 1, 1);
 
         RR = new QRadioButton(Algorithm);
         RR->setObjectName(QStringLiteral("RR"));
@@ -363,6 +378,7 @@ public:
         ReadyJobTbl->horizontalHeader()->setDefaultSectionSize(75);
         ReadyJobTbl->horizontalHeader()->setStretchLastSection(true);
         ReadyJobTbl->verticalHeader()->setDefaultSectionSize(25);
+        ReadyJobTbl->raise();
         FinishedJob = new QGroupBox(Widget);
         FinishedJob->setObjectName(QStringLiteral("FinishedJob"));
         FinishedJob->setGeometry(QRect(740, 250, 621, 301));
@@ -443,6 +459,9 @@ public:
 
         WATTHL->addWidget(WATTValue);
 
+        FinishedJobTbl->raise();
+        layoutWidget->raise();
+        layoutWidget->raise();
         NextJob = new QGroupBox(Widget);
         NextJob->setObjectName(QStringLiteral("NextJob"));
         NextJob->setGeometry(QRect(740, 130, 471, 101));
@@ -490,6 +509,8 @@ public:
         frame->setStyleSheet(QStringLiteral("background-image:url(:/images/images/cloud.jpg)"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
+        List->raise();
+        List->raise();
         frame->raise();
         List->raise();
         Algorithm->raise();
@@ -518,12 +539,13 @@ public:
         RunBtn->setText(QString());
         PauseBtn->setText(QString());
         StopBtn->setText(QString());
+        waittimeLbl->setText(QApplication::translate("Widget", "Interval is 50   ms", 0));
         Algorithm->setTitle(QApplication::translate("Widget", "Algorithm", 0));
-        FCFS->setText(QApplication::translate("Widget", "FCFS", 0));
-        EDF->setText(QApplication::translate("Widget", "EDF", 0));
         SJF->setText(QApplication::translate("Widget", "SJF", 0));
-        HRRN->setText(QApplication::translate("Widget", "HRRN", 0));
+        EDF->setText(QApplication::translate("Widget", "EDF", 0));
         MFQ->setText(QApplication::translate("Widget", "MFQ", 0));
+        FCFS->setText(QApplication::translate("Widget", "FCFS", 0));
+        HRRN->setText(QApplication::translate("Widget", "HRRN", 0));
         RR->setText(QApplication::translate("Widget", "RR", 0));
         Input->setTitle(QApplication::translate("Widget", "Input", 0));
         JobNameLbl->setText(QApplication::translate("Widget", "Job Name", 0));

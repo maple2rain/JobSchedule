@@ -54,5 +54,6 @@ void Proxy::clearScheduler(std::shared_ptr<Scheduler> &scheduler)
 {
     extern QMutex JobLock;
     QMutexLocker lockerWait(&JobLock);
-    scheduler->clear();
+    if(scheduler.get() != nullptr)
+        scheduler->clear();
 }

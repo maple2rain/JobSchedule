@@ -16,9 +16,10 @@
 #include <QTextStream>
 #include <QPixmap>
 #include <QMovie>
+#include <QTextEdit>
 
 us16 Widget::runtime = 0;
-us16 Widget::waittime = 500; // ms
+us16 Widget::waittime = 50; // ms
 
 void Widget::test()
 {
@@ -56,9 +57,9 @@ Widget::Widget(QWidget *parent) :
     connect(timer, &QTimer::timeout, [=](){
         CurTimeClock->display(QString::number(++runtime));
         timeRun();
-//                if(runtime == 1){
-//                    addJob();
-//                }
+        //                if(runtime == 1){
+        //                    addJob();
+        //                }
 
         qDebug() << "runtime is " << runtime ;
     });
@@ -77,6 +78,7 @@ void Widget::InitModule()
     initMap();
     initPalette();
     movie = new QMovie(this);
+    waittimeLbl->hide();
 }
 
 inline
@@ -248,14 +250,14 @@ void Widget::on_PauseBtn_clicked()
         if(isPause){
             CurTimeClock->setPalette(Qt::green);
             timer->start(waittime);
-//            PauseBtn->setText(tr("Pause"));     //change the text show on the button
+            //            PauseBtn->setText(tr("Pause"));     //change the text show on the button
             PauseBtn->setStyleSheet("border-image: url(:/images/images/icon/pause_128px_1200673_easyicon.net.ico);");
             isPause = false;
             movie->start();
         }else{
             timer->stop();
             CurTimeClock->setPalette(Qt::red);
-//            PauseBtn->setText(tr("Continue"));  //change the text show on the button
+            //            PauseBtn->setText(tr("Continue"));  //change the text show on the button
             PauseBtn->setStyleSheet("border-image: url(:/images/images/icon/play_128px_1205833_easyicon.net.ico);");
             isPause = true;
             movie->stop();
@@ -275,7 +277,7 @@ void Widget::stopEvent()
     isMethodFixed = false;
 
     RunBtn->setEnabled(true);
-//    PauseBtn->setText(tr("Pause"));     //change the text show on the button
+    //    PauseBtn->setText(tr("Pause"));     //change the text show on the button
     PauseBtn->setStyleSheet("border-image: url(:/images/images/icon/pause_128px_1200673_easyicon.net.ico);");
     EnableRadioBtn();
     
@@ -289,6 +291,9 @@ void Widget::stopEvent()
 
     if(isStore)
         timeStop();
+
+    Table2ExcelByTxt(FinishedJobTbl);
+    Table2ExcelByTxt(PreInputTbl);
 }
 
 void Widget::on_StopBtn_clicked()
@@ -784,4 +789,69 @@ void Widget::clearLbl()
 {
     ATTValue->setText("0");
     WATTValue->setText("0");
+}
+
+void Widget::Table2ExcelByTxt(QTableWidget *table)
+{
+    QString filepath = QFileDialog::getSaveFileName(this, tr("Save as..."),
+                                                    QString(), tr("EXCEL files (*.xls *.xlsx);;HTML-Files (*.txt);;"));
+
+    int row = table->rowCount();
+    int col = table->columnCount();
+    QList<QString> list;
+    //添加列标题
+    QString HeaderRow;
+    for(int i=0;i<col;i++)
+    {
+        HeaderRow.append(table->horizontalHeaderItem(i)->text()+"\t");
+    }
+    list.push_back(HeaderRow);
+    for(int i=0;i<row;i++)
+    {
+        QString rowStr = "";
+        for(int j=0;j<col;j++){
+            rowStr += table->item(i,j)->text() + "\t";
+        }
+        list.push_back(rowStr);
+    }
+    QTextEdit textEdit;
+    for(int i=0;i<list.size();i++)
+    {
+        textEdit.append(list.at(i));
+    }
+
+    QFile file(filepath);
+    if(file.open(QFile::WriteOnly | QIODevice::Text))
+    {
+        QTextStream ts(&file);
+        ts.setCodec("UTF-8");
+        ts<<textEdit.document()->toPlainText();
+        file.close();
+    }
+}
+
+void Widget::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Plus){
+        if(waittime < 2 * 1000)
+            waittime += 50;
+        waittimeLblShow(waittime);
+
+    }else if(event->key() == Qt::Key_Minus){
+        if(waittime > 50)
+            waittime -= 50;
+        waittimeLblShow(waittime);
+    }
+}
+
+void Widget::waittimeLblHide()
+{
+    waittimeLbl->hide();
+}
+
+void Widget::waittimeLblShow(us16 time)
+{
+    waittimeLbl->setText(QString("Interval is %1").arg(time) + "ms");
+    waittimeLbl->show();
+    QTimer::singleShot(1500, this, SLOT(waittimeLblHide()));
 }

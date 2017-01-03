@@ -22,7 +22,13 @@ void Login::on_LoginBtn_clicked()
     /* set info about user */
     user.setUserName(std::string((const char*)UserNameLineEdit->text().toLocal8Bit()));
     user.setPassword(std::string((const char*)PasswdLineEdit->text().toLocal8Bit()));
-    Info info = user.CheckUser(); // check if uers valid
+    Info info;
+
+    if(user.getUserName() == ""){// let null user login
+        info.setStatus(true);
+    }else{
+        info = user.CheckUser(); // check if uers valid
+    }
 
     if(info.getStatus() == true){
         user.getAllInfoFromDB();
@@ -39,4 +45,11 @@ void Login::on_RegisterBtn_clicked()
     r->setAttribute(Qt::WA_DeleteOnClose);
     r->setWindowModality(Qt::ApplicationModal);//set parent window to lock
     r->show();
+}
+
+void Login::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return){
+        on_LoginBtn_clicked();
+    }
 }

@@ -76,7 +76,10 @@ public:
     void setAverTurn(JobRecorder &jobRecorder);
     void clearAllJob();
     void setFlag(bool isPSA = false, bool isPM = false) { flag = 0; flag |= isPSA; flag <<= 1; flag |= isPM; }
-    void clear() { scheduler->clearAllJob(); }
+    void clear() {
+        if(scheduler != 0)
+            scheduler->clearAllJob();
+    }
     void addJobNum() { ++jobNum; }
     void subJobNum() { --jobNum; }
     void addReadyJobNum() { ++readyJobNum; }
@@ -275,6 +278,9 @@ public:
     void sortJobPM();
     void sortJobPSA();
     void sortJobPM_PSA();
+
+//    ptr &selectFirstJob(std::list<ptr> readyJobs) { return readyJobs.front(); }	//select the job to run, which is in the front of the readyJobs list
+//    ptr &selectNextJob(std::list<ptr> readyJobs);       //return next job, require detect the size of job-list by user
 
     static const us16 Slice = 3;
 };

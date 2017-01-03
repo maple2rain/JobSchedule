@@ -9,6 +9,7 @@
 #include <memory>
 #include <map>
 #include <QTextStream>
+#include <QKeyEvent>
 #include "ui_widget.h"
 #include "../inc/scheduler.h"
 #include "../inc/job/job.h"
@@ -75,7 +76,7 @@ private slots:
     void on_PauseBtn_clicked();
     void on_StopBtn_clicked();
     void on_PauseBtn_pressed();
-
+    void waittimeLblHide();
 private:
     /* deal with radio button */
     void DisableRadioBtn(std::string exception);
@@ -107,6 +108,10 @@ private:
     void clearLbl();
     void showGif();
     void settooltip();
+    void Table2ExcelByTxt(QTableWidget *table);
+    void keyPressEvent(QKeyEvent *event);
+    void waittimeLblShow(us16 time);
+
 
 private:
     QTimer *timer;

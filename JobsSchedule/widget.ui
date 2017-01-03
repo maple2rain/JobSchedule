@@ -186,6 +186,33 @@ font: 75 14pt &quot;Calibri&quot;;</string>
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="waittimeLbl">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>31</y>
+      <width>121</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(252, 252, 252, 252);
+font: 75 12pt &quot;Calibri&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Interval is 50   ms</string>
+    </property>
+   </widget>
+   <zorder>CurTimeLbl</zorder>
+   <zorder>CurTimeClock</zorder>
+   <zorder>PSA</zorder>
+   <zorder>PM</zorder>
+   <zorder>ClearAllDataBtn</zorder>
+   <zorder>RunBtn</zorder>
+   <zorder>PauseBtn</zorder>
+   <zorder>StopBtn</zorder>
+   <zorder>frame</zorder>
+   <zorder>waittimeLbl</zorder>
   </widget>
   <widget class="QGroupBox" name="Algorithm">
    <property name="geometry">
@@ -207,13 +234,13 @@ font: 75 14pt &quot;Calibri&quot;;</string>
     <string>Algorithm</string>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QRadioButton" name="FCFS">
+    <item row="1" column="0">
+     <widget class="QRadioButton" name="SJF">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
-       <string>FCFS</string>
+       <string>SJF</string>
       </property>
      </widget>
     </item>
@@ -227,13 +254,23 @@ font: 75 14pt &quot;Calibri&quot;;</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QRadioButton" name="SJF">
+    <item row="0" column="1">
+     <widget class="QRadioButton" name="MFQ">
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
-       <string>SJF</string>
+       <string>MFQ</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QRadioButton" name="FCFS">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>FCFS</string>
       </property>
      </widget>
     </item>
@@ -244,16 +281,6 @@ font: 75 14pt &quot;Calibri&quot;;</string>
       </property>
       <property name="text">
        <string>HRRN</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QRadioButton" name="MFQ">
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="text">
-       <string>MFQ</string>
       </property>
      </widget>
     </item>
@@ -956,6 +983,9 @@ font: 75 14pt &quot;Calibri&quot;;</string>
      </property>
     </column>
    </widget>
+   <zorder>ReadyJobTbl</zorder>
+   <zorder>frame</zorder>
+   <zorder>frame</zorder>
   </widget>
   <widget class="QGroupBox" name="FinishedJob">
    <property name="geometry">
@@ -1183,6 +1213,10 @@ font: 75 14pt &quot;Calibri&quot;;</string>
      </item>
     </layout>
    </widget>
+   <zorder>FinishedJobTbl</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>frame</zorder>
   </widget>
   <widget class="QGroupBox" name="NextJob">
    <property name="geometry">
@@ -1358,6 +1392,8 @@ font: 75 14pt &quot;Calibri&quot;;</string>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
+   <zorder>List</zorder>
+   <zorder>List</zorder>
   </widget>
   <zorder>frame</zorder>
   <zorder>List</zorder>

@@ -2,6 +2,7 @@
 #define LOGIN_H
 
 #include <QWidget>
+#include <QKeyEvent>
 #include "ui_login.h"
 
 namespace Ui {
@@ -19,6 +20,7 @@ public:
     void signInSignalSend() {
         emit userSignInSignal();
     }
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_LoginBtn_clicked();

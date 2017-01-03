@@ -122,3 +122,12 @@ void RR::sortJobPM_PSA()
 {
 
 }
+
+//Scheduler::ptr& Scheduler::selectNextJob(std::list<ptr> readyJobs)
+//{
+//    require(readyJobNum >= 1, "The size of ready jobs list is less than 2!");
+//    auto it = readyJobs.begin();
+//    subReadyJobNum();
+//    nextJobs.push_back(*++it);
+//    return *it;
+//}

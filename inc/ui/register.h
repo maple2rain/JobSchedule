@@ -2,6 +2,7 @@
 #define REGISTER_H
 
 #include <QWidget>
+#include <QKeyEvent>
 #include "ui_register.h"
 
 namespace Ui {
@@ -15,7 +16,7 @@ class Register : public QWidget, public Ui::Register
 public:
     explicit Register(QWidget *parent = 0);
     ~Register();
-
+    void keyPressEvent(QKeyEvent *event);
 private slots:
     void on_OkBtn_clicked();
 

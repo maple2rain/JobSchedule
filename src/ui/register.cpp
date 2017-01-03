@@ -45,3 +45,10 @@ void Register::on_CancelBtn_clicked()
 {
     this->close();
 }
+
+void Register::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return){
+        on_OkBtn_clicked();
+    }
+}
