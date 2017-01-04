@@ -91,12 +91,12 @@ void RR::schedule_PSA(us16 runtime, JobRecorder &jobRecorder)
 
 void RR::schedule_PM(us16 runtime, JobRecorder &jobRecorder)
 {
-
+    schedule_NONE(runtime, jobRecorder);
 }
 
 void RR::schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder)
 {
-
+    schedule_NONE(runtime, jobRecorder);
 }
 
 void RR::sortJobNone()

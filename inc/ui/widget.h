@@ -108,7 +108,7 @@ private:
     void clearLbl();
     void showGif();
     void settooltip();
-    void Table2ExcelByTxt(QTableWidget *table);
+    void Table2ExcelByTxt(QTableWidget *table, QString tableName);
     void keyPressEvent(QKeyEvent *event);
     void waittimeLblShow(us16 time);
 

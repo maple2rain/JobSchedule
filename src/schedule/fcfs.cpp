@@ -37,8 +37,8 @@ void FCFS::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
 
 void FCFS::schedule_PM(us16 runtime, JobRecorder &jobRecorder)
 {
-    std::cout << "schedule_PM" << std::endl;
-    Scheduler::schedule_PM(runtime, jobRecorder);
+    std::cout << "FCFS: schedule_PM" << std::endl;
+    Scheduler::schedule_NONE(runtime, jobRecorder);
 }
 
 void FCFS::schedule_PSA(us16 runtime, JobRecorder &jobRecorder)

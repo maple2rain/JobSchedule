@@ -31,7 +31,9 @@ void Login::on_LoginBtn_clicked()
     }
 
     if(info.getStatus() == true){
-        user.getAllInfoFromDB();
+        if(user.getUserName() != "")
+            user.getAllInfoFromDB();
+
         signInSignalSend();
         this->close();
     }else{

@@ -16,12 +16,12 @@ void SJF::schedule_PSA(us16 runtime, JobRecorder &jobRecorder)
 
 void SJF::schedule_PM(us16 runtime, JobRecorder &jobRecorder)
 {
-
+    Scheduler::schedule_NONE(runtime, jobRecorder);
 }
 
 void SJF::schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder)
 {
-
+    Scheduler::schedule_NONE(runtime, jobRecorder);
 }
 
 void SJF::sortJobNone()

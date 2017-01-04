@@ -45,7 +45,7 @@ void HRRN::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
 
 void HRRN::schedule_PSA(us16 runtime, JobRecorder &jobRecorder)
 {
-
+    schedule_NONE(runtime, jobRecorder);
 }
 
 void HRRN::schedule_PM(us16 runtime, JobRecorder &jobRecorder)
@@ -102,7 +102,7 @@ void HRRN::schedule_PM(us16 runtime, JobRecorder &jobRecorder)
 
 void HRRN::schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder)
 {
-
+    schedule_PM(runtime, jobRecorder);
 }
 
 void HRRN::sortJobNone(us16 runtime)

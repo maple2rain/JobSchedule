@@ -168,18 +168,18 @@ class MFQ : public Scheduler
     MFQ operator=(MFQ&);
 
     MFQ() {
-        DEBUG_PRINT("create FCFS scheduler"); } //private constructor, prevent to be instanced by other operation
+        DEBUG_PRINT("create MFQ scheduler"); } //private constructor, prevent to be instanced by other operation
     friend class Scheduler;
 public:
     ~MFQ() {}
     void schedule_NONE(us16 runtime, JobRecorder &jobRecorder);
-    void schedule_PSA(us16 runtime, JobRecorder &jobRecorder){}
-    void schedule_PM(us16 runtime, JobRecorder &jobRecorder){}
-    void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder){}
+    void schedule_PSA(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM(us16 runtime, JobRecorder &jobRecorder);
+    void schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder);
     void sortJobNone();
-    void sortJobPM() {}
-    void sortJobPSA() {}
-    void sortJobPM_PSA() {}
+    void sortJobPM(){}
+    void sortJobPSA(){}
+    void sortJobPM_PSA(){}
 
     ptr &selectFirstJob() { return jobVec[MaxPrio].front(); }	//select the job to run, which is in the front of the readyJobs list
     ptr &selectNextJob();       //return next job, require detect the size of job-list by user

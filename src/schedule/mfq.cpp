@@ -139,6 +139,24 @@ void MFQ::schedule_NONE(us16 runtime, JobRecorder &jobRecorder)
     }
 }
 
+void MFQ::schedule_PM(us16 runtime, JobRecorder &jobRecorder)
+{
+    std::cout << "FCFS: schedule_PM" << std::endl;
+    schedule_NONE(runtime, jobRecorder);
+}
+
+void MFQ::schedule_PSA(us16 runtime, JobRecorder &jobRecorder)
+{
+    std::cout << "FCFS: schedule_PSA" << std::endl;
+    schedule_NONE(runtime, jobRecorder);
+}
+
+void MFQ::schedule_PM_PSA(us16 runtime, JobRecorder &jobRecorder)
+{
+    std::cout << "schedule_PM_PSA" << std::endl;
+    schedule_PM(runtime, jobRecorder);
+}
+
 Scheduler::ptr& MFQ::selectNextJob()
 {
     require(readyJobNum >= 1, "The size of ready jobs list is less than 2!");

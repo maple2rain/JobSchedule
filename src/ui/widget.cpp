@@ -292,8 +292,8 @@ void Widget::stopEvent()
     if(isStore)
         timeStop();
 
-    Table2ExcelByTxt(FinishedJobTbl);
-    Table2ExcelByTxt(PreInputTbl);
+    Table2ExcelByTxt(FinishedJobTbl, "Fibished Job");
+    Table2ExcelByTxt(PreInputTbl, "Pre Input Job");
 }
 
 void Widget::on_StopBtn_clicked()
@@ -791,9 +791,11 @@ void Widget::clearLbl()
     WATTValue->setText("0");
 }
 
-void Widget::Table2ExcelByTxt(QTableWidget *table)
+void Widget::Table2ExcelByTxt(QTableWidget *table, QString tableName)
 {
-    QString filepath = QFileDialog::getSaveFileName(this, tr("Save as..."),
+    QString filepath = QFileDialog::getSaveFileName(this, tr(
+                                                        (QString("Save %1").arg(tableName)).toLocal8Bit()
+                                                        ),
                                                     QString(), tr("EXCEL files (*.xls *.xlsx);;HTML-Files (*.txt);;"));
 
     int row = table->rowCount();
@@ -832,12 +834,12 @@ void Widget::Table2ExcelByTxt(QTableWidget *table)
 
 void Widget::keyPressEvent(QKeyEvent *event)
 {
-    if(event->key() == Qt::Key_Plus){
+    if(event->key() == Qt::Key_W){
         if(waittime < 2 * 1000)
             waittime += 50;
         waittimeLblShow(waittime);
 
-    }else if(event->key() == Qt::Key_Minus){
+    }else if(event->key() == Qt::Key_S){
         if(waittime > 50)
             waittime -= 50;
         waittimeLblShow(waittime);
