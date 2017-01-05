@@ -280,17 +280,21 @@ void Widget::stopEvent()
     //    PauseBtn->setText(tr("Pause"));     //change the text show on the button
     PauseBtn->setStyleSheet("border-image: url(:/images/images/icon/pause_128px_1200673_easyicon.net.ico);");
     EnableRadioBtn();
-    
-    bool isStore = QMessageBox::question(this,
-                                         tr("Store"),
-                                         tr("Do you want to store your job in DB?"),
-                                         QMessageBox::Yes | QMessageBox::No,
-                                         QMessageBox::Yes)
-            == QMessageBox::Yes;
-    showGraph();
 
-    if(isStore)
-        timeStop();
+    showGraph();
+    
+    extern UserOperate user;
+    if(user.getUserName() != ""){
+        bool isStore = QMessageBox::question(this,
+                                             tr("Store"),
+                                             tr("Do you want to store your job in DB?"),
+                                             QMessageBox::Yes | QMessageBox::No,
+                                             QMessageBox::Yes)
+                == QMessageBox::Yes;
+
+        if(isStore)
+            timeStop();
+    }
 
     Table2ExcelByTxt(FinishedJobTbl, "Fibished Job");
     Table2ExcelByTxt(PreInputTbl, "Pre Input Job");
@@ -793,41 +797,41 @@ void Widget::clearLbl()
 
 void Widget::Table2ExcelByTxt(QTableWidget *table, QString tableName)
 {
-    QString filepath = QFileDialog::getSaveFileName(this, tr(
-                                                        (QString("Save %1").arg(tableName)).toLocal8Bit()
-                                                        ),
-                                                    QString(), tr("EXCEL files (*.xls *.xlsx);;HTML-Files (*.txt);;"));
+    QString filepath =
+            QFileDialog::getSaveFileName(this,
+                                         tr((QString("Save %1").arg(tableName)).toLocal8Bit()),//fileDialog title
+                                         QString(),
+                                         tr("EXCEL files (*.xls *.xlsx);;HTML-Files (*.txt);;"));//store file type
 
     int row = table->rowCount();
     int col = table->columnCount();
     QList<QString> list;
-    //添加列标题
+
+    //add header row
     QString HeaderRow;
-    for(int i=0;i<col;i++)
-    {
-        HeaderRow.append(table->horizontalHeaderItem(i)->text()+"\t");
+    for(int i = 0; i < col; ++i){
+        HeaderRow.append(table->horizontalHeaderItem(i)->text() + "\t");
     }
     list.push_back(HeaderRow);
-    for(int i=0;i<row;i++)
-    {
+    for(int i = 0; i < row; ++i){
         QString rowStr = "";
-        for(int j=0;j<col;j++){
-            rowStr += table->item(i,j)->text() + "\t";
+        for(int j = 0; j < col; ++j){
+            rowStr += table->item(i, j)->text() + "\t";
         }
         list.push_back(rowStr);
     }
+
+    //add text list to textedit
     QTextEdit textEdit;
-    for(int i=0;i<list.size();i++)
-    {
+    for(int i = 0; i < list.size(); ++i){
         textEdit.append(list.at(i));
     }
 
     QFile file(filepath);
-    if(file.open(QFile::WriteOnly | QIODevice::Text))
-    {
+    if(file.open(QFile::WriteOnly | QIODevice::Text)){
         QTextStream ts(&file);
         ts.setCodec("UTF-8");
-        ts<<textEdit.document()->toPlainText();
+        ts << textEdit.document()->toPlainText();
         file.close();
     }
 }

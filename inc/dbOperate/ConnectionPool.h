@@ -12,9 +12,9 @@
 class ConnectionPool {
 
 public:
-    static void release(); // 关闭所有的数据库连接
-    static QSqlDatabase openConnection();                 // 获取数据库连接
-    static void closeConnection(QSqlDatabase connection); // 释放数据库连接回连接池
+    static void release();                                // close all the connection
+    static QSqlDatabase openConnection();                 // get a connection from database
+    static void closeConnection(QSqlDatabase connection); // put connection to connection-pool
 
     ~ConnectionPool();
 
@@ -24,24 +24,24 @@ private:
     ConnectionPool();
     ConnectionPool(const ConnectionPool &other);
     ConnectionPool& operator=(const ConnectionPool &other);
-    QSqlDatabase createConnection(const QString &connectionName); // 创建数据库连接
+    QSqlDatabase createConnection(const QString &connectionName); // create a connection
 
-    QQueue<QString> usedConnectionNames;   // 已使用的数据库连接名
-    QQueue<QString> unusedConnectionNames; // 未使用的数据库连接名
+    QQueue<QString> usedConnectionNames;   // store connections that have been used
+    QQueue<QString> unusedConnectionNames; // store connections that haven't been used
 
-    // 数据库信息
+    // the info of database
     QString hostName;
     QString databaseName;
     QString username;
     QString password;
     QString databaseType;
 
-    bool    testOnBorrow;    // 取得连接的时候验证连接是否有效
-    QString testOnBorrowSql; // 测试访问数据库的 SQL
+    bool    testOnBorrow;    // whether to check that the connection is valid
+    QString testOnBorrowSql; // test sql
 
-    int maxWaitTime;  // 获取连接最大等待时间
-    int waitInterval; // 尝试获取连接时等待间隔时间
-    int maxConnectionCount; // 最大连接数
+    int maxWaitTime;  // max wait time to wait for a valid connection
+    int waitInterval; // wait time interval
+    int maxConnectionCount; // max number of connection in this pool
 
     static QMutex mutex;
     static QWaitCondition waitConnection;

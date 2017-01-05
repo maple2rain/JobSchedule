@@ -5,11 +5,11 @@ QWaitCondition ConnectionPool::waitConnection;
 ConnectionPool* ConnectionPool::instance = NULL;
 
 ConnectionPool::ConnectionPool() {
-	hostName     = "localhost";//主机名
-	databaseName = "Jobs";//需要访问的数据库
-	username     = "root";//用户名
-	password     = "123456";//密码
-	databaseType = "QMYSQL";//数据库类型
+    hostName     = "localhost"; //host name
+    databaseName = "Jobs";      //the database that will be accessed
+    username     = "root";      //user
+    password     = "123456";    //password
+    databaseType = "QMYSQL";    //database type
 
 	testOnBorrow = true;
 	testOnBorrowSql = "SELECT 1";
@@ -20,7 +20,7 @@ ConnectionPool::ConnectionPool() {
 }
 
 ConnectionPool::~ConnectionPool() {
-	// 销毁连接池的时候删除所有的连接
+    // destory all the connection when destruct
 	foreach(QString connectionName, usedConnectionNames) {
 		QSqlDatabase::removeDatabase(connectionName);
 	}
@@ -61,36 +61,35 @@ QSqlDatabase ConnectionPool::openConnection() {
 
 	QMutexLocker locker(&mutex);
 
-	// 已创建连接数
+    //  the number of connection that have been created
 	int connectionCount = pool.unusedConnectionNames.size() + pool.usedConnectionNames.size();
 
-	// 如果连接已经用完，等待 waitInterval 毫秒看看是否有可用连接，最长等待 maxWaitTime 毫秒
+    // if there is not connection left, that wait each waitInterval ms for connection available, not more than maxWaitTime
 	for (int i = 0;
 		 i < pool.maxWaitTime
 		 && pool.unusedConnectionNames.size() == 0 && connectionCount == pool.maxConnectionCount;
 		 i += pool.waitInterval) {
 		waitConnection.wait(&mutex, pool.waitInterval);
 
-		// 重新计算已创建连接数
+        // recount the number of connection
 		connectionCount = pool.unusedConnectionNames.size() + pool.usedConnectionNames.size();
 	}
 
 	if (pool.unusedConnectionNames.size() > 0) {
-		// 有已经回收的连接，复用它们
+        // reuserd unused connection
 		connectionName = pool.unusedConnectionNames.dequeue();
 	} else if (connectionCount < pool.maxConnectionCount) {
-		// 没有已经回收的连接，但是没有达到最大连接数，则创建新的连接
+        // create new connection when there is not unused connection and the number of connection are less than max
 		connectionName = QString("Connection-%1").arg(connectionCount + 1);
 	} else {
-		// 已经达到最大连接数
 		qDebug() << "Cannot create more connections.";
 		return QSqlDatabase();
 	}
 
-	// 创建连接
+    // create new connection
 	QSqlDatabase db = pool.createConnection(connectionName);
 
-	// 有效的连接才放入 usedConnectionNames
+    // put valid connection to usedConnectionNames
 	if (db.isOpen()) {
 		pool.usedConnectionNames.enqueue(connectionName);
         qDebug() << "create new connection.";
@@ -103,22 +102,23 @@ void ConnectionPool::closeConnection(QSqlDatabase connection) {
 	ConnectionPool& pool = ConnectionPool::getInstance();
 	QString connectionName = connection.connectionName();
 
-	// 如果是我们创建的连接，从 used 里删除，放入 unused 里
+    // if exists in used, then put it in unused
 	if (pool.usedConnectionNames.contains(connectionName)) {
 		QMutexLocker locker(&mutex);
 		pool.usedConnectionNames.removeOne(connectionName);
 		pool.unusedConnectionNames.enqueue(connectionName);
 		waitConnection.wakeOne();
-	}
+    }else{
+        connection.close();
+    }
 }
 
 QSqlDatabase ConnectionPool::createConnection(const QString &connectionName) {
-	// 连接已经创建过了，复用它，而不是重新创建
+    // if connection has been created, then reuse it
 	if (QSqlDatabase::contains(connectionName)) {
 		QSqlDatabase db1 = QSqlDatabase::database(connectionName);
 
 		if (testOnBorrow) {
-			// 返回连接前访问数据库，如果连接断开，重新建立连接
 			qDebug() << "Test connection on borrow, execute:" << testOnBorrowSql << ", for" << connectionName;
 			QSqlQuery query(testOnBorrowSql, db1);
 
@@ -131,7 +131,7 @@ QSqlDatabase ConnectionPool::createConnection(const QString &connectionName) {
 		return db1;
 	}
 
-	// 创建一个新的连接
+    // create a new connection
 	QSqlDatabase db = QSqlDatabase::addDatabase(databaseType, connectionName);
 	db.setHostName(hostName);
 	db.setDatabaseName(databaseName);
