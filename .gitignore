@@ -1,3 +1,4 @@
+/build-	build-JobsSchedule-Desktop_Qt_5_7_1_GCC_64bit-Debug/*
 /build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/*
 /build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Release/*
 !/build-JobsSchedule-Desktop_Qt_5_6_2_MSVC2015_64bit-Debug/ui_widget.h

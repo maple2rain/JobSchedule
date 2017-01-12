@@ -6,13 +6,13 @@
 typedef unsigned int us16;
 
 /* debug print define */
-#define DEBUG_ON 1
+#define DEBUG_ON 0
 #if DEBUG_ON
     #define DEBUG_PRINT_JOB(jobs, type) \
     do{ \
         std::cout << "join time is: ";\
-        for(auto it = scheduler->jobs##.begin(); it != scheduler->jobs##.end(); ++it)\
-            std::cout << (*it)->get##type##() << " ";\
+        for(auto it = scheduler->jobs.begin(); it != scheduler->jobs.end(); ++it)\
+            std::cout << (*it)->get##type() << " ";\
         std::cout << std::endl;  \
     }while(0)
 #else

@@ -315,7 +315,7 @@ private:
 };
 
 inline
-Scheduler::Scheduler(const std::string &type) {
+Scheduler::Scheduler(const std::string &type) throw(BadSchedulerCreation) {
     if (type == "FCFS")
         scheduler = new FCFS;
     else if(type == "SJF")

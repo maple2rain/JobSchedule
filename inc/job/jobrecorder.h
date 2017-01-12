@@ -81,8 +81,8 @@ private:
 #define AddRecord(recorder, job, status) \
 do{ \
     std::cout << "recorder add record" << std::endl;\
-    recorder.##addJob(job);\
-    recorder.add##status##();\
+    recorder.addJob(job);\
+    recorder.add##status();\
 }while(0)
 
 #endif // JOBRECORDER_H

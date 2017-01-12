@@ -194,10 +194,10 @@ public:
     ~ValidJob() {}
 
     /* setter */
-    void setJobName(std::string &_jobName) { jobName = _jobName; }
-    void setJoinTimeStr(std::string &_joinTimeStr) { joinTimeStr = _joinTimeStr; }
-    void setLastTimeStr(std::string &_lastTimeStr) { lastTimeStr = _lastTimeStr; }
-    void setDeadLineStr(std::string &_deadLineStr) { deadLineStr = _deadLineStr; }
+    void setJobName(const std::string &_jobName) { jobName = _jobName; }
+    void setJoinTimeStr(const std::string &_joinTimeStr) { joinTimeStr = _joinTimeStr; }
+    void setLastTimeStr(const std::string &_lastTimeStr) { lastTimeStr = _lastTimeStr; }
+    void setDeadLineStr(const std::string &_deadLineStr) { deadLineStr = _deadLineStr; }
     void setJoinTime(us16 _joinTime) { joinTime = _joinTime; }
     void setLastTime(us16 _lastTime) { lastTime = _lastTime; }
     void setDeadLine(us16 _deadLine) { deadLine = _deadLine; }
